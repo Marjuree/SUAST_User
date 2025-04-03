@@ -1,0 +1,26 @@
+/* Green button with rounded shape and animation */
+.button {
+    width: 80%;
+    padding: 15px; /* Ensures consistent padding */
+    margin: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+
+    /* Styling */
+    background-color: #28a745; /* Green color */
+    color: white; /* Text color */
+    border: 2px solid black; /* Border added */
+    border-radius: 30px; /* Makes the button rounded */
+    transition: all 0.3s ease-in-out; /* Smooth animation */
+}
+
+.button:hover {
+    background-color: #218838; /* Darker green for hover effect */
+    transform: scale(1.1); /* Slightly enlarges the button */
+}
+
+.button:active {
+    transform: scale(0.95); /* Shrinks button when clicked */
+}
+
+

@@ -1,0 +1,174 @@
+/* Set background image with full cover, centered, and fixed */
+/* body {
+    background: url('../img/background.jpg') no-repeat center center fixed;
+    background-size: cover;  
+    font-family: Arial, sans-serif;  
+} */
+
+/* Navbar styling */
+.navbar {
+    border-radius: 0; /* Removes rounded corners */
+    background-color: #000080; /* Sets a navy blue background color */
+}
+
+/* Navbar brand image (logo) */
+.navbar-brand img {
+    width: 50px; /* Sets the width of the logo */
+    margin-top: -15px; /* Adjusts the positioning of the logo */
+}
+
+/* Navbar collapse padding */
+.navbar-collapse {
+    padding: 10px; /* Adds padding inside the navbar for spacing */
+}
+
+/* Container for the welcome section */
+.welcome-container {
+    text-align: center; /* Centers text horizontally */
+    color: black; /* Sets text color */
+    margin-top: 100px; /* Adds spacing from the top */
+}
+
+/* Styling for welcome message heading */
+.welcome-container h1 {
+    font-size: 3em; /* Sets a large font size */
+    margin-bottom: 20px; /* Adds spacing below the heading */
+    color: black; /* Ensures text remains black */
+}
+
+/* Styling for welcome message paragraph */
+.welcome-container p {
+    font-size: 1.2em; /* Increases font size for readability */
+    margin-bottom: 30px; /* Adds space below the paragraph */
+    color: black; /* Keeps text color black */
+}
+
+/* Button styling */
+.btn-register, .btn-login {
+    font-size: 1.2em; /* Increases button text size */
+    background-color: #4CAF50; /* Sets a green background */
+    color: white; /* Makes text white */
+    padding: 15px 32px; /* Adds padding for better button appearance */
+    border-radius: 50px; /* Rounds the button edges */
+    transition: all 0.3s ease-in-out; /* Smooth transition effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    margin: 0 10px; /* Adds spacing between buttons */
+    text-decoration: none; /* Removes underline from links */
+    width: 200px; /* Fixed width for both buttons to make them the same size */
+}
+
+/* Hover effect for buttons */
+.btn-register:hover, .btn-login:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+    transform: translateY(-2px); /* Moves button slightly upward */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increases shadow for depth */
+}
+
+/* Click effect for buttons */
+.btn-register:active, .btn-login:active {
+    transform: translateY(2px); /* Moves button downward when clicked */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduces shadow */
+}
+
+/* Styling for dropdown menu */
+.dropdown-menu {
+    min-width: 180px; /* Sets a minimum width for dropdown items */
+}
+
+/* Container for center-aligned buttons */
+.buttons-container {
+    display: flex; /* Uses flexbox for alignment */
+    justify-content: center; /* Centers buttons horizontally */
+    margin-top: 20px; /* Adds spacing above buttons */
+    flex-wrap: wrap; /* Allows buttons to wrap on small screens */
+}
+
+/* Responsive design adjustments for small screens */
+@media (max-width: 767px) {
+    .btn-register, .btn-login {
+        width: 100%; /* Makes buttons full-width on smaller screens */
+        margin-bottom: 10px; /* Adds spacing between buttons */
+    }
+}
+
+/* LOGO */
+.no-print {
+    display: none;
+}
+
+.welcome-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 20px; /* Center the logo and add space below it */
+    max-width: 200px; /* Adjust the max-width as needed */
+    height: auto;
+}
+
+/* CSS for Footer  */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    font-size: 14px;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.footer-links li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 18px;
+    color: white;
+}
+
+.social-icons a:hover {
+    color: #4CAF50;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .footer {
+        font-size: 12px;
+    }
+    
+    .footer-links li {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .social-icons a {
+        font-size: 16px;
+    }
+}
