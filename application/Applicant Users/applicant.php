@@ -1,5 +1,8 @@
 <?php
 session_start();
+// Regenerate session ID for security
+session_regenerate_id(true);
+
 require_once "../../configuration/config.php";
 
 // Check if the user is logged in and is an applicant
@@ -8,7 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     exit();
 }
 
-session_regenerate_id(true);
+
 
 $applicant_id = $_SESSION['applicant_id'];
 $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
