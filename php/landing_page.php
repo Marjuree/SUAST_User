@@ -1,3 +1,8 @@
+<?php
+// Start session at the very top before any HTML or output
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,6 +122,6 @@
 </html>
 
 <?php
-// End output buffering and flush content
-ob_end_flush();
+// Ensure output buffering is not needed if not explicitly required
+// No need for ob_end_flush() if we aren't using output buffering
 ?>
