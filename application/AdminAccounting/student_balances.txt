@@ -1,0 +1,939 @@
+Original    
+
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../php/error.php?welcome=Please login to access this page");
+    exit();
+}
+
+ob_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Balance | Dashboard</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" />
+    
+    <style>
+        .table th, .table td {
+            text-align: center; /* Center table content */
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="skin-blue">
+    <?php 
+    require_once "../../configuration/config.php";
+    require_once('../../includes/header.php');
+    require_once('../../includes/head_css.php'); 
+    ?>
+    
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <?php include('../../includes/sidebar.php'); ?>
+        
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>Student Dashboard</h1>
+            </section>
+            
+            <section class="content">
+                <div class="row">
+                    <div class="box">
+                        <div class="box-body">
+                            <hr>
+                            <h3>Student balance</h3>
+                            <!-- Add Student Balance Button -->
+                            <button class="btn btn-success mb-3" data-toggle="modal" data-target="#addBalanceModal">
+                                Add Student Balance
+                            </button>
+                            <hr>
+
+                            <table class="table table-bordered table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Total Balance</th>
+                                    <th>Last Payment</th>
+                                    <th>Due Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Database connection
+                                require_once "../../configuration/config.php"; // Make sure this file contains your DB connection settings
+
+                                // Query to fetch student balances
+                                $query = "SELECT * FROM tbl_student_balances"; // Correct table name
+                                $result = mysqli_query($con, $query);
+
+                                if ($result) {
+                                    // Loop through and display the results
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['student_id']; ?></td>
+                                        <td><?php echo $row['student_name']; ?></td>
+                                        <td><?php echo number_format($row['total_balance'], 2); ?></td>
+                                        <td><?php echo $row['last_payment']; ?></td>
+                                        <td><?php echo $row['due_date']; ?></td>
+                                        <td>
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-primary edit-btn" 
+                                            data-id="<?php echo $row['id']; ?>"
+                                            data-student_id="<?php echo $row['student_id']; ?>"
+                                            data-name="<?php echo $row['student_name']; ?>"
+                                            data-balance="<?php echo $row['total_balance']; ?>"
+                                            data-last_payment="<?php echo $row['last_payment']; ?>"
+                                            data-due_date="<?php echo $row['due_date']; ?>"
+                                            data-toggle="modal" data-target="#editBalanceModal">
+                                            Edit
+                                        </button>
+
+                                        <!-- Delete Button -->
+                                        <a href="delete_balance.php?id=<?php echo $row['id']; ?>" 
+                                        class="btn btn-danger" 
+                                        onclick="return confirm('Are you sure you want to delete this record?');">
+                                        Delete
+                                        </a>
+                                    </td>
+                                        </td>
+                                    </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6'>No data found.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <script>
+    $(document).ready(function(){
+        $(".edit-btn").click(function(){
+            var id = $(this).data('id');
+            var student_id = $(this).data('student_id');
+            var name = $(this).data('name');
+            var balance = $(this).data('balance');
+            var last_payment = $(this).data('last_payment');
+            var due_date = $(this).data('due_date');
+
+            $("#edit_id").val(id);
+            $("#edit_student_id").val(student_id);
+            $("#edit_name").val(name);
+            $("#edit_balance").val(balance);
+            $("#edit_last_payment").val(last_payment);
+            $("#edit_due_date").val(due_date);
+        });
+    });
+</script>
+
+
+
+
+<div class="modal fade" id="editBalanceModal" tabindex="-1" role="dialog" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBalanceModalLabel">Edit Student Balance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editBalanceForm" method="POST" action="update_balance.php">
+                <div class="modal-body">
+                    <input type="hidden" id="edit_id" name="id">
+
+                    <div class="form-group">
+                        <label>Student ID:</label>
+                        <input type="text" id="edit_student_id" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="edit_name" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Balance:</label>
+                        <input type="number" id="edit_balance" name="total_balance" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Payment:</label>
+                        <input type="date" id="edit_last_payment" name="last_payment" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Due Date:</label>
+                        <input type="date" id="edit_due_date" name="due_date" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="update_balance" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <?php include "modal.php"; ?>
+    <?php include "../../includes/footer.php"; ?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../php/error.php?welcome=Please login to access this page");
+    exit();
+}
+
+ob_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Balance | Dashboard</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" />
+    
+    <style>
+        .table th, .table td {
+            text-align: center; /* Center table content */
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="skin-blue">
+    <?php 
+    require_once "../../configuration/config.php";
+    require_once('../../includes/header.php');
+    require_once('../../includes/head_css.php'); 
+    ?>
+    
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <?php include('../../includes/sidebar.php'); ?>
+        
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>Student Dashboard</h1>
+            </section>
+            
+            <section class="content">
+                <div class="row">
+                    <div class="box">
+                        <div class="box-body">
+                            <hr>
+                            <h3>Student balance</h3>
+                            <!-- Add Student Balance Button -->
+                            <button class="btn btn-success mb-3" data-toggle="modal" data-target="#addBalanceModal">
+                                Add Student Balance
+                            </button>
+                            <hr>
+
+                            <table class="table table-bordered table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Total Balance</th>
+                                    <th>Last Payment</th>
+                                    <th>Due Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Database connection
+                                require_once "../../configuration/config.php"; // Make sure this file contains your DB connection settings
+
+                                // Query to fetch student balances
+                                $query = "SELECT * FROM tbl_student_balances"; // Correct table name
+                                $result = mysqli_query($con, $query);
+
+                                if ($result) {
+                                    // Loop through and display the results
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['student_id']; ?></td>
+                                        <td><?php echo $row['student_name']; ?></td>
+                                        <td><?php echo number_format($row['total_balance'], 2); ?></td>
+                                        <td><?php echo $row['last_payment']; ?></td>
+                                        <td><?php echo $row['due_date']; ?></td>
+                                        <td>
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-primary edit-btn" 
+                                            data-id="<?php echo $row['id']; ?>"
+                                            data-student_id="<?php echo $row['student_id']; ?>"
+                                            data-name="<?php echo $row['student_name']; ?>"
+                                            data-balance="<?php echo $row['total_balance']; ?>"
+                                            data-last_payment="<?php echo $row['last_payment']; ?>"
+                                            data-due_date="<?php echo $row['due_date']; ?>"
+                                            data-toggle="modal" data-target="#editBalanceModal">
+                                            Edit
+                                        </button>
+
+                                        <!-- Delete Button -->
+                                        <a href="delete_balance.php?id=<?php echo $row['id']; ?>" 
+                                        class="btn btn-danger" 
+                                        onclick="return confirm('Are you sure you want to delete this record?');">
+                                        Delete
+                                        </a>
+                                    </td>
+                                        </td>
+                                    </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6'>No data found.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <script>
+    $(document).ready(function(){
+        $(".edit-btn").click(function(){
+            var id = $(this).data('id');
+            var student_id = $(this).data('student_id');
+            var name = $(this).data('name');
+            var balance = $(this).data('balance');
+            var last_payment = $(this).data('last_payment');
+            var due_date = $(this).data('due_date');
+
+            $("#edit_id").val(id);
+            $("#edit_student_id").val(student_id);
+            $("#edit_name").val(name);
+            $("#edit_balance").val(balance);
+            $("#edit_last_payment").val(last_payment);
+            $("#edit_due_date").val(due_date);
+        });
+    });
+</script>
+
+
+
+
+<div class="modal fade" id="editBalanceModal" tabindex="-1" role="dialog" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBalanceModalLabel">Edit Student Balance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editBalanceForm" method="POST" action="update_balance.php">
+                <div class="modal-body">
+                    <input type="hidden" id="edit_id" name="id">
+
+                    <div class="form-group">
+                        <label>Student ID:</label>
+                        <input type="text" id="edit_student_id" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="edit_name" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Balance:</label>
+                        <input type="number" id="edit_balance" name="total_balance" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Payment:</label>
+                        <input type="date" id="edit_last_payment" name="last_payment" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Due Date:</label>
+                        <input type="date" id="edit_due_date" name="due_date" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="update_balance" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <?php include "modal.php"; ?>
+    <?php include "../../includes/footer.php"; ?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+With automatic sear   
+
+
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../php/error.php?welcome=Please login to access this page");
+    exit();
+}
+
+ob_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Balance | Dashboard</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" />
+    
+    <style>
+        .table th, .table td {
+            text-align: center; /* Center table content */
+            vertical-align: middle;
+        }
+        /* Add styles for the search bar */
+        .search-bar {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .search-bar input {
+            padding: 8px;
+            width: 60%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+    <!-- Include jQuery for the search functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            // Filter the table rows based on the search input
+            $("#searchName").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#studentTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+
+</head>
+<body class="skin-blue">
+    <?php 
+    require_once "../../configuration/config.php";
+    require_once('../../includes/header.php');
+    require_once('../../includes/head_css.php'); 
+    ?>
+    
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <?php include('../../includes/sidebar.php'); ?>
+        
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>Student Dashboard</h1>
+            </section>
+            
+            <section class="content">
+                <div class="row">
+                    <div class="box">
+                        <div class="box-body">
+                            <hr>
+                            <h3>Student balance</h3>
+
+                            <!-- Search Bar -->
+                            <div class="search-bar">
+                                <input type="text" id="searchName" placeholder="Search by Name...">
+                            </div>
+
+                            <!-- Add Student Balance Button -->
+                            <button class="btn btn-success mb-3" data-toggle="modal" data-target="#addBalanceModal">
+                                Add Student Balance
+                            </button>
+                            <hr>
+
+                            <table class="table table-bordered table-striped" id="studentTable">
+                                <thead class="table-dark">
+                                    <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Total Balance</th>
+                                    <th>Last Payment</th>
+                                    <th>Due Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Database connection
+                                require_once "../../configuration/config.php"; // Make sure this file contains your DB connection settings
+
+                                // Query to fetch student balances
+                                $query = "SELECT * FROM tbl_student_balances"; // Correct table name
+                                $result = mysqli_query($con, $query);
+
+                                if ($result) {
+                                    // Loop through and display the results
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['student_id']; ?></td>
+                                        <td><?php echo $row['student_name']; ?></td>
+                                        <td><?php echo number_format($row['total_balance'], 2); ?></td>
+                                        <td><?php echo $row['last_payment']; ?></td>
+                                        <td><?php echo $row['due_date']; ?></td>
+                                        <td>
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-primary edit-btn" 
+                                            data-id="<?php echo $row['id']; ?>"
+                                            data-student_id="<?php echo $row['student_id']; ?>"
+                                            data-name="<?php echo $row['student_name']; ?>"
+                                            data-balance="<?php echo $row['total_balance']; ?>"
+                                            data-last_payment="<?php echo $row['last_payment']; ?>"
+                                            data-due_date="<?php echo $row['due_date']; ?>"
+                                            data-toggle="modal" data-target="#editBalanceModal">
+                                            Edit
+                                        </button>
+
+                                        <!-- Delete Button -->
+                                        <a href="delete_balance.php?id=<?php echo $row['id']; ?>" 
+                                        class="btn btn-danger" 
+                                        onclick="return confirm('Are you sure you want to delete this record?');">
+                                        Delete
+                                        </a>
+                                    </td>
+                                        </td>
+                                    </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6'>No data found.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+ 
+
+
+    <script>
+    $(document).ready(function(){
+        $(".edit-btn").click(function(){
+            var id = $(this).data('id');
+            var student_id = $(this).data('student_id');
+            var name = $(this).data('name');
+            var balance = $(this).data('balance');
+            var last_payment = $(this).data('last_payment');
+            var due_date = $(this).data('due_date');
+
+            $("#edit_id").val(id);
+            $("#edit_student_id").val(student_id);
+            $("#edit_name").val(name);
+            $("#edit_balance").val(balance);
+            $("#edit_last_payment").val(last_payment);
+            $("#edit_due_date").val(due_date);
+        });
+    });
+</script>
+
+
+
+
+<div class="modal fade" id="editBalanceModal" tabindex="-1" role="dialog" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBalanceModalLabel">Edit Student Balance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editBalanceForm" method="POST" action="update_balance.php">
+                <div class="modal-body">
+                    <input type="hidden" id="edit_id" name="id">
+
+                    <div class="form-group">
+                        <label>Student ID:</label>
+                        <input type="text" id="edit_student_id" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="edit_name" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Balance:</label>
+                        <input type="number" id="edit_balance" name="total_balance" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Payment:</label>
+                        <input type="date" id="edit_last_payment" name="last_payment" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Due Date:</label>
+                        <input type="date" id="edit_due_date" name="due_date" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="update_balance" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <?php include "modal.php"; ?>
+    <?php include "../../includes/footer.php"; ?>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../php/error.php?welcome=Please login to access this page");
+    exit();
+}
+
+ob_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Balance | Dashboard</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" />
+    <script src="js/search_balance.js"></script>
+    
+    <style>
+        .table th, .table td {
+            text-align: center; /* Center table content */
+            vertical-align: middle;
+        }
+        /* Add styles for the search bar */
+        .search-bar {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .search-bar input {
+            padding: 8px;
+            width: 30%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+
+    <script>
+        $(document).ready(function(){
+            // Filter the table rows based on the search input
+            $("#searchName").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                var found = false;  // Flag to track if any matching rows are found
+                
+                $("#studentTable tbody tr").each(function() {
+                    var rowText = $(this).text().toLowerCase();
+                    if (rowText.indexOf(value) > -1) {
+                        $(this).show();  // Show row if it matches the search
+                        found = true;
+                    } else {
+                        $(this).hide();  // Hide row if it doesn't match the search
+                    }
+                });
+                
+                // If no rows are found, show "No data found" message
+                if (!found) {
+                    $("#noDataRow").show();
+                } else {
+                    $("#noDataRow").hide();
+                }
+            });
+        });
+    </script>
+
+</head>
+<body class="skin-blue">
+    <?php 
+    require_once "../../configuration/config.php";
+    require_once('../../includes/header.php');
+    require_once('../../includes/head_css.php'); 
+    ?>
+    
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <?php include('../../includes/sidebar.php'); ?>
+        
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>Student Dashboard</h1>
+            </section>
+            
+            <section class="content">
+                <div class="row">
+                    <div class="box">
+                        <div class="box-body">
+                            <hr>
+                            <h3>Student balance</h3>
+
+
+                            <!-- Add Student Balance Button -->
+                            <button class="btn btn-success mb-3" data-toggle="modal" data-target="#addBalanceModal">
+                                Add Student Balance
+                            </button>
+                            </div>
+                            <hr>
+
+                            <table class="table table-bordered table-striped" id="studentTable">
+                                <thead class="table-dark">
+                            <!-- Search Bar -->
+                            <div class="search-bar">
+                            <input type="text" id="searchName" placeholder="Search by Name.......">
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Name</th>
+                                        <th>Total Balance</th>
+                                        <th>Last Payment</th>
+                                        <th>Due Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Database connection
+                                    require_once "../../configuration/config.php"; // Make sure this file contains your DB connection settings
+
+                                    // Query to fetch student balances
+                                    $query = "SELECT * FROM tbl_student_balances"; // Correct table name
+                                    $result = mysqli_query($con, $query);
+
+                                    if ($result && mysqli_num_rows($result) > 0) {
+                                        // Loop through and display the results
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $row['student_id']; ?></td>
+                                            <td><?php echo $row['student_name']; ?></td>
+                                            <td><?php echo number_format($row['total_balance'], 2); ?></td>
+                                            <td><?php echo $row['last_payment']; ?></td>
+                                            <td><?php echo $row['due_date']; ?></td>
+                                            <td>
+                                                <!-- Edit Button -->
+                                                <button class="btn btn-primary edit-btn" 
+                                                    data-id="<?php echo $row['id']; ?>"
+                                                    data-student_id="<?php echo $row['student_id']; ?>"
+                                                    data-name="<?php echo $row['student_name']; ?>"
+                                                    data-balance="<?php echo $row['total_balance']; ?>"
+                                                    data-last_payment="<?php echo $row['last_payment']; ?>"
+                                                    data-due_date="<?php echo $row['due_date']; ?>"
+                                                    data-toggle="modal" data-target="#editBalanceModal">
+                                                    Edit
+                                                </button>
+
+                                                <!-- Delete Button -->
+                                                <a href="delete_balance.php?id=<?php echo $row['id']; ?>" 
+                                                class="btn btn-danger" 
+                                                onclick="return confirm('Are you sure you want to delete this record?');">
+                                                Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='6' class='text-center'>Data not found.</td></tr>";
+                                    }
+                                    ?>
+                                    <!-- Empty row for "No data found" when search results are empty -->
+                                    <tr id="noDataRow" style="display:none;">
+                                        <td colspan="6" class="text-center">No data found.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+</body>
+</html>
+
+
+
+    <script>
+    $(document).ready(function(){
+        $(".edit-btn").click(function(){
+            var id = $(this).data('id');
+            var student_id = $(this).data('student_id');
+            var name = $(this).data('name');
+            var balance = $(this).data('balance');
+            var last_payment = $(this).data('last_payment');
+            var due_date = $(this).data('due_date');
+
+            $("#edit_id").val(id);
+            $("#edit_student_id").val(student_id);
+            $("#edit_name").val(name);
+            $("#edit_balance").val(balance);
+            $("#edit_last_payment").val(last_payment);
+            $("#edit_due_date").val(due_date);
+        });
+    });
+</script>
+
+
+
+
+<div class="modal fade" id="editBalanceModal" tabindex="-1" role="dialog" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBalanceModalLabel">Edit Student Balance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editBalanceForm" method="POST" action="update_balance.php">
+                <div class="modal-body">
+                    <input type="hidden" id="edit_id" name="id">
+
+                    <div class="form-group">
+                        <label>Student ID:</label>
+                        <input type="text" id="edit_student_id" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="edit_name" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Balance:</label>
+                        <input type="number" id="edit_balance" name="total_balance" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Payment:</label>
+                        <input type="date" id="edit_last_payment" name="last_payment" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Due Date:</label>
+                        <input type="date" id="edit_due_date" name="due_date" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="update_balance" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <?php include "modal.php"; ?>
+    <?php include "../../includes/footer.php"; ?>
+</body>
+</html>

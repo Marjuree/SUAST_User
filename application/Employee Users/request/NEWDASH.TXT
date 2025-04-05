@@ -1,0 +1,138 @@
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../login.php");
+    exit();
+}
+
+ob_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Employee | Dashboard</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" />
+
+    <!-- Stylesheets -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../js/morris/morris-0.4.3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/select2.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/landing.css" rel="stylesheet" type="text/css" />
+    
+    <script src="../../js/jquery-1.12.3.js" type="text/javascript"></script>
+</head>
+
+<body class="skin-blue">
+    <?php 
+    include('../../includes/head_css.php');
+    include('../../includes/header.php'); 
+    include('../../includes/sidebar.php');
+    ?>
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>Employee Service Request System</h1>
+                <p>Welcome, <strong><?php echo htmlspecialchars($_SESSION['role']); ?></strong></p>
+            </section>
+
+            <section class="content">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Your Dashboard</h3>
+                    </div>
+                   
+                    <div class="box-body">
+
+                    <?php
+                        // Fetch all leave requests from tbl_leave_requests
+                        $query = "SELECT id, request_type, date_request, name, faculty, leave_dates, leave_form, request_status, created_at 
+                                  FROM tbl_leave_requests ORDER BY created_at DESC";
+                        $result = $con->query($query);
+
+                        if (!$result) {
+                            die("Query failed: " . $con->error); // Debugging if query fails
+                        }
+                        ?>
+                        
+                        <!-- Buttons for different requests -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicehrmo">SERVICE</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestPersonnelInquiry">Personnel Inquiry</button>
+                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#requestServiceRecord">Service Record</button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#requestCertification">Certification Request</button>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestLeaveApplication">Leave Request</button>
+                        
+                        <hr>
+                        
+                        <h3>Submitted Requests</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                <th>Date of Request</th>
+                                    <th>Full Name</th>
+                                    <th>Faculty/Institute</th>
+                                    <th>Request Type</th>
+                                    <th>Leave Dates</th>
+                                    <th>Leave Form</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['date_request']) ?></td>
+                                        <td><?= htmlspecialchars($row['name']) ?></td>
+                                        <td><?= htmlspecialchars($row['faculty']) ?></td>
+                                        <td><?= htmlspecialchars($row['request_type']) ?></td>
+                                        <td><?= htmlspecialchars($row['leave_dates']) ?></td>
+                                        <td>
+                                            <?php if (!empty($row['leave_form'])): ?>
+                                                <a href="../leave_forms/<?= htmlspecialchars($row['leave_form']) ?>" target="_blank">View</a>
+                                            <?php else: ?>
+                                                No File
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><span class="badge bg-info"><?= htmlspecialchars($row['request_status']) ?></span></td>
+                                        <td><?= htmlspecialchars($row['created_at']) ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+
+                  
+    
+    <script src="../../vendors/js/vendor.bundle.base.js"></script> 
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../vendors/chart.js/Chart.min.js"></script>
+    <script src="../../js/chart.js"></script>
+
+    <?php include "modal.php"; ?>
+    <?php include "../../includes/footer.php"; ?>
+
+    
+    <script src="../../vendors/js/vendor.bundle.base.js"></script> 
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../vendors/chart.js/Chart.min.js"></script>
+    <script src="../../js/chart.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".select2").select2();
+        });
+    </script>
+</body>
+</html>
+                   c
