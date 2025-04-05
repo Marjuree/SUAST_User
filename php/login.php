@@ -1,6 +1,9 @@
 <?php
 
-session_start();
+// Start session only if it is not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
 require_once "../application/SystemLog.php";
