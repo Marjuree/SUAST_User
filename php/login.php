@@ -5,7 +5,7 @@ session_start();
 require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
 require_once "../application/SystemLog.php";
 
- 
+
 
 // Registration Handler
 if (isset($_POST['btn_register'])) {
@@ -89,9 +89,3 @@ if (isset($_POST['btn_login'])) {
     }
 }
 
-?>
-
-
-
-
- 
