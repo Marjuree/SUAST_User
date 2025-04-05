@@ -1,0 +1,255 @@
+[2025-03-25 15:29:24] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Employee'.
+[2025-03-25 15:29:24] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-25 15:33:51] - WARNING - Login Failed - Admin Office Failed login attempt for user 'Kenneth'.
+[2025-03-25 15:33:51] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-25 15:34:49] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-25 16:32:08] - WARNING - Login Failed - Admin Office Failed login attempt for user 'Kenneth'.
+[2025-03-25 16:32:08] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-25 16:32:21] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-25 16:35:00] - INFO - Login Success - Admin 'Employee' logged in successfully.
+[2025-03-25 17:38:00] - WARNING - Login Failed - Employee User not found: ''.
+[2025-03-25 17:40:16] - WARNING - Login Failed - Employee User not found: ''.
+[2025-03-25 17:58:42] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-25 18:07:46] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-25 19:03:50] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-25 19:12:06] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-25 19:13:18] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Expertnode'.
+[2025-03-25 19:13:18] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-25 19:13:59] - INFO - Login Success - Admin 'Employee ' logged in successfully.
+[2025-03-25 19:15:09] - INFO - Login Success - Applicant 'Kenneth ' logged in successfully.
+[2025-03-25 19:29:19] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-25 21:14:07] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-25 21:15:02] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-25 21:15:19] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-25 21:15:19] - WARNING - Login Failed - Student User not found!  ''.
+[2025-03-25 21:15:50] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-25 21:21:11] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-26 12:46:13] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-26 13:12:30] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:22:50] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:31:09] - INFO - Registration Success - New employee 'Kenneth' registered successfully.
+[2025-03-26 13:32:07] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 13:34:42] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:35:04] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:35:19] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:38:06] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:38:16] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:40:07] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:40:19] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 13:42:27] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 13:44:49] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 13:45:23] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 13:46:41] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 13:53:36] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 14:01:55] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 14:02:49] - INFO - Login Success - Employee 'Kenneth' logged in.
+[2025-03-26 14:04:02] - INFO - Login Success - Employee 'Kenneth' logged in.
+[2025-03-26 14:04:48] - INFO - Registration Success - New employee 'Ken' registered.
+[2025-03-26 14:06:33] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 14:07:21] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 14:07:43] - WARNING - Login Failed - Employee '213' not found in database.
+[2025-03-26 14:08:30] - ERROR - Registration Failed - Error registering employee 'Kenneth': Duplicate entry '54321' for key 'emp_school_id'
+[2025-03-26 14:09:08] - INFO - Registration Success - New employee 'kenn' registered successfully.
+[2025-03-26 14:09:31] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 14:46:42] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 14:49:40] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 14:54:52] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 14:56:11] - INFO - Registration Success - New employee 'choy' registered successfully.
+[2025-03-26 14:56:45] - INFO - Login Success - Employee 'choy' logged in successfully.
+[2025-03-26 14:58:20] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 14:58:52] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 15:03:28] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 15:06:08] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 15:09:23] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-26 15:11:16] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-26 15:11:48] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Employee'.
+[2025-03-26 15:11:48] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 15:12:33] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Employee'.
+[2025-03-26 15:12:33] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 15:12:59] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-26 15:36:40] - INFO - Login Success - Applicant 'Kenneth ' logged in successfully.
+[2025-03-26 15:43:09] - INFO - Login Success - Admin 'Kenneth' logged in successfully.
+[2025-03-26 15:43:17] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'HRMO'.
+[2025-03-26 15:43:17] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 15:47:16] - WARNING - Login Failed - Invalid Role Selection Attempt for 'Jonweak'.
+[2025-03-26 15:47:16] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 15:47:33] - WARNING - Login Failed - Invalid Role Selection Attempt for 'Kenneth'.
+[2025-03-26 15:47:33] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:16:29] - WARNING - Login Failed - Invalid Role Selection Attempt for 'Accounting'.
+[2025-03-26 17:16:29] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:21:58] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Accounting'.
+[2025-03-26 17:21:58] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:22:50] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Accounting'.
+[2025-03-26 17:22:50] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:24:04] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Accounting'.
+[2025-03-26 17:24:04] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:24:31] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Accounting'.
+[2025-03-26 17:24:31] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:26:27] - WARNING - Login Failed - Invalid Role Selection Attempt for 'jude'.
+[2025-03-26 17:26:27] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:29:53] - WARNING - Login Failed - Invalid Role Selection Attempt for 'accounting_user'.
+[2025-03-26 17:29:53] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:34:47] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:39:00] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:45:08] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Accounting'.
+[2025-03-26 17:45:08] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:45:35] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-26 17:45:45] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-26 20:22:29] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-26 22:13:49] - INFO - Login Success - Applicant 'Kenneth ' logged in successfully.
+[2025-03-28 00:53:06] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-28 00:54:23] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 01:02:47] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 02:46:24] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 03:46:41] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 03:53:35] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 04:25:25] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 05:28:53] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-28 18:11:11] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 18:16:27] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 18:17:17] - INFO - Login Success - Admin 'Accounting' logged in successfully.
+[2025-03-28 18:27:08] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-28 18:35:25] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-28 21:12:28] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:13:02] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:13:14] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:13:27] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:13:41] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:17:36] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:20:10] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:20:23] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:20:34] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:20:51] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:24:44] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:26:22] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-28 21:27:03] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-28 21:30:41] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:31:04] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:32:55] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:33:11] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:33:29] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:33:40] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-28 21:33:56] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-28 21:33:56] - WARNING - Login Failed - Student User not found!  ''.
+[2025-03-28 21:34:09] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:34:23] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:34:37] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:36:46] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:37:06] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'sample'.
+[2025-03-28 21:37:06] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 21:38:08] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Accounting'.
+[2025-03-28 21:38:08] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-28 23:33:20] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-28 23:34:15] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-28 23:50:19] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-28 23:50:39] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-28 23:50:53] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-28 23:52:40] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-28 23:56:26] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-29 00:01:28] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-29 00:03:00] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-29 00:03:17] - INFO - Login Success - Employee 'sample' logged in successfully.
+[2025-03-29 00:16:07] - WARNING - Login Failed - Employee Invalid Password! 'Kenneth'.
+[2025-03-29 00:17:12] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-29 00:57:02] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-29 01:05:29] - WARNING - Login Failed - No account found with this username! 'Accounting'.
+[2025-03-29 01:05:36] - WARNING - Login Failed - No account found with this username! 'Accounting'.
+[2025-03-29 01:05:45] - INFO - Login Success - Student '' logged in successfully.
+[2025-03-29 01:05:45] - WARNING - Login Failed - Student User not found!  ''.
+[2025-03-29 01:07:09] - WARNING - Login Failed - Student User 'Accounting' not found.
+[2025-03-29 01:07:28] - WARNING - Login Failed - No account found with this username! 'sss'.
+[2025-03-29 01:08:18] - WARNING - Login Failed - Student User 'Accounting' not found.
+[2025-03-29 01:08:26] - WARNING - Login Failed - Invalid password for user 'Kenneth N.Genobisa'.
+[2025-03-29 01:08:57] - INFO - Login Success - Student 'Kenneth N.Genobisa' logged in successfully.
+[2025-03-29 01:10:17] - INFO - Login Success - Student 'Kenneth N.Genobisa' logged in successfully.
+[2025-03-29 01:12:23] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-30 06:37:31] - INFO - Login Success - Employee 'Kenneth' logged in successfully.
+[2025-03-30 06:42:41] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 06:47:32] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 06:47:49] - INFO - Login Success - Admin 'ken' logged in successfully.
+[2025-03-30 06:48:54] - INFO - Login Success - Admin 'ken' logged in successfully.
+[2025-03-30 06:57:47] - INFO - Login Success - User 'ken' logged in successfully.
+[2025-03-30 07:57:12] - WARNING - Login Failed - Employee Invalid Password! 'sample'.
+[2025-03-30 07:57:29] - INFO - Login Success - Employee 'sample' logged in successfully.
+[2025-03-30 07:58:42] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-30 08:13:01] - INFO - Login Success - Student 'Kenneth N.Genobisa' logged in successfully.
+[2025-03-30 08:13:50] - INFO - Login Success - User 'Accounting' logged in successfully.
+[2025-03-30 08:27:23] - WARNING - Login Failed - Invalid role selected for user 'Accounting'.
+[2025-03-30 08:27:23] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 08:35:33] - INFO - Login Success - User 'Accounting' logged in successfully.
+[2025-03-30 08:41:13] - INFO - Login Success - Student 'Kenneth N.Genobisa' logged in successfully.
+[2025-03-30 09:01:59] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-30 09:14:40] - WARNING - Login Failed - Invalid role selected for user 'accounting_user'.
+[2025-03-30 09:14:40] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:14:57] - WARNING - Login Failed - Invalid role selected for user 'jude'.
+[2025-03-30 09:14:57] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:15:09] - WARNING - Login Failed - Invalid role selected for user 'accounting_user'.
+[2025-03-30 09:15:09] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:15:47] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'jude'.
+[2025-03-30 09:15:48] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:16:03] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'zone'.
+[2025-03-30 09:16:04] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:19:54] - INFO - Login Success - User 'Accounting' logged in successfully.
+[2025-03-30 09:19:54] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:21:02] - WARNING - Login Failed - Invalid role selected for user 'Kenneth'.
+[2025-03-30 09:21:33] - WARNING - Login Failed - Invalid role selected for user 'Kenneth'.
+[2025-03-30 09:21:55] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'Kenneth'.
+[2025-03-30 09:21:55] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 09:26:35] - WARNING - Login Failed - Applicant Invalid Password! 'Kenneth'.
+[2025-03-30 09:26:51] - WARNING - Login Failed - Applicant Invalid Password! 'Kenneth'.
+[2025-03-30 09:27:08] - WARNING - Login Failed - Applicant Invalid Password! 'Kenneth '.
+[2025-03-30 09:27:25] - WARNING - Login Failed - Applicant Invalid Password! 'Kenneth'.
+[2025-03-30 09:27:33] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-30 09:27:51] - INFO - Login Success - Applicant 'Kenneth' logged in successfully.
+[2025-03-30 09:35:04] - INFO - Login Success - Applicant 'Kenneth ' logged in successfully.
+[2025-03-30 09:39:11] - WARNING - Login Failed - Invalid password for user 'Kenneth N.Genobisa'.
+[2025-03-30 10:55:40] - WARNING - Login Failed - Invalid password for user 'Kenneth N.Genobisa'.
+[2025-03-30 10:56:01] - WARNING - Login Failed - Applicant Invalid Password! 'Kenneth '.
+[2025-03-30 11:00:20] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 11:03:06] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 11:08:27] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 11:20:02] - WARNING - Login Failed - No account found with this username! ''.
+[2025-03-30 11:21:07] - WARNING - Login Failed - Employee Invalid Password! 'Kenneth '.
+[2025-03-30 11:23:08] - INFO - Login Success - Applicant 'Kenneth ' logged in successfully.
+[2025-03-30 11:27:25] - WARNING - Login Failed - Employee Invalid Password! 'Kenneth '.
+[2025-03-30 11:27:38] - INFO - Login Success - Employee 'choy' logged in successfully.
+[2025-03-30 11:30:30] - INFO - Login Success - Student 'John' logged in successfully.
+[2025-04-01 12:45:35] - INFO - Login Success - Applicant 'test123@gmail.com' logged in successfully.
+[2025-04-01 12:49:00] - WARNING - Login Failed - No account found with this username! 'test123@gmail.com'.
+[2025-04-01 12:49:07] - WARNING - Login Failed - Student User 'test123@gmail.com' not found.
+[2025-04-01 12:51:50] - INFO - Login Success - Applicant 'test123@gmail.com' logged in successfully.
+[2025-04-01 17:58:00] - WARNING - Login Failed - No account found with this username! 'HRMO404'.
+[2025-04-01 17:58:52] - WARNING - Login Failed - No account found with this username! 'Employees'.
+[2025-04-01 17:59:39] - INFO - Login Success - Employee 'test' logged in successfully.
+[2025-04-01 18:18:57] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'HRMO404'.
+[2025-04-01 18:19:37] - INFO - Login Success - Admin 'test123@gmail.com' logged in successfully.
+[2025-04-02 02:55:38] - INFO - Login Success - Admin 'test123@gmail.com' logged in successfully.
+[2025-04-02 02:57:26] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'test1234@gmail.com'.
+[2025-04-02 02:57:47] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'test1234@gmail.com'.
+[2025-04-02 02:58:04] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'test1234@gmail.com'.
+[2025-04-02 02:58:53] - INFO - Login Success - Admin 'hatdog123' logged in successfully.
+[2025-04-02 03:02:24] - INFO - Login Success - Admin 'hatdog123' logged in successfully.
+[2025-04-02 03:03:03] - INFO - Login Success - Admin 'hatdog123' logged in successfully.
+[2025-04-02 08:28:11] - WARNING - Login Failed - Admin Office Failed login attempt for user 'hatdog123'.
+[2025-04-03 10:22:01] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-03 10:22:51] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-04 14:21:04] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-04 17:46:57] - WARNING - Login Failed - No account found with this username! 'app'.
+[2025-04-04 17:57:21] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-04 18:47:49] - WARNING - Login Failed - No account found with this username! 'chan'.
+[2025-04-04 18:47:59] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-04 18:50:53] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-04 19:05:58] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 12:07:40] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 12:28:12] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'app'.
+[2025-04-05 12:28:33] - WARNING - Login Failed - Admin Invalid Role Please Select OFFICE!  'app'.
+[2025-04-05 12:28:50] - INFO - Login Success - Admin 'chan' logged in successfully.
+[2025-04-05 12:30:10] - WARNING - Login Failed - No account found with this username! 'chan'.
+[2025-04-05 12:30:21] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 12:42:21] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 13:23:10] - WARNING - Login Failed - No account found with this username! 'chan'.
+[2025-04-05 13:24:22] - WARNING - Login Failed - No account found with this username! 'chan'.
+[2025-04-05 13:24:35] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 15:42:44] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 16:28:34] - INFO - Login Success - Applicant 'app' logged in successfully.
+[2025-04-05 17:55:09] - INFO - Login Success - Applicant 'app' logged in successfully.
