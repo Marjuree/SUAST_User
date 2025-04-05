@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #8e44ad, #3498db);
+            background: linear-gradient(135deg,rgb(78, 195, 249),rgb(85, 225, 204));
             color: white;
             text-align: center;
             animation: fadeIn 1s ease-in-out;
