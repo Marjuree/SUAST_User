@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
     $bdate = $_POST['bdate'];
-    $age = $_POST['age'];
+    $age = isset($_POST['age']) && is_numeric($_POST['age']) ? (int)$_POST['age'] : 0;
     $religion = $_POST['religion'];
     $nationality = $_POST['nationality'];
     $civilstatus = $_POST['civilstatus'];
@@ -60,13 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $new_image_name = time() . '.' . $image_ext;
         $image_path = 'uploads/' . $new_image_name;
 
+        // Check if 'uploads/' directory exists, create if not
         if (!file_exists('uploads/')) {
             mkdir('uploads/', 0777, true);
         }
 
-        move_uploaded_file($image_tmp_name, $image_path);
+        // Attempt to move the uploaded file
+        if (!move_uploaded_file($image_tmp_name, $image_path)) {
+            echo "<script>alert('Error uploading the image.'); window.location.href = 'applicant.php';</script>";
+            exit();
+        }
     } else {
-        $new_image_name = '';
+        $new_image_name = ''; // No image uploaded
     }
 
     // File upload for Document (e.g., PDF, DOC, Image)
@@ -77,13 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $new_document_name = time() . '.' . $document_ext;
         $document_path = 'uploads/' . $new_document_name;
 
+        // Check if 'uploads/' directory exists, create if not
         if (!file_exists('uploads/')) {
             mkdir('uploads/', 0777, true);
         }
 
-        move_uploaded_file($document_tmp_name, $document_path);
+        // Attempt to move the uploaded file
+        if (!move_uploaded_file($document_tmp_name, $document_path)) {
+            echo "<script>alert('Error uploading the document.'); window.location.href = 'applicant.php';</script>";
+            exit();
+        }
     } else {
-        $new_document_name = '';
+        $new_document_name = ''; // No document uploaded
     }
 
     // SQL query to insert data into the tbl_applicants table
@@ -101,15 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Execute the query
     if (mysqli_query($con, $sql)) {
-        echo "<script>
-                alert('Applicant added successfully!');
-                window.location.href = 'applicant.php';
-              </script>";
+        echo "<script>alert('Applicant added successfully!'); window.location.href = 'applicant.php';</script>";
     } else {
-        echo "<script>
-                alert('Error: " . mysqli_error($con) . "');
-                window.location.href = 'applicant.php';
-              </script>";
+        echo "<script>alert('Error: " . mysqli_error($con) . "'); window.location.href = 'applicant.php';</script>";
     }
 }
 
