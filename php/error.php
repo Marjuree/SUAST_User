@@ -1,5 +1,7 @@
 <?php
 session_start();
+// Regenerate session ID to prevent fixation attacks
+session_regenerate_id(true);
 require_once "../configuration/config.php"; // Ensure this file contains $conn for database connection
 
 // Get error message from URL or set a default message
@@ -56,8 +58,7 @@ if (isset($_SESSION['testing_access']) && $_SESSION['testing_access'] === true) 
     exit();
 }
 
-// Regenerate session ID to prevent fixation attacks
-session_regenerate_id(true);
+
 ?>
 
 <!DOCTYPE html>
