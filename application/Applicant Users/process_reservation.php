@@ -17,9 +17,12 @@ $venue = $_POST['venue'];
 // Handle exam_time (make sure it's either NULL or valid datetime)
 $exam_time = !empty($_POST['exam_time']) ? $_POST['exam_time'] : NULL;  // If empty, set to NULL
 
-// Step 1: Check available slot limit
-$query = "SELECT slot_limit FROM tbl_exam_schedule WHERE room = '$room' AND venue = '$venue'";
-$result = mysqli_query($con, $query);
+// Step 1: Check available slot limit using prepared statements to prevent SQL injection
+$query = "SELECT slot_limit FROM tbl_exam_schedule WHERE room = ? AND venue = ?";
+$stmt = mysqli_prepare($con, $query);
+mysqli_stmt_bind_param($stmt, "ss", $room, $venue);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
 // Check if query failed, if so redirect with error
 if (!$result) {
@@ -34,10 +37,12 @@ if ($row) {
 
     // Step 2: Check if there are available slots
     if ($slot_limit > 0) {
-        // Step 3: Insert the reservation into tbl_reservation
+        // Step 3: Insert the reservation into tbl_reservation using prepared statements
         $insert_query = "INSERT INTO tbl_reservation (applicant_id, name, exam_time, room, venue) 
-                         VALUES ('$applicant_id', '$name', " . ($exam_time ? "'$exam_time'" : "NULL") . ", '$room', '$venue')";
-        $insert_result = mysqli_query($con, $insert_query);
+                         VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($con, $insert_query);
+        mysqli_stmt_bind_param($stmt, "issss", $applicant_id, $name, $exam_time, $room, $venue);
+        $insert_result = mysqli_stmt_execute($stmt);
 
         // Check if the insert query failed, if so redirect with error
         if (!$insert_result) {
@@ -45,28 +50,30 @@ if ($row) {
             exit();
         }
 
-        // Step 4: Update the slot_limit in tbl_exam_schedule
+        // Step 4: Update the slot_limit in tbl_exam_schedule using prepared statements
         $new_slot_limit = $slot_limit - 1;
-        $update_query = "UPDATE tbl_exam_schedule SET slot_limit = $new_slot_limit WHERE room = '$room' AND venue = '$venue'";
-        $update_result = mysqli_query($con, $update_query);
+        $update_query = "UPDATE tbl_exam_schedule SET slot_limit = ? WHERE room = ? AND venue = ?";
+        $stmt = mysqli_prepare($con, $update_query);
+        mysqli_stmt_bind_param($stmt, "iss", $new_slot_limit, $room, $venue);
+        $update_result = mysqli_stmt_execute($stmt);
 
         // Check if the update query failed, if so redirect with error
         if (!$update_result) {
-            header("Location: exam_schedule.php?");
+            header("Location: exam_schedule.php?error=Failed to update available slots.");
             exit();
         }
 
         // Reservation success, redirect back with success message
-        header("Location: exam_schedule.php?");
+        header("Location: exam_schedule.php?success=Reservation successfully made!");
         exit();
     } else {
         // No available slots
-        header("Location: exam_schedule.php?");
+        header("Location: exam_schedule.php?error=No available slots left.");
         exit();
     }
 } else {
     // Invalid room or venue
-    header("Location: exam_schedule.php?");
+    header("Location: exam_schedule.php?error=Invalid room or venue.");
     exit();
 }
 ?>
