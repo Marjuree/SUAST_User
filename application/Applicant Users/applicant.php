@@ -1,5 +1,6 @@
 <?php
 session_start();
+session_regenerate_id(true);
 require_once "../../configuration/config.php"; // Ensure database connection
 
 // Check if the user is logged in and is an applicant
@@ -9,7 +10,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     exit();
 }
 
-session_regenerate_id(true);
 
 // Fetch applicant details
 $applicant_id = $_SESSION['applicant_id'];
