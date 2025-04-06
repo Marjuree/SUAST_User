@@ -119,7 +119,7 @@ if (isset($_SESSION['testing_access']) && $_SESSION['testing_access'] === true) 
         <p>Your Error ID: <span class="error-id"><?php echo $error_id; ?></span></p>
         <p>User: <b><?php echo $username; ?></b></p>
         <p>Device: <b><?php echo $device_name; ?></b></p>
-        <a href="index.php" class="back-btn">Go to Login</a>
+        <a href="admin_page.php" class="back-btn">Go to Login</a>
 
         <p class="law-notice">
             Unauthorized access is a criminal offense under <b>Republic Act No. 10175 (Cybercrime Prevention Act of 2012)</b>.  
