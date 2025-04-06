@@ -1,15 +1,17 @@
 <?php
 session_start();
-require_once "../../configuration/config.php";
+require_once "../../configuration/config.php"; // Ensure database connection
 
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
+    // Ensure there is no output before this redirect.
     header("Location: ../../php/error.php?welcome=Please login as an applicant");
     exit();
 }
 
 session_regenerate_id(true);
 
+// Fetch applicant details
 $applicant_id = $_SESSION['applicant_id'];
 $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
 ?>
@@ -23,7 +25,6 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
     <title>My Application</title>
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
@@ -140,14 +141,13 @@ table thead th {
                                                 <a href='delete_applicant.php?id={$row['id']}' class='btn btn-sm btn-danger' onclick=\"return confirm('Are you sure you want to delete your application?');\"><i class='fa fa-trash'></i> Delete</a>
                                             </td>
                                         </tr>";
-                                }
+                                    }
 
-                                $stmt->close();
-                                ?>
+                                    $stmt->close();
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </section>
