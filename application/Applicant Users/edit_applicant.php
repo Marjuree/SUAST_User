@@ -946,6 +946,59 @@ h5 {
                                 </div>
                             </div>
 
+                            
+
+
+                            <!-- Parental Information -->
+                            <h5 class="mt-4">Parent's Details</h5>
+                            <div class="row">
+                                <?php
+                                $parents = [
+                                    "n_mother" => "Mother's Name", "c_mother" => "Mother's Contact", "m_occupation" => "Mother's Occupation",
+                                    "m_address" => "Mother's Address", "n_father" => "Father's Name", "c_father" => "Father's Contact",
+                                    "f_occupation" => "Father's Occupation", "f_address" => "Father's Address"
+                                ];
+
+                                foreach ($parents as $name => $label) {
+                                    echo "<div class='col-md-4 mb-3'>
+                                            <label for='{$name}'>{$label}</label>
+                                            <input type='text' class='form-control' name='{$name}' id='{$name}' value='{$applicant[$name]}' required>
+                                        </div>";
+                                }
+                                ?>
+                            </div>
+
+                            <!-- Other Details Section -->
+                            <h5 class="mt-4">Other Details</h5>
+                            <div class="row">
+                                <?php
+                                $other = [
+                                    "living_status" => "Living Status",
+                                    "siblings" => "No. of Siblings",
+                                    "birth_order" => "Birth Order",
+                                    "monthly_income" => "Monthly Income",
+                                    "indigenous" => "Indigenous?",
+                                    "basic_sector" => "Basic Sector?"
+                                ];
+
+                                foreach ($other as $name => $label) {
+                                    // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
+                                    $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
+
+                                    echo "<div class='col-md-4 mb-3'>
+                                            <label for='{$name}'>{$label}</label>
+                                            <input type='{$input_type}' class='form-control' name='{$name}' id='{$name}' value='{$applicant[$name]}' required>
+                                        </div>";
+                                }
+                                ?>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="date_applied">Date Applied</label>
+                                    <input type="date" class="form-control" name="date_applied" id="date_applied"
+                                        value="<?= $applicant['date_applied']; ?>" required>
+                                </div>
+                            </div>
+
                             <!-- Educational Preferences Section -->
                             <h5 class="mt-4">Educational Preferences</h5>
                             <div class="row">
@@ -1012,58 +1065,6 @@ h5 {
                                 }
                                 ?>
                             </div>
-
-
-                            <!-- Parental Information -->
-                            <h5 class="mt-4">Parent's Details</h5>
-                            <div class="row">
-                                <?php
-                                $parents = [
-                                    "n_mother" => "Mother's Name", "c_mother" => "Mother's Contact", "m_occupation" => "Mother's Occupation",
-                                    "m_address" => "Mother's Address", "n_father" => "Father's Name", "c_father" => "Father's Contact",
-                                    "f_occupation" => "Father's Occupation", "f_address" => "Father's Address"
-                                ];
-
-                                foreach ($parents as $name => $label) {
-                                    echo "<div class='col-md-4 mb-3'>
-                                            <label for='{$name}'>{$label}</label>
-                                            <input type='text' class='form-control' name='{$name}' id='{$name}' value='{$applicant[$name]}' required>
-                                        </div>";
-                                }
-                                ?>
-                            </div>
-
-                            <!-- Other Details Section -->
-                            <h5 class="mt-4">Other Details</h5>
-                            <div class="row">
-                                <?php
-                                $other = [
-                                    "living_status" => "Living Status",
-                                    "siblings" => "No. of Siblings",
-                                    "birth_order" => "Birth Order",
-                                    "monthly_income" => "Monthly Income",
-                                    "indigenous" => "Indigenous?",
-                                    "basic_sector" => "Basic Sector?"
-                                ];
-
-                                foreach ($other as $name => $label) {
-                                    // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
-                                    $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
-
-                                    echo "<div class='col-md-4 mb-3'>
-                                            <label for='{$name}'>{$label}</label>
-                                            <input type='{$input_type}' class='form-control' name='{$name}' id='{$name}' value='{$applicant[$name]}' required>
-                                        </div>";
-                                }
-                                ?>
-
-                                <div class="col-md-4 mb-3">
-                                    <label for="date_applied">Date Applied</label>
-                                    <input type="date" class="form-control" name="date_applied" id="date_applied"
-                                        value="<?= $applicant['date_applied']; ?>" required>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
