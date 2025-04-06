@@ -20,7 +20,7 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Applicants List</title>
+    <title>My Application</title>
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -58,30 +58,29 @@ table thead th {
     <?php
     require_once('includes/header.php');
     require_once('../../includes/head_css.php');
-    
+    include 'add_modal.php';
     ?>
-    <?php include 'add_modal.php'; ?>
-
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <?php require_once('../../includes/sidebar.php'); ?>
 
         <aside class="right-side">
             <section class="content-header">
-                <h1>Applicants List</h1>
+                <h1>My Application</h1>
                 <p>Welcome, <strong><?php echo $first_name; ?></strong></p>
             </section>
 
             <section class="content">
                 <div class="row">
                     <div class="box">
+                        <!-- ✅ Keep Add Applicant Button -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#addApplicantModal">
                                 <i class="fa fa-plus"></i> Add Applicant
                             </button>
-
                         </div>
+
                         <div class="box-body table-responsive">
                             <table id="applicantsTable" class="table table-bordered table-striped">
                                 <thead>
@@ -90,48 +89,65 @@ table thead th {
                                         <th>Last Name</th>
                                         <th>First Name</th>
                                         <th>Middle Name</th>
-                                        <th>Image</th> <!-- Added column for the image -->
+                                        <th>Image</th>
+                                        <th>Document</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                        // Fetch applicants' data including image
-                                        $sql = "SELECT id, lname, fname, mname, image FROM tbl_applicants";
-                                        $query = mysqli_query($con, $sql);
-                                        
-                                        // Loop through each row of applicants
-                                        while ($row = mysqli_fetch_assoc($query)) {
-                                            // Check if the applicant has an image, otherwise use a placeholder
-                                            $image_path = !empty($row['image']) ? 'uploads/' . $row['image'] : 'path/to/default/image.jpg';
-                                            echo "<tr class='text-center'>
-                                                    <td>{$row['id']}</td>
-                                                    <td>{$row['lname']}</td>
-                                                    <td>{$row['fname']}</td>
-                                                    <td>{$row['mname']}</td>
-                                                    <td>";
-                                                    
-                                            // Display the image if it exists
-                                            if ($row['image']) {
-                                                echo "<img src='{$image_path}' alt='Profile Image' class='rounded-circle' width='50' height='50'>";
+                                    // Prepared statement to show ONLY the logged-in user's data
+                                    $sql = "SELECT id, lname, fname, mname, image, document FROM tbl_applicants WHERE applicant_id = ?";
+                                    $stmt = $con->prepare($sql);
+                                    $stmt->bind_param("i", $applicant_id);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        $image_path = !empty($row['image']) ? 'uploads/' . $row['image'] : 'path/to/default/image.jpg';
+                                        $document_path = !empty($row['document']) ? 'uploads/' . $row['document'] : '';
+
+                                        echo "<tr class='text-center'>
+                                                <td>{$row['id']}</td>
+                                                <td>{$row['lname']}</td>
+                                                <td>{$row['fname']}</td>
+                                                <td>{$row['mname']}</td>
+                                                <td>
+                                                    <img src='{$image_path}' alt='Profile Image' class='rounded-circle' width='50' height='50'>
+                                                </td>
+                                                <td>";
+
+                                            // Check if document is available
+                                            if ($document_path) {
+                                                $document_ext = pathinfo($document_path, PATHINFO_EXTENSION);
+                                                if (in_array($document_ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+                                                    // Display document preview for images
+                                                    echo "<img src='{$document_path}' alt='Document Preview' class='img-thumbnail' width='50' height='50'>";
+                                                } elseif ($document_ext == 'pdf') {
+                                                    // Display a PDF icon with a link to view the document
+                                                    echo "<a href='{$document_path}' target='_blank' class='btn btn-info btn-sm'><i class='fa fa-file-pdf-o'></i> View PDF</a>";
+                                                } else {
+                                                    // For other file types, just show the file name
+                                                    echo "<a href='{$document_path}' target='_blank' class='btn btn-info btn-sm'>View Document</a>";
+                                                }
                                             } else {
-                                                // Default image if no profile image exists
-                                                echo "<img src='{$image_path}' alt='No Image' class='rounded-circle' width='50' height='50'>";
+                                                echo "No Document";
                                             }
-                                            
-                                            echo "</td>
-                                                    <td>
-                                                        <a href='edit_applicant.php?id={$row['id']}' class='btn btn-sm btn-warning'><i class='fa fa-edit'></i> Edit</a>
-                                                        <a href='delete_applicant.php?id={$row['id']}' class='btn btn-sm btn-danger' onclick=\"return confirm('Are you sure you want to delete this applicant?');\"><i class='fa fa-trash'></i> Delete</a>
-                                                    </td>
-                                                </tr>";
-                                        }
-                                        ?>
+
+                                    echo "</td>
+                                            <td>
+                                                <a href='edit_applicant.php?id={$row['id']}' class='btn btn-sm btn-warning'><i class='fa fa-edit'></i> Edit</a>
+                                                <a href='delete_applicant.php?id={$row['id']}' class='btn btn-sm btn-danger' onclick=\"return confirm('Are you sure you want to delete your application?');\"><i class='fa fa-trash'></i> Delete</a>
+                                            </td>
+                                        </tr>";
+                                }
+
+                                $stmt->close();
+                                ?>
                                 </tbody>
                             </table>
-
-
                         </div>
+
                     </div>
                 </div>
             </section>
@@ -145,7 +161,6 @@ table thead th {
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
     <script>
     $(document).ready(function() {
         $('#applicantsTable').DataTable({
@@ -153,10 +168,12 @@ table thead th {
             "columnDefs": [{
                 "orderable": false,
                 "targets": []
-            }]
+            }],
+            "lengthChange": false // This will hide the "Show entries" dropdown
         });
     });
     </script>
+
 </body>
 
 </html>

@@ -13,14 +13,9 @@ session_regenerate_id(true);
 $applicant_id = $_SESSION['applicant_id'];
 $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
 
-// Fetch applicant data from the database using the ID passed in the query string
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    die("Invalid applicant ID.");
-}
+// Fetch applicant data from the database using the applicant_id from the session
+$query = "SELECT * FROM tbl_applicants WHERE applicant_id = ?";
 
-$applicant_id = intval($_GET['id']);
-
-$query = "SELECT * FROM tbl_applicants WHERE id = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $applicant_id);
 $stmt->execute();
@@ -30,8 +25,8 @@ $applicant = $result->fetch_assoc();
 if (!$applicant) {
     die("Applicant not found.");
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,8 +52,7 @@ h5 {
     padding: 20px;
     background-color: #fff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 340px;
-    margin-left: 250px;
+    width: 300px;
 }
 
 .profile-card .card-title {
@@ -73,7 +67,7 @@ h5 {
     padding: 10px 20px;
     cursor: pointer;
     margin-top: 15px;
-    margin-left: 100px;
+    margin-left: 90px;
     background-color: #007bff;
     color: #fff;
     font-weight: 500;
@@ -166,8 +160,11 @@ h5 {
                                             <?php endif; ?>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
+
 
 
                             <div style="margin-top: 80px;" class="row">
@@ -509,6 +506,23 @@ h5 {
                                             <?= ($applicant['gender'] == 'Prefer not to say') ? 'selected' : ''; ?>>
                                             Prefer not to say</option>
                                     </select>
+                                </div>
+                                <!-- Document Upload Section -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="document">Upload Document</label>
+                                    <input type="file" class="form-control" name="document" id="document"
+                                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                                        <?= ($applicant['document']) ? '' : 'required'; ?>>
+
+                                    <!-- Display document if available -->
+                                    <?php if ($applicant['document']): ?>
+                                    <div class="mt-3">
+                                        <a href="uploads/<?= $applicant['document']; ?>" target="_blank"
+                                            class="btn btn-info">
+                                            View Document
+                                        </a>
+                                    </div>
+                                    <?php endif; ?>
                                 </div>
 
 

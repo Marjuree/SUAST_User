@@ -1,13 +1,24 @@
 <?php
-// Include the database connection from config.php
-require_once "../../configuration/config.php"; 
+session_start();
+require_once "../../configuration/config.php";
+
+// Make sure the user is logged in
+if (!isset($_SESSION['applicant_id'])) {
+    echo "<script>
+            alert('User not logged in.');
+            window.location.href = '../../php/error.php?welcome=Please login first';
+          </script>";
+    exit();
+}
+
+$applicant_id = $_SESSION['applicant_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the form data from POST request
+    // Get form data
     $lname = $_POST['lname'];
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
-    $bdate = $_POST['bdate']; // Ensure the date is in the format YYYY-MM-DD
+    $bdate = $_POST['bdate'];
     $age = $_POST['age'];
     $religion = $_POST['religion'];
     $nationality = $_POST['nationality'];
@@ -33,56 +44,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $f_address = $_POST['f_address'];
     $living_status = $_POST['living_status'];
 
-    // Validate numeric fields: siblings, birth_order, monthly_income
     $siblings = isset($_POST['siblings']) && is_numeric($_POST['siblings']) ? $_POST['siblings'] : 0;
     $birth_order = isset($_POST['birth_order']) && is_numeric($_POST['birth_order']) ? $_POST['birth_order'] : 0;
     $monthly_income = isset($_POST['monthly_income']) && is_numeric($_POST['monthly_income']) ? $_POST['monthly_income'] : 0;
-    
+
     $indigenous = $_POST['indigenous'];
     $basic_sector = $_POST['basic_sector'];
     $date_applied = $_POST['date_applied'];
 
-    // File upload handling (profile image)
+    // File upload for Profile Image
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $image_name = $_FILES['image']['name'];
         $image_tmp_name = $_FILES['image']['tmp_name'];
-        $image_size = $_FILES['image']['size'];
         $image_ext = pathinfo($image_name, PATHINFO_EXTENSION);
-        $new_image_name = time() . '.' . $image_ext; // Unique file name
+        $new_image_name = time() . '.' . $image_ext;
         $image_path = 'uploads/' . $new_image_name;
 
-        // Ensure the uploads directory exists and has correct permissions
         if (!file_exists('uploads/')) {
-            mkdir('uploads/', 0777, true); // Creates the directory if it doesn't exist
+            mkdir('uploads/', 0777, true);
         }
 
         move_uploaded_file($image_tmp_name, $image_path);
     } else {
-        $new_image_name = ''; // If no image is uploaded, set it to an empty string
+        $new_image_name = '';
     }
 
-    // Insert query (removed password from fields)
+    // File upload for Document (e.g., PDF, DOC, Image)
+    if (isset($_FILES['document']) && $_FILES['document']['error'] == 0) {
+        $document_name = $_FILES['document']['name'];
+        $document_tmp_name = $_FILES['document']['tmp_name'];
+        $document_ext = pathinfo($document_name, PATHINFO_EXTENSION);
+        $new_document_name = time() . '.' . $document_ext;
+        $document_path = 'uploads/' . $new_document_name;
+
+        if (!file_exists('uploads/')) {
+            mkdir('uploads/', 0777, true);
+        }
+
+        move_uploaded_file($document_tmp_name, $document_path);
+    } else {
+        $new_document_name = '';
+    }
+
+    // SQL query to insert data into the tbl_applicants table
     $sql = "INSERT INTO tbl_applicants 
-        (lname, fname, mname, bdate, age, religion, nationality, civilstatus, ethnicity, contact, 
-        purok, barangay, municipality, province, first_option, second_option, third_option, campus, 
-        gender, n_mother, n_father, c_mother, c_father, m_occupation, f_occupation, m_address, f_address, 
-        living_status, siblings, birth_order, monthly_income, indigenous, basic_sector, image, date_applied) 
+        (applicant_id, lname, fname, mname, bdate, age, religion, nationality, civilstatus, ethnicity, contact, 
+         purok, barangay, municipality, province, first_option, second_option, third_option, campus, 
+         gender, n_mother, n_father, c_mother, c_father, m_occupation, f_occupation, m_address, f_address, 
+         living_status, siblings, birth_order, monthly_income, indigenous, basic_sector, image, document, date_applied) 
         VALUES 
-        ('$lname', '$fname', '$mname', '$bdate', '$age', '$religion', '$nationality', '$civilstatus', '$ethnicity', 
-        '$contact', '$purok', '$barangay', '$municipality', '$province', '$first_option', '$second_option', 
-        '$third_option', '$campus', '$gender', '$n_mother', '$n_father', '$c_mother', '$c_father', '$m_occupation', 
-        '$f_occupation', '$m_address', '$f_address', '$living_status', '$siblings', '$birth_order', '$monthly_income', 
-        '$indigenous', '$basic_sector', '$new_image_name', '$date_applied')";
+        ('$applicant_id', '$lname', '$fname', '$mname', '$bdate', '$age', '$religion', '$nationality', '$civilstatus', 
+         '$ethnicity', '$contact', '$purok', '$barangay', '$municipality', '$province', '$first_option', 
+         '$second_option', '$third_option', '$campus', '$gender', '$n_mother', '$n_father', '$c_mother', '$c_father', 
+         '$m_occupation', '$f_occupation', '$m_address', '$f_address', '$living_status', '$siblings', '$birth_order', 
+         '$monthly_income', '$indigenous', '$basic_sector', '$new_image_name', '$new_document_name', '$date_applied')";
 
     // Execute the query
     if (mysqli_query($con, $sql)) {
-        // Success - show pop-up message using JavaScript and redirect to applicants.php
         echo "<script>
                 alert('Applicant added successfully!');
                 window.location.href = 'applicant.php';
               </script>";
     } else {
-        // Error - show error message and redirect to applicants.php
         echo "<script>
                 alert('Error: " . mysqli_error($con) . "');
                 window.location.href = 'applicant.php';
@@ -90,6 +113,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Close the database connection
 mysqli_close($con);
 ?>

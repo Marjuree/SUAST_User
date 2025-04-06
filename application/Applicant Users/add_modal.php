@@ -164,12 +164,23 @@ h5 {
                                 </select>
                             </div>
 
+                           
+                        </div>
+                        <!-- Profile Image and Document Upload -->
+                        <div class="row">
                             <!-- Profile Image -->
-                            <div class="col-md-4 mb-3">
-                                <label for="image">Profile Image</label>
-                                <input type="file" class="form-control-file" name="image" id="image" required>
+                            <div class="col-md-6 mb-3">
+                                <label for="image" class="form-label">Profile Image</label>
+                                <input type="file" class="form-control" name="image" id="image" required>
+                            </div>
+
+                            <!-- Add Document Upload Input -->
+                            <div class="col-md-6 mb-3">
+                                <label for="document" class="form-label">Upload Document (PDF, Resume):</label>
+                                <input type="file" class="form-control" name="document" id="document" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
                             </div>
                         </div>
+
 
 
                         <!-- Address Section -->
