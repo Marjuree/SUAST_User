@@ -3,8 +3,6 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-            session_regenerate_id(true); // Prevent session fixation
-
 
 require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
 require_once "../application/SystemLog.php";
@@ -27,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Verify password
         if (password_verify($password, $user['applicant_password'])) {
+            session_regenerate_id(true); // Prevent session fixation
 
             $_SESSION['applicant_id'] = $user['applicant_id'];
             $_SESSION['first_name'] = $user['first_name'];
