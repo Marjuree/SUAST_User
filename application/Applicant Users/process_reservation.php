@@ -4,7 +4,9 @@ require_once "../../configuration/config.php";
 
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
-    header("Location: ../../php/error.php?welcome=Please login as an applicant");
+    $_SESSION['error_message'] = "Please login as an applicant.";
+    // Redirect to error page or show the error message directly on the current page
+    header("Location: ../../php/error.php");
     exit();
 }
 
@@ -24,9 +26,9 @@ mysqli_stmt_bind_param($stmt, "ss", $room, $venue);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-// Check if query failed, if so redirect with error
+// Check if query failed
 if (!$result) {
-    header("Location: exam_schedule.php?error=An error occurred while checking available slots.");
+    $_SESSION['error_message'] = "An error occurred while checking available slots.";
     exit();
 }
 
@@ -44,9 +46,9 @@ if ($row) {
         mysqli_stmt_bind_param($stmt, "issss", $applicant_id, $name, $exam_time, $room, $venue);
         $insert_result = mysqli_stmt_execute($stmt);
 
-        // Check if the insert query failed, if so redirect with error
+        // Check if the insert query failed
         if (!$insert_result) {
-            header("Location: exam_schedule.php?error=Failed to insert reservation. Please try again.");
+            $_SESSION['error_message'] = "Failed to insert reservation. Please try again.";
             exit();
         }
 
@@ -57,23 +59,24 @@ if ($row) {
         mysqli_stmt_bind_param($stmt, "iss", $new_slot_limit, $room, $venue);
         $update_result = mysqli_stmt_execute($stmt);
 
-        // Check if the update query failed, if so redirect with error
+        // Check if the update query failed
         if (!$update_result) {
-            header("Location: exam_schedule.php?error=Failed to update available slots.");
+            $_SESSION['error_message'] = "Failed to update available slots.";
             exit();
         }
 
-        // Reservation success, redirect back with success message
-        header("Location: exam_schedule.php?success=Reservation successfully made!");
-        exit();
+        // Reservation success
+        $_SESSION['success_message'] = "Reservation successfully made!";
     } else {
         // No available slots
-        header("Location: exam_schedule.php?error=No available slots left.");
-        exit();
+        $_SESSION['error_message'] = "No available slots left.";
     }
 } else {
     // Invalid room or venue
-    header("Location: exam_schedule.php?error=Invalid room or venue.");
-    exit();
+    $_SESSION['error_message'] = "Invalid room or venue.";
 }
+
+// Redirect back to the exam schedule page to display the message
+header("Location: exam_schedule.php");
+exit();
 ?>
