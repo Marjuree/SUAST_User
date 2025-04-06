@@ -5,8 +5,9 @@ require_once "../../configuration/config.php";
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     $_SESSION['error_message'] = "Please login as an applicant.";
-    // Redirect to error page or show the error message directly on the current page
-    header("Location: ../../php/error.php");
+    // Display the error message and use JavaScript to redirect
+    echo "<p class='error'>{$_SESSION['error_message']}</p>";
+    echo "<script>setTimeout(function(){ window.location.href = '../../php/error.php'; }, 3000);</script>";
     exit();
 }
 
@@ -29,6 +30,8 @@ $result = mysqli_stmt_get_result($stmt);
 // Check if query failed
 if (!$result) {
     $_SESSION['error_message'] = "An error occurred while checking available slots.";
+    echo "<p class='error'>{$_SESSION['error_message']}</p>";
+    echo "<script>setTimeout(function(){ window.location.href = 'exam_schedule.php'; }, 3000);</script>";
     exit();
 }
 
@@ -49,6 +52,8 @@ if ($row) {
         // Check if the insert query failed
         if (!$insert_result) {
             $_SESSION['error_message'] = "Failed to insert reservation. Please try again.";
+            echo "<p class='error'>{$_SESSION['error_message']}</p>";
+            echo "<script>setTimeout(function(){ window.location.href = 'exam_schedule.php'; }, 3000);</script>";
             exit();
         }
 
@@ -62,21 +67,27 @@ if ($row) {
         // Check if the update query failed
         if (!$update_result) {
             $_SESSION['error_message'] = "Failed to update available slots.";
+            echo "<p class='error'>{$_SESSION['error_message']}</p>";
+            echo "<script>setTimeout(function(){ window.location.href = 'exam_schedule.php'; }, 3000);</script>";
             exit();
         }
 
         // Reservation success
         $_SESSION['success_message'] = "Reservation successfully made!";
+        echo "<p class='success'>{$_SESSION['success_message']}</p>";
+        echo "<script>setTimeout(function(){ window.location.href = 'exam_schedule.php'; }, 3000);</script>";
     } else {
         // No available slots
         $_SESSION['error_message'] = "No available slots left.";
+        echo "<p class='error'>{$_SESSION['error_message']}</p>";
+        echo "<script>setTimeout(function(){ window.location.href = 'exam_schedule.php'; }, 3000);</script>";
     }
 } else {
     // Invalid room or venue
     $_SESSION['error_message'] = "Invalid room or venue.";
+    echo "<p class='error'>{$_SESSION['error_message']}</p>";
+    echo "<script>setTimeout(function(){ window.location.href = 'exam_schedule.php'; }, 3000);</script>";
 }
 
-// Redirect back to the exam schedule page to display the message
-header("Location: exam_schedule.php");
 exit();
 ?>
