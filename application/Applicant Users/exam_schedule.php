@@ -1,6 +1,22 @@
 <?php
 session_start();
+<<<<<<< HEAD
 require_once "../../configuration/config.php";
+=======
+// Regenerate session ID for security
+session_regenerate_id(true);
+
+require_once "../../configuration/config.php"; // Ensure database connection
+
+// Debugging: Check session values
+// Uncomment the next lines to debug session issues
+/*
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+exit();
+*/
+>>>>>>> d03d8ed7478d5ce5591ede5e54cc6b9d65250ac6
 
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
@@ -8,7 +24,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     exit();
 }
 
+<<<<<<< HEAD
 session_regenerate_id(true);
+=======
+
+>>>>>>> d03d8ed7478d5ce5591ede5e54cc6b9d65250ac6
 
 $applicant_id = $_SESSION['applicant_id'];
 $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
@@ -196,5 +216,8 @@ $result_reservations = mysqli_query($con, $query_reservations);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
 </body>
+<<<<<<< HEAD
 
+=======
+>>>>>>> d03d8ed7478d5ce5591ede5e54cc6b9d65250ac6
 </html>

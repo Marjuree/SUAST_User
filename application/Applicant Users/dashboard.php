@@ -1,14 +1,26 @@
 <?php
 session_start();
+// Regenerate session ID for security
+session_regenerate_id(true);
+
 require_once "../../configuration/config.php"; // Ensure database connection
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d03d8ed7478d5ce5591ede5e54cc6b9d65250ac6
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     header("Location: ../../php/error.php?welcome=Please login as an applicant");
     exit();
 }
 
+<<<<<<< HEAD
 session_regenerate_id(true);
+=======
+
+>>>>>>> d03d8ed7478d5ce5591ede5e54cc6b9d65250ac6
 
 $applicant_id = $_SESSION['applicant_id'];
 $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";

@@ -1,5 +1,8 @@
 <?php
 session_start();
+// Regenerate session ID for security
+session_regenerate_id(true);
+
 require_once "../../configuration/config.php"; // Ensure database connection
 
 // Debugging: Check session values
@@ -17,8 +20,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     exit();
 }
 
-// Regenerate session ID for security
-session_regenerate_id(true);
 
 // Store session values safely
 $applicant_id = $_SESSION['applicant_id'];
