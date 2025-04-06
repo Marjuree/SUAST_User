@@ -5,11 +5,11 @@ require_once "../../configuration/config.php"; // Ensure database connection
 
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
-    // Ensure there is no output before this redirect.
-    header("Location: ../../php/error.php?welcome=Please login as an applicant");
+    $_SESSION['error_message'] = "Please login as an applicant.";
+    // Instead of redirecting, just display the error message
+    header("Location: ../../php/error.php");
     exit();
 }
-
 
 // Fetch applicant details
 $applicant_id = $_SESSION['applicant_id'];
@@ -83,6 +83,21 @@ table thead th {
                         </div>
 
                         <div class="box-body table-responsive">
+                            <!-- Display messages -->
+                            <?php if (isset($_SESSION['error_message'])): ?>
+                                <div class="alert alert-danger">
+                                    <?= $_SESSION['error_message']; ?>
+                                </div>
+                                <?php unset($_SESSION['error_message']); ?>
+                            <?php endif; ?>
+
+                            <?php if (isset($_SESSION['success_message'])): ?>
+                                <div class="alert alert-success">
+                                    <?= $_SESSION['success_message']; ?>
+                                </div>
+                                <?php unset($_SESSION['success_message']); ?>
+                            <?php endif; ?>
+
                             <table id="applicantsTable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr class="text-center">
