@@ -1,15 +1,15 @@
 <?php
 session_start();
-session_regenerate_id(true);
-
 require_once "../../configuration/config.php";
 
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
-    header("Location: ../../php/error.php?welcome=Please login as an applicant");
-    exit();
+    $_SESSION['error_message'] = "Please login as an applicant";
+    // No header redirection. Instead, display the message
 }
 
+// Generate new session ID for security
+session_regenerate_id(true);
 
 $applicant_id = $_SESSION['applicant_id'];
 $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
@@ -104,6 +104,14 @@ $result_reservations = mysqli_query($con, $query_reservations);
                         <h3 class="box-title">Your Exam Reservations</h3>
                     </div>
                     <div class="box-body">
+                        <!-- Display messages if any -->
+                        <?php if (isset($_SESSION['error_message'])): ?>
+                            <div class="alert alert-danger">
+                                <?= $_SESSION['error_message']; ?>
+                            </div>
+                            <?php unset($_SESSION['error_message']); ?>
+                        <?php endif; ?>
+
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
