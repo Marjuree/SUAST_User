@@ -44,105 +44,105 @@ h5 {
                                     <option value="" disabled selected>Select Ethnicity</option>
                                     <option value="Indigenous People">Indigenous People</option>
                                     <option>Not a member</option>
-                                        <option>Abelling</option>
-                                        <option>Agta-Agay</option>
-                                        <option>Agta</option>
-                                        <option>Agutaynen</option>
-                                        <option>Alangan-Mangyan</option>
-                                        <option>Alta</option>
-                                        <option>Applai</option>
-                                        <option>Aromanen-Ne-Manuvu</option>
-                                        <option>Ata-Manobo</option>
-                                        <option>Ata</option>
-                                        <option>Ati</option>
-                                        <option>Ayangan</option>
-                                        <option>Ayta-Ambala</option>
-                                        <option>Ayta-Magantsi</option>
-                                        <option>Ayta-Magbukun</option>
-                                        <option>Ayta</option>
-                                        <option>Badjao</option>
-                                        <option>Bago</option>
-                                        <option>Bagobo-Klata</option>
-                                        <option>Bagobo-Tagakawa</option>
-                                        <option>Balangao</option>
-                                        <option>Bangon-Mangyan</option>
-                                        <option>Bantoanon</option>
-                                        <option>Banwaon</option>
-                                        <option>Batak</option>
-                                        <option>Blaan</option>
-                                        <option>Bontok</option>
-                                        <option>Bugkalot</option>
-                                        <option>Buhid-Mangyan</option>
-                                        <option>Bukidnon</option>
-                                        <option>Cagayanen</option>
-                                        <option>Calinga</option>
-                                        <option>Cuyunon</option>
-                                        <option>Dibabawon</option>
-                                        <option>Dumagat</option>
-                                        <option>Eskaya</option>
-                                        <option>Gaddang</option>
-                                        <option>Gubatnon-Ratagnon-Mangyan</option>
-                                        <option>Hanunuo-Mangyan</option>
-                                        <option>Higaonon</option>
-                                        <option>Ibaloi</option>
-                                        <option>Ibanag</option>
-                                        <option>Ibatan</option>
-                                        <option>Ilongot</option>
-                                        <option>Imalawa</option>
-                                        <option>Iraya-Mangyan</option>
-                                        <option>Isinai</option>
-                                        <option>Isnag-of-Apayao</option>
-                                        <option>Isnag-of-Ilocos Norte</option>
-                                        <option>Isneg-Isnag</option>
-                                        <option>Itawes</option>
-                                        <option>Itneg</option>
-                                        <option>Ivatan</option>
-                                        <option>Iwak</option>
-                                        <option>Kabihug</option>
-                                        <option>Kagan/Kalagan</option>
-                                        <option>Kalanguya</option>
-                                        <option>Kalinga</option>
-                                        <option>Kamigin</option>
-                                        <option>Kankaney</option>
-                                        <option>Karao</option>
-                                        <option>Karulano</option>
-                                        <option>Kalibogan</option>
-                                        <option>Malaueg</option>
-                                        <option>Mamanwa</option>
-                                        <option>Mandaya</option>
-                                        <option>Mangguangan</option>
-                                        <option>Manobo-Blit</option>
-                                        <option>Manobo-Dulangan</option>
-                                        <option>Manobo-Lambanguian</option>
-                                        <option>Manobo</option>
-                                        <option>Manobo-Tasabay</option>
-                                        <option>Mansaka</option>
-                                        <option>Matigsalog</option>
-                                        <option>Molbog</option>
-                                        <option>Obu-Manuvu</option>
-                                        <option>Palawan</option>
-                                        <option>Panay-Bukidnon</option>
-                                        <option>Sama-Bajau</option>
-                                        <option>Sama-Bangingi</option>
-                                        <option>Sama</option>
-                                        <option>Sibuyan-Mangyan-Tagabukid</option>
-                                        <option>Tadyawan-Mangyan</option>
-                                        <option>Tagakaulo</option>
-                                        <option>Tagbanua-Calamian</option>
-                                        <option>Tagbanua</option>
-                                        <option>Tagbanoa-Tandulanen</option>
-                                        <option>Talaandig</option>
-                                        <option>Tau-Buid</option>
-                                        <option>Tboli</option>
-                                        <option>Teduray</option>
-                                        <option>Tigwahanon</option>
-                                        <option>Tingguian</option>
-                                        <option>Tinonanen</option>
-                                        <option>Tuwali</option>
-                                        <option>Umayamnon</option>
-                                        <option>Yakan</option>
-                                        <option>Yapayao</option>
-                                        <option>Yogad</option>
+                                    <option>Abelling</option>
+                                    <option>Agta-Agay</option>
+                                    <option>Agta</option>
+                                    <option>Agutaynen</option>
+                                    <option>Alangan-Mangyan</option>
+                                    <option>Alta</option>
+                                    <option>Applai</option>
+                                    <option>Aromanen-Ne-Manuvu</option>
+                                    <option>Ata-Manobo</option>
+                                    <option>Ata</option>
+                                    <option>Ati</option>
+                                    <option>Ayangan</option>
+                                    <option>Ayta-Ambala</option>
+                                    <option>Ayta-Magantsi</option>
+                                    <option>Ayta-Magbukun</option>
+                                    <option>Ayta</option>
+                                    <option>Badjao</option>
+                                    <option>Bago</option>
+                                    <option>Bagobo-Klata</option>
+                                    <option>Bagobo-Tagakawa</option>
+                                    <option>Balangao</option>
+                                    <option>Bangon-Mangyan</option>
+                                    <option>Bantoanon</option>
+                                    <option>Banwaon</option>
+                                    <option>Batak</option>
+                                    <option>Blaan</option>
+                                    <option>Bontok</option>
+                                    <option>Bugkalot</option>
+                                    <option>Buhid-Mangyan</option>
+                                    <option>Bukidnon</option>
+                                    <option>Cagayanen</option>
+                                    <option>Calinga</option>
+                                    <option>Cuyunon</option>
+                                    <option>Dibabawon</option>
+                                    <option>Dumagat</option>
+                                    <option>Eskaya</option>
+                                    <option>Gaddang</option>
+                                    <option>Gubatnon-Ratagnon-Mangyan</option>
+                                    <option>Hanunuo-Mangyan</option>
+                                    <option>Higaonon</option>
+                                    <option>Ibaloi</option>
+                                    <option>Ibanag</option>
+                                    <option>Ibatan</option>
+                                    <option>Ilongot</option>
+                                    <option>Imalawa</option>
+                                    <option>Iraya-Mangyan</option>
+                                    <option>Isinai</option>
+                                    <option>Isnag-of-Apayao</option>
+                                    <option>Isnag-of-Ilocos Norte</option>
+                                    <option>Isneg-Isnag</option>
+                                    <option>Itawes</option>
+                                    <option>Itneg</option>
+                                    <option>Ivatan</option>
+                                    <option>Iwak</option>
+                                    <option>Kabihug</option>
+                                    <option>Kagan/Kalagan</option>
+                                    <option>Kalanguya</option>
+                                    <option>Kalinga</option>
+                                    <option>Kamigin</option>
+                                    <option>Kankaney</option>
+                                    <option>Karao</option>
+                                    <option>Karulano</option>
+                                    <option>Kalibogan</option>
+                                    <option>Malaueg</option>
+                                    <option>Mamanwa</option>
+                                    <option>Mandaya</option>
+                                    <option>Mangguangan</option>
+                                    <option>Manobo-Blit</option>
+                                    <option>Manobo-Dulangan</option>
+                                    <option>Manobo-Lambanguian</option>
+                                    <option>Manobo</option>
+                                    <option>Manobo-Tasabay</option>
+                                    <option>Mansaka</option>
+                                    <option>Matigsalog</option>
+                                    <option>Molbog</option>
+                                    <option>Obu-Manuvu</option>
+                                    <option>Palawan</option>
+                                    <option>Panay-Bukidnon</option>
+                                    <option>Sama-Bajau</option>
+                                    <option>Sama-Bangingi</option>
+                                    <option>Sama</option>
+                                    <option>Sibuyan-Mangyan-Tagabukid</option>
+                                    <option>Tadyawan-Mangyan</option>
+                                    <option>Tagakaulo</option>
+                                    <option>Tagbanua-Calamian</option>
+                                    <option>Tagbanua</option>
+                                    <option>Tagbanoa-Tandulanen</option>
+                                    <option>Talaandig</option>
+                                    <option>Tau-Buid</option>
+                                    <option>Tboli</option>
+                                    <option>Teduray</option>
+                                    <option>Tigwahanon</option>
+                                    <option>Tingguian</option>
+                                    <option>Tinonanen</option>
+                                    <option>Tuwali</option>
+                                    <option>Umayamnon</option>
+                                    <option>Yakan</option>
+                                    <option>Yapayao</option>
+                                    <option>Yogad</option>
                                     <option value="Others">Others</option>
                                 </select>
                             </div>
@@ -164,22 +164,24 @@ h5 {
                                 </select>
                             </div>
 
-                           
+
                         </div>
                         <!-- Profile Image and Document Upload -->
                         <div class="row">
                             <!-- Profile Image -->
                             <div class="col-md-6 mb-3">
                                 <label for="image" class="form-label">Profile Image</label>
-                                <input type="file" class="form-control" name="image" id="image" required>
+                                <input type="file" class="form-control" name="image" id="image">
                             </div>
 
                             <!-- Add Document Upload Input -->
                             <div class="col-md-6 mb-3">
                                 <label for="document" class="form-label">Upload Document (PDF, Resume):</label>
-                                <input type="file" class="form-control" name="document" id="document" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                                <input type="file" class="form-control" name="document" id="document"
+                                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
                             </div>
                         </div>
+
 
 
 
@@ -350,6 +352,57 @@ h5 {
                             </div>
                         </div>
 
+
+
+
+
+                        <!-- Parental Information -->
+                        <h5 class="mt-4">Parent's Details</h5>
+                        <div class="row">
+                            <?php
+                        $parents = [
+                            "n_mother" => "Mother's Name", "c_mother" => "Mother's Contact", "m_occupation" => "Mother's Occupation",
+                            "m_address" => "Mother's Address", "n_father" => "Father's Name", "c_father" => "Father's Contact",
+                            "f_occupation" => "Father's Occupation", "f_address" => "Father's Address"
+                        ];
+                        foreach ($parents as $name => $label) {
+                            echo "<div class='col-md-4 mb-3'>
+                                    <label for='{$name}'>{$label}</label>
+                                    <input type='text' class='form-control' name='{$name}' id='{$name}' required>
+                                </div>";
+                        }
+                        ?>
+                        </div>
+
+                        <!-- Additional Details -->
+                        <h5 class="mt-4">Other Details</h5>
+                        <div class="row">
+                            <?php
+                            $other = [
+                                "living_status" => "Living Status", 
+                                "siblings" => "No. of Siblings", 
+                                "birth_order" => "Birth Order",
+                                "monthly_income" => "Monthly Income", 
+                                "indigenous" => "Indigenous?", 
+                                "basic_sector" => "Basic Sector?", 
+                                
+                            ];
+                            
+                            foreach ($other as $name => $label) {
+                                // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
+                                $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
+                                
+                                echo "<div class='col-md-4 mb-3'>
+                                        <label for='{$name}'>{$label}</label>
+                                        <input type='{$input_type}' class='form-control' name='{$name}' id='{$name}' required>
+                                    </div>";
+                            }
+                            ?>
+                            <div class="col-md-4 mb-3">
+                                <label for="date_applied">Date Applied</label>
+                                <input type="date" class="form-control" name="date_applied" id="date_applied" required>
+                            </div>
+                        </div>
                         <!-- Educational Preferences -->
                         <h5 class="mt-4">Educational Preferences</h5>
                         <div class="row">
@@ -407,57 +460,6 @@ h5 {
                             }
                         ?>
                         </div>
-
-
-
-                        <!-- Parental Information -->
-                        <h5 class="mt-4">Parent's Details</h5>
-                        <div class="row">
-                            <?php
-                        $parents = [
-                            "n_mother" => "Mother's Name", "c_mother" => "Mother's Contact", "m_occupation" => "Mother's Occupation",
-                            "m_address" => "Mother's Address", "n_father" => "Father's Name", "c_father" => "Father's Contact",
-                            "f_occupation" => "Father's Occupation", "f_address" => "Father's Address"
-                        ];
-                        foreach ($parents as $name => $label) {
-                            echo "<div class='col-md-4 mb-3'>
-                                    <label for='{$name}'>{$label}</label>
-                                    <input type='text' class='form-control' name='{$name}' id='{$name}' required>
-                                </div>";
-                        }
-                        ?>
-                        </div>
-
-                        <!-- Additional Details -->
-                        <h5 class="mt-4">Other Details</h5>
-                        <div class="row">
-                            <?php
-                            $other = [
-                                "living_status" => "Living Status", 
-                                "siblings" => "No. of Siblings", 
-                                "birth_order" => "Birth Order",
-                                "monthly_income" => "Monthly Income", 
-                                "indigenous" => "Indigenous?", 
-                                "basic_sector" => "Basic Sector?", 
-                                
-                            ];
-                            
-                            foreach ($other as $name => $label) {
-                                // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
-                                $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
-                                
-                                echo "<div class='col-md-4 mb-3'>
-                                        <label for='{$name}'>{$label}</label>
-                                        <input type='{$input_type}' class='form-control' name='{$name}' id='{$name}' required>
-                                    </div>";
-                            }
-                            ?>
-                            <div class="col-md-4 mb-3">
-                                <label for="date_applied">Date Applied</label>
-                                <input type="date" class="form-control" name="date_applied" id="date_applied" required>
-                            </div>
-                        </div>
-
 
                     </div>
                 </div>
