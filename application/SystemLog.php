@@ -7,13 +7,16 @@ if (!function_exists('logMessage')) {
     {
         global $con; // Use the global database connection
 
-        $filename = __DIR__ . "../../System.log"; // Ensure correct path
+        $filename = realpath(__DIR__ . '/../..') . '/System.log';
 
         // Create log file if it does not exist
         if (!file_exists($filename)) {
             $file = fopen($filename, "w");
             if ($file) {
                 fclose($file);
+            } else {
+                error_log("Failed to create log file: $filename");
+                return;
             }
         }
 
@@ -22,6 +25,8 @@ if (!function_exists('logMessage')) {
             $date = date("Y-m-d H:i:s");
             fwrite($file, "[$date] - $type - $title - $message\n");
             fclose($file);
+        } else {
+            error_log("Failed to open log file for writing: $filename");
         }
 
         // Insert log into database
@@ -37,5 +42,4 @@ if (!function_exists('logMessage')) {
         }
     }
 }
-
 ?>
