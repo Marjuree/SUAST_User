@@ -3,6 +3,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+session_regenerate_id(true); // Security: Prevent session fixation
 
 require_once "../configuration/config.php"; // Ensure no output in this file
 require_once "../application/SystemLog.php"; // Ensure this file does not start a session
@@ -22,7 +23,6 @@ if (isset($_POST['btn_student'])) {
         $stmt->fetch();
         
         if (password_verify($password, $hashed_password)) {
-            session_regenerate_id(true); // Security: Prevent session fixation
 
             $_SESSION['student_id'] = $id;
             $_SESSION['student_name'] = $full_name;
