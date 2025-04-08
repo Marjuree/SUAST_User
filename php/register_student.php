@@ -1,5 +1,5 @@
 <?php
-require_once "../configuration/config.php";
+require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
 require_once "../application/SystemLog.php";
 
 if (isset($_POST['register_student'])) {
@@ -15,18 +15,6 @@ if (isset($_POST['register_student'])) {
         exit();
     }
 
-    // Check if username or email already exists
-    $check_sql = "SELECT id FROM tbl_student_users WHERE username = ? OR email = ?";
-    $check_stmt = $con->prepare($check_sql);
-    $check_stmt->bind_param("ss", $username, $email);
-    $check_stmt->execute();
-    $check_result = $check_stmt->get_result();
-
-    if ($check_result->num_rows > 0) {
-        header("Location: ../index.php?register_error=Username or email already exists!");
-        exit();
-    }
-
     // Hash password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -39,11 +27,10 @@ if (isset($_POST['register_student'])) {
     if ($stmt->execute()) {
         header("Location: ../index.php?register_success=Registration successful! Please login.");
     } else {
-        header("Location: ../index.php?register_error=Registration failed. Please try again.");
+        header("Location: ../index.php?register_error=Registration failed! Username or email may already exist.");
     }
 
     $stmt->close();
-    $check_stmt->close();
     $con->close();
 }
 ?>
