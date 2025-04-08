@@ -1,10 +1,3 @@
-<?php
-// Start session at the very top before any HTML or output
-session_start();
-session_regenerate_id(true); // Regenerate session ID for security (prevents session fixation)
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,3 +116,7 @@ session_regenerate_id(true); // Regenerate session ID for security (prevents ses
 </body>
 </html>
 
+<?php
+// End output buffering and flush content
+ob_end_flush();
+?>
