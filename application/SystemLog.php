@@ -7,13 +7,16 @@ if (!function_exists('logMessage')) {
     {
         global $con; // Use the global database connection
 
-        $filename = __DIR__ . "../../System.log"; // Ensure correct path
+        // Corrected file path with proper directory separation
+        $filename = __DIR__ . "/../../System.log"; 
 
         // Create log file if it does not exist
         if (!file_exists($filename)) {
             $file = fopen($filename, "w");
             if ($file) {
                 fclose($file);
+            } else {
+                error_log("Failed to create log file: $filename");
             }
         }
 
@@ -22,6 +25,8 @@ if (!function_exists('logMessage')) {
             $date = date("Y-m-d H:i:s");
             fwrite($file, "[$date] - $type - $title - $message\n");
             fclose($file);
+        } else {
+            error_log("Failed to write to log file: $filename");
         }
 
         // Insert log into database
@@ -39,58 +44,3 @@ if (!function_exists('logMessage')) {
 }
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--?php
-
-require_once "../configuration/config.php"; // Use require_once to prevent multiple inclusions
-
-// Check if the function is already defined
-if (!function_exists('logMessage')) {
-    function logMessage($type, $title, $message)
-    {
-        $filename = __DIR__ . "../../System.log"; // Use absolute path to avoid inconsistencies
-
-        // Create log file if it does not exist
-        if (!file_exists($filename)) {
-            $file = fopen($filename, "w");
-            if ($file) {
-                fclose($file);
-            }
-        }
-
-        // Open log file in append mode
-        if ($file = fopen($filename, "a")) {
-            $date = date("Y-m-d H:i:s");
-            fwrite($file, "[$date] - $type - $title - $message\n");
-            fclose($file);
-        }
-    }
-}
-    
-?-->
