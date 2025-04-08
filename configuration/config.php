@@ -1,4 +1,3 @@
-
 <?php
 $dbhost = "bwygtvcqnww3bwtcc8mw-mysql.services.clever-cloud.com";
 $dbusername = "uwfbf1jptm3pg6p0";
@@ -11,7 +10,7 @@ try {
 
     if ($con->connect_error) {
         error_log("Database connection failed: " . $con->connect_error);
-        die("Database connection failed."); // Optional: Stop execution if DB connection fails
+        die("Database connection failed.");
     }
 } catch (\Throwable $th) {
     error_log("Exception in DB connection: " . $th->getMessage());
@@ -19,16 +18,3 @@ try {
     exit();
 }
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
