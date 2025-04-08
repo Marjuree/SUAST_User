@@ -1,13 +1,12 @@
 <?php
-// Ensure this is the very first line in the file (no whitespace before it)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once "../configuration/config.php"; // Ensure no output in this file
+require_once "../configuration/config.php";
 
 if (isset($_POST['btn_student'])) {
-    $username = trim(htmlspecialchars($_POST['student_username'])); // Sanitize input
+    $username = trim(htmlspecialchars($_POST['student_username']));
     $password = $_POST['student_password'];
 
     $sql = "SELECT id, full_name, password FROM tbl_student_users WHERE username = ?";
@@ -21,24 +20,20 @@ if (isset($_POST['btn_student'])) {
         $stmt->fetch();
         
         if (password_verify($password, $hashed_password)) {
-
             $_SESSION['student_id'] = $id;
             $_SESSION['student_name'] = $full_name;
-            $_SESSION['role'] = 'Student'; // Store role for session-based access control
+            $_SESSION['role'] = 'Student';
 
-            // ✅ Log successful login
-            logMessage("INFO", "Login Success", "Student '$full_name' logged in successfully.");
+            // ✅ Logging removed
             header("Location: ../application/Student Users/StudentDashboard.php?success=login");
             exit();
         } else {
-            // ❌ Log failed login attempt
-            logMessage("WARNING", "Login Failed", "Invalid password for user '$full_name'.");
+            // ❌ Logging removed
             echo "<script>alert('Invalid password!'); window.location.href='landing_page.php';</script>";
             exit();
         }
     } else {
-        // ❌ Log failed login attempt (No user found)
-        logMessage("WARNING", "Login Failed", "Student User '$username' not found.");
+        // ❌ Logging removed
         echo "<script>alert('No account found with this username!'); window.location.href='landing_page.php';</script>";
         exit();
     }
