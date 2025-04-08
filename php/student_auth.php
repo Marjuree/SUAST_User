@@ -5,7 +5,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once "../configuration/config.php"; // Ensure no output in this file
-require_once "../application/SystemLog.php"; // Ensure this file does not start a session
 
 if (isset($_POST['btn_student'])) {
     $username = trim(htmlspecialchars($_POST['student_username'])); // Sanitize input
