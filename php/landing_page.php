@@ -28,17 +28,7 @@ require_once  "../configuration/config.php";
 </head>
 <body>
     
-    <!-- Navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <!-- <a class="navbar-brand" href="index.php"> -->
-                    <a class="navbar-brand">
-                    <img src="../img/ken.png" alt="Brand" class="navbar-logo">
-                </a>
-            </div>
-        </div>
-    </nav>
+   
 
     <!-- Welcome Section -->
     <div class="welcome-container">
