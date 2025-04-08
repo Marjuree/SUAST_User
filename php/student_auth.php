@@ -1,5 +1,5 @@
 <?php
-// Start session only if not already started
+// Ensure this is the very first line in the file (no whitespace before it)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
