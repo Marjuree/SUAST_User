@@ -1,0 +1,21 @@
+SQL Error: Unknown column 'image' in 'field list' | Query: INSERT INTO tbl_applicants 
+        (applicant_id, lname, fname, mname, bdate, age, religion, nationality, civilstatus, ethnicity, contact, 
+         purok, barangay, municipality, province, first_option, second_option, third_option, campus, 
+         gender, n_mother, n_father, c_mother, c_father, m_occupation, f_occupation, m_address, f_address, 
+         living_status, siblings, birth_order, monthly_income, indigenous, basic_sector, image, document, date_applied) 
+        VALUES 
+        ('22', 'Fancisco', 'Farhana', 'F', '2025-04-10', '22', 'Muslim', 'Filipino', 'Single', 
+         'Calinga', '0902139111', 'N/A', 'Bobon, Mati', 'Lupon', 'Davao Oriental', 'Bachelor of Secondary Education Major in Mathematics (Board Course)', 
+         'Bachelor of Science in Information Technology (Non-Board Course)', 'Bachelor of Secondary Education Major in Science (Board Course)', 'taragonna', 'Female', 'N/A', 'N/A', 'N/A', 'N/A', 
+         'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '1', '1', 
+         '10000000', 'NO', 'N/A', '1744272426.jpg', '1744272426.pdf', '2025-04-10')SQL Error: Unknown column 'image' in 'field list' | Query: INSERT INTO tbl_applicants 
+        (applicant_id, lname, fname, mname, bdate, age, religion, nationality, civilstatus, ethnicity, contact, 
+         purok, barangay, municipality, province, first_option, second_option, third_option, campus, 
+         gender, email, n_mother, n_father, c_mother, c_father, m_occupation, f_occupation, m_address, f_address, 
+         living_status, siblings, birth_order, monthly_income, indigenous, basic_sector, image, document, date_applied) 
+        VALUES 
+        ('22', 'Fancisco', 'Farhana', 'F', '2025-04-10', '22', 'Muslim', 'Filipino', 'Single', 
+         'Calinga', '0902139111', 'N/A', 'Bobon, Mati', 'Lupon', 'Davao Oriental', 'Bachelor of Secondary Education Major in Mathematics (Board Course)', 
+         'Bachelor of Science in Information Technology (Non-Board Course)', 'Bachelor of Secondary Education Major in Science (Board Course)', 'taragonna', 'Female', 'farhana@gmail.com', 'N/A', 'N/A', 'N/A', 'N/A', 
+         'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '1', '1', 
+         '10000000', 'NO', 'N/A', '1744272522.jpg', '1744272522.pdf', '2025-04-10')
