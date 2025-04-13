@@ -66,6 +66,9 @@ table thead th {
             font-size: 14px; /* Smaller font on smaller screens */
         }
     }
+  .modal-body input{
+        border-radius: 30px !important;
+    }
 </style>
 
 <body class="skin-blue">
