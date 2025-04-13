@@ -82,7 +82,7 @@ require_once  "../configuration/config.php";
 
     .button {
         font-size: 1.1em;
-        background-color: #00bcd4;
+        background-color: #02457A;
         color: white;
         padding: 14px 28px;
         border: 1px solid white;
@@ -98,10 +98,11 @@ require_once  "../configuration/config.php";
     }
 
     .button:hover {
-        background-color: #0097a7;
+        background-color: #018ABE;
         transform: translateY(-2px);
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     }
+
 
     .buttons-container {
         display: flex;
@@ -129,7 +130,10 @@ require_once  "../configuration/config.php";
     p{
       color: white !important;
     }
-     .modal-body input{
+    .tiny-text {
+    font-size: 2px;
+}
+    .modal-body input{
         border-radius: 30px !important;
     }
     .form-control{
@@ -148,7 +152,7 @@ require_once  "../configuration/config.php";
     <div class="welcome-container">
         <img src="../img/logo1.png" alt="SUAST Logo" class="logo">
         <h3>Welcome to UniReserve</h3>
-        <p><strong> Choose a Service</strong></p>
+        <p class="tiny-text"  ><strong> Choose a Service</strong></p>
          <!-- View List Button -->
     <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
 
