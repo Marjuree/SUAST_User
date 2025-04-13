@@ -129,6 +129,12 @@ require_once  "../configuration/config.php";
     p{
       color: white !important;
     }
+     .modal-body input{
+        border-radius: 30px !important;
+    }
+    .form-control{
+        border-radius: 30px !important;
+    }
     </style>
 <body>
     
