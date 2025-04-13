@@ -85,7 +85,7 @@ require_once  "../configuration/config.php";
         background-color: #00bcd4;
         color: white;
         padding: 14px 28px;
-        border: 2px solid white;
+        border: 1px solid white;
         border-radius: 50px;
         transition: all 0.3s ease-in-out;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
