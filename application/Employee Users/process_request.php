@@ -37,6 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!-- Redirect back to the form with a message -->
 <?php
 if (isset($message)) {
-    echo "<script>alert('$message'); window.location.href='dashboard.php?success=login';</script>";
+    echo "<script>alert('$message'); window.location.href='EmployeeDashboard.php?success=login';</script>";
 }
 ?>
