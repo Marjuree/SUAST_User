@@ -1,6 +1,7 @@
 <?php
 
-require_once "../../configuration/config.php";// Include your database connection file
+require_once "../../configuration/config.php";
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $request_type = "Certification";
@@ -9,16 +10,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $faculty = $_POST['faculty'];
     $reason = $_POST['reason'];
 
+    // Get employee ID from session
+    $employee_id = $_SESSION['employee_id'];
+
     // Validate inputs
     if (empty($date_request) || empty($name) || empty($faculty) || empty($reason)) {
         $message = "All fields are required!";
     } else {
-        // Insert into database
-        $sql = "INSERT INTO tbl_certification_requests (request_type, date_request, name, faculty, reason) 
-                VALUES (?, ?, ?, ?, ?)";
+        // Insert with employee_id
+        $sql = "INSERT INTO tbl_certification_requests (request_type, date_request, name, faculty, reason, employee_id) 
+                VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("sssss", $request_type, $date_request, $name, $faculty, $reason);
+        $stmt->bind_param("sssssi", $request_type, $date_request, $name, $faculty, $reason, $employee_id);
 
         if ($stmt->execute()) {
             $message = "Certification request submitted successfully!";
@@ -28,12 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmt->close();
     }
+
     $con->close();
 }
-?>
 
-<!-- Redirect back to the form with a message -->
-<?php
+// Redirect with message
 if (isset($message)) {
     echo "<script>alert('$message'); window.location.href='EmployeeDashboard.php?success=login';</script>";
 }
