@@ -34,14 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssssss", $request_type, $date_request, $name, $faculty, $leave_dates, $target_file);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Leave request submitted successfully!'); window.location.href='dashboard.php?success=login';</script>";
+            echo "<script>alert('Leave request submitted successfully!'); window.location.href='EmployeeDashboard.php?success=login';</script>";
         } else {
-            echo "<script>alert('Error submitting leave request.'); window.location.href='dashboard.php?success=login';</script>";
+            echo "<script>alert('Error submitting leave request.'); window.location.href='EmployeeDashboard.php?success=login';</script>";
         }
 
         $stmt->close();
     } else {
-        echo "<script>alert('Error uploading file. Please try again.'); window.location.href='dashboard.php?success=login';</script>";
+        echo "<script>alert('Error uploading file. Please try again.'); window.location.href='EmployeeDashboard.php?success=login';</script>";
     }
 
     $con->close();
