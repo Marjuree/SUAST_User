@@ -101,81 +101,87 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 
                             <div id="certificationRequests" class="toggle-section" style="display: none;">
                                 <h3>Certification Requests</h3>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Date of Request</th>
-                                            <th>Full Name</th>
-                                            <th>Faculty/Institute</th>
-                                            <th>Request Type</th>
-                                            <th>Reason</th>
-                                            <th>Status</th>
-                                            <th>Created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $employee_id = $_SESSION['employee_id'];
-                                        $query = "SELECT * FROM tbl_certification_requests WHERE employee_id = $employee_id ORDER BY created_at DESC";
-                                    $result = $con->query($query);
-                                    while ($row = $result->fetch_assoc()): ?>
-                                        <tr>
-                                            <td><?= htmlspecialchars($row['date_request']) ?></td>
-                                            <td><?= htmlspecialchars($row['name']) ?></td>
-                                            <td><?= htmlspecialchars($row['faculty']) ?></td>
-                                            <td><?= htmlspecialchars($row['request_type']) ?></td>
-                                            <td><?= htmlspecialchars($row['reason']) ?></td>
-                                            <td><span
-                                                    class="badge bg-info"><?= htmlspecialchars($row['request_status']) ?></span>
-                                            </td>
-                                            <td><?= htmlspecialchars($row['created_at']) ?></td>
-                                        </tr>
-                                        <?php endwhile; ?>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Date of Request</th>
+                                                <th>Full Name</th>
+                                                <th>Faculty/Institute</th>
+                                                <th>Request Type</th>
+                                                <th>Reason</th>
+                                                <th>Status</th>
+                                                <th>Created At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $employee_id = $_SESSION['employee_id'];
+                                            $query = "SELECT * FROM tbl_certification_requests WHERE employee_id = $employee_id ORDER BY created_at DESC";
+                                            $result = $con->query($query);
+                                            while ($row = $result->fetch_assoc()):
+                                            ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars($row['date_request']) ?></td>
+                                                <td><?= htmlspecialchars($row['name']) ?></td>
+                                                <td><?= htmlspecialchars($row['faculty']) ?></td>
+                                                <td><?= htmlspecialchars($row['request_type']) ?></td>
+                                                <td><?= htmlspecialchars($row['reason']) ?></td>
+                                                <td><span
+                                                        class="badge bg-info"><?= htmlspecialchars($row['request_status']) ?></span>
+                                                </td>
+                                                <td><?= htmlspecialchars($row['created_at']) ?></td>
+                                            </tr>
+                                            <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                             <div id="serviceRequests" class="toggle-section" style="display: none;">
                                 <h3>Service Requests</h3>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Date of Request</th>
-                                            <th>Full Name</th>
-                                            <th>Faculty/Institute</th>
-                                            <th>Request Type</th>
-                                            <th>Reason</th>
-                                            <th>Status</th>
-                                            <th>Created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        // Filter service requests by employee_id
-                                        $employee_id = $_SESSION['employee_id']; // Get the employee_id from session
-                                        $query = "SELECT * FROM tbl_service_requests WHERE employee_id = ? ORDER BY created_at DESC";
-                                        $stmt = $con->prepare($query);
-                                        $stmt->bind_param("i", $employee_id); // Bind employee_id to the query
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Date of Request</th>
+                                                <th>Full Name</th>
+                                                <th>Faculty/Institute</th>
+                                                <th>Request Type</th>
+                                                <th>Reason</th>
+                                                <th>Status</th>
+                                                <th>Created At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Filter service requests by employee_id
+                                            $employee_id = $_SESSION['employee_id']; // Get the employee_id from session
+                                            $query = "SELECT * FROM tbl_service_requests WHERE employee_id = ? ORDER BY created_at DESC";
+                                            $stmt = $con->prepare($query);
+                                            $stmt->bind_param("i", $employee_id); // Bind employee_id to the query
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
 
-                                        while ($row = $result->fetch_assoc()):
-                                        ?>
-                                        <tr>
-                                            <td><?= htmlspecialchars($row['date_request']) ?></td>
-                                            <td><?= htmlspecialchars($row['name']) ?></td>
-                                            <td><?= htmlspecialchars($row['faculty']) ?></td>
-                                            <td><?= htmlspecialchars($row['request_type']) ?></td>
-                                            <td><?= htmlspecialchars($row['reason']) ?></td>
-                                            <td><span
-                                                    class="badge bg-info"><?= htmlspecialchars($row['request_status']) ?></span>
-                                            </td>
-                                            <td><?= htmlspecialchars($row['created_at']) ?></td>
-                                        </tr>
-                                        <?php endwhile; ?>
-                                    </tbody>
-                                </table>
+                                            while ($row = $result->fetch_assoc()):
+                                            ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars($row['date_request']) ?></td>
+                                                <td><?= htmlspecialchars($row['name']) ?></td>
+                                                <td><?= htmlspecialchars($row['faculty']) ?></td>
+                                                <td><?= htmlspecialchars($row['request_type']) ?></td>
+                                                <td><?= htmlspecialchars($row['reason']) ?></td>
+                                                <td><span
+                                                        class="badge bg-info"><?= htmlspecialchars($row['request_status']) ?></span>
+                                                </td>
+                                                <td><?= htmlspecialchars($row['created_at']) ?></td>
+                                            </tr>
+                                            <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+
 
 
                             <div id="personnelinquiry" class="toggle-section" style="display: none;">
