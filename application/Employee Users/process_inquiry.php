@@ -17,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssss", $request_type, $date_request, $name, $faculty, $question);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Personnel inquiry submitted successfully!'); window.location.href='dashboard.php?success=login';</script>";
+        echo "<script>alert('Personnel inquiry submitted successfully!'); window.location.href='EmployeeDashboard.php?success=login';</script>";
     } else {
-        echo "<script>alert('Error submitting inquiry.'); window.location.href='dashboard.php?success=login';</script>";
+        echo "<script>alert('Error submitting inquiry.'); window.location.href='EmployeeDashboard.php?success=login';</script>";
     }
 
     $stmt->close();
