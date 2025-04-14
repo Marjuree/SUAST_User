@@ -75,9 +75,11 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $query = "SELECT * FROM tbl_leave_requests ORDER BY created_at DESC";
-                                            $result = $con->query($query);
-                                            while ($row = $result->fetch_assoc()): ?>
+                                                $stmt = $con->prepare("SELECT * FROM tbl_leave_requests WHERE employee_id = ? ORDER BY created_at DESC");
+                                                $stmt->bind_param("i", $employee_id);
+                                                $stmt->execute();
+                                                $result = $stmt->get_result();
+                                                while ($row = $result->fetch_assoc()): ?>
                                             <tr>
                                                 <td><?= htmlspecialchars($row['date_request']) ?></td>
                                                 <td><?= htmlspecialchars($row['name']) ?></td>
@@ -90,6 +92,7 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
                                                 <td><?= htmlspecialchars($row['created_at']) ?></td>
                                             </tr>
                                             <?php endwhile; ?>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -112,7 +115,8 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
                                     </thead>
                                     <tbody>
                                         <?php
-                                    $query = "SELECT * FROM tbl_certification_requests ORDER BY created_at DESC";
+                                        $employee_id = $_SESSION['employee_id'];
+                                        $query = "SELECT * FROM tbl_certification_requests WHERE employee_id = $employee_id ORDER BY created_at DESC";
                                     $result = $con->query($query);
                                     while ($row = $result->fetch_assoc()): ?>
                                         <tr>
@@ -147,9 +151,16 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
                                     </thead>
                                     <tbody>
                                         <?php
-                                    $query = "SELECT * FROM tbl_service_requests ORDER BY created_at DESC";
-                                    $result = $con->query($query);
-                                    while ($row = $result->fetch_assoc()): ?>
+                                        // Filter service requests by employee_id
+                                        $employee_id = $_SESSION['employee_id']; // Get the employee_id from session
+                                        $query = "SELECT * FROM tbl_service_requests WHERE employee_id = ? ORDER BY created_at DESC";
+                                        $stmt = $con->prepare($query);
+                                        $stmt->bind_param("i", $employee_id); // Bind employee_id to the query
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+
+                                        while ($row = $result->fetch_assoc()):
+                                        ?>
                                         <tr>
                                             <td><?= htmlspecialchars($row['date_request']) ?></td>
                                             <td><?= htmlspecialchars($row['name']) ?></td>
@@ -165,6 +176,7 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
                                     </tbody>
                                 </table>
                             </div>
+
 
                             <div id="personnelinquiry" class="toggle-section" style="display: none;">
                                 <h3>Submitted Personnel Inquiries</h3>
