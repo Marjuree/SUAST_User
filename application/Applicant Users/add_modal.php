@@ -3,6 +3,9 @@ h5 {
     font-size: 20px;
     font-weight: bold;
 }
+    .form-control{
+        border-radius: 30px !important;
+    }
 </style>
 <!-- add_modal.php -->
 <div class="modal fade" id="addApplicantModal" tabindex="-1" role="dialog" aria-labelledby="addApplicantLabel"

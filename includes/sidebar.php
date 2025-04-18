@@ -66,7 +66,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 "Applicant" => [
                     ["link" => "../Applicant Users/dashboard.php", "icon" => "fas fa-tachometer-alt", "label" => "Dashboard"],
                     ["link" => "../Applicant Users/exam_schedule.php", "icon" => "fa-calendar-check", "label" => "Request Slot"],
-                    ["link" => "../Applicant Users/ViewList.php", "icon" => "fa-calendar-check", "label" => "View List"],
+                    ["link" => "../Applicant Users/viewList.php", "icon" => "fa-calendar-check", "label" => "View List"],
                     ["link" => "../Applicant Users/applicant.php", "icon" => "fa-users", "label" => "Applicants Detail's"],
                     ["link" => "../Applicant Users/announcement.php", "icon" => "fa-bullhorn", "label" => "Announcement"],
                     ["link" => "../Applicant Users/contact.php", "icon" => "fa-envelope", "label" => "Contact Us"]
