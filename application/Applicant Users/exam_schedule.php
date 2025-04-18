@@ -51,43 +51,8 @@ $result_reservations = mysqli_query($con, $query_reservations);
         font-weight: bold;
     }
 
-    /* Additional styles for layout */
-    .wrapper {
-        display: flex;
-        width: 100%;
-    }
-
-    .right-side {
-        flex-grow: 1;
-        padding: 20px;
-    }
-
-    .content {
-        margin-top: 20px;
-    }
-
-    .table {
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    .box-body {
-        overflow-x: auto;
-    }
-
-    .table td, .table th {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 150px; /* Adjust as needed */
-        vertical-align: middle;
-    }
-
-    @media (max-width: 768px) {
-        .table td, .table th {
-            font-size: 14px; /* Smaller font on smaller screens */
-        }
-    }
+   
+    
     .status-pending {
         background-color: #f39c12;
         color: white;
