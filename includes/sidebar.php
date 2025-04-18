@@ -53,6 +53,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 ],
                 "Student" => [
                     ["link" => "../Student Users/StudentDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
+                    ["link" => "../Student Users/announcement.php", "icon" => "fa-tachometer-alt", "label" => "Announcements"]
+
                 ],
              "Employee" => [
                     ["link" => "../Employee Users/EmployeeDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
