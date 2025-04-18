@@ -36,20 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // ✅ Log successful login
             logMessage("INFO", "Login Success", "Employee '$username' logged in successfully.");
 
-            echo "<script>alert('Login Successful!'); window.location.href='../application/Employee Users/EmployeeDashboard.php?success=login';</script>";
+            echo "<script>('Login Successful!'); window.location.href='../application/Employee Users/EmployeeDashboard.php?success=login';</script>";
             exit();
         } else {
             // ❌ Log failed login attempt
             logMessage("WARNING", "Login Failed", "Employee Invalid Password! '$username'.");
 
-            echo "<script>alert('Invalid Password!'); window.location.href='landing_page.php';</script>";
+            echo "<script>('Invalid Password!'); window.location.href='landing_page.php';</script>";
             exit();
         }
     } else {
         // ❌ Log failed login attempt
         logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
 
-        echo "<script>alert('No account found with this username!'); window.location.href='landing_page.php';</script>";
+        echo "<script>('No account found with this username!'); window.location.href='landing_page.php';</script>";
         exit();
     }
 
