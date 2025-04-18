@@ -45,6 +45,22 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
         border: 1px solid #000;
         border-radius: 10px;
     }
+
+
+    .responsive-divider {
+        border-bottom: 6px solid #003399;
+        width: 80%;
+        max-width: 325px;
+    }
+
+    @media (max-width: 480px) {
+        .responsive-divider span {
+            font-size: 0.875rem;
+        }
+        .text-right img{
+            margin-left: -50px !important;
+        }
+    }
     </style>
 </head>
 
@@ -71,12 +87,15 @@ require_once('../../includes/sidebar.php');
                         <div class="row">
                             <div class="col-xs-9">
                                 <h6>Republic of the Philippines</h6>
-                                <div style="height: 5px; background-color: #003399; width: 325px; margin-bottom: 5px;">
+                                <div class="responsive-divider">
                                 </div>
+
                                 <h3 style="color: #003399; font-weight: bold;">DAVAO ORIENTAL <br> STATE UNIVERSITY</h3>
                                 <p style="font-style: italic; font-size: 14px;">"A university of excellence, innovation,
                                     and inclusion"</p>
-                                <div style="height: 5px; background-color: #003399; width: 325px;"></div>
+                                <div class="responsive-divider">
+                                </div>
+
                             </div>
                             <div class="col-xs-3 text-right">
                                 <img src="../../php/image/logo1.png" alt="University Seal" style="height: 120px;">
@@ -137,7 +156,7 @@ require_once('../../includes/sidebar.php');
                                         </h5>
                                         <h5>Date and Venue</h5>
 
-                                                                <?php
+                                        <?php
                                             // Conditionally apply scroll style
                                             $scrollStyle = count($students) >= 5 ? 'style="max-height: 300px; overflow-y: auto;"' : '';
                                             ?>
@@ -168,13 +187,9 @@ require_once('../../includes/sidebar.php');
                                             <h5><strong><?= htmlspecialchars($room) ?></strong></h5>
                                         </div>
                                         <div class="text-center" style="border: 1px solid #000; padding: 10px;">
-                                           <h5><strong>
-                                            <?= !empty($students[0]['exam_date']) ? date('F d, Y', strtotime($students[0]['exam_date'])) : 'N/A' ?>
-                                        </strong></h5>
-                                        <h5>
-                                            Time: <?= !empty($students[0]['exam_time']) ? date('g:i a', strtotime($students[0]['exam_time'])) : 'N/A' ?>
-                                        </h5>
-
+                                            <h5><strong><?= date('F d, Y', strtotime($students[0]['exam_date'])) ?></strong>
+                                            </h5>
+                                            <h5>Time: <?= date('g:i a', strtotime($students[0]['exam_time'])) ?></h5>
                                         </div>
                                     </div>
                                 </div>
