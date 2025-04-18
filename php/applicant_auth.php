@@ -37,18 +37,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             logMessage("INFO", "Login Success", "Applicant '$username' logged in successfully.");
             
 
-            echo "<script>alert('Login Successful!'); window.location.href='../application/Applicant Users/dashboard.php?success=login';</script>";
+            echo "<script>('Login Successful!'); window.location.href='../application/Applicant Users/dashboard.php?success=login';</script>";
             exit();
         } else {
             // ❌ Log failed login attempt
             logMessage("WARNING", "Login Failed", "Applicant Invalid Password! '$username'.");
-            echo "<script>alert('Invalid Password!'); window.location.href='landing_page.php';</script>";
+            echo "<script>('Invalid Password!'); window.location.href='landing_page.php';</script>";
             exit();
         }
     } else {
         // ❌ Log failed login attempt
         logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
-        echo "<script>alert('No account found with this username!'); window.location.href='landing_page.php';</script>";
+        echo "<script>('No account found with this username!'); window.location.href='landing_page.php';</script>";
         exit();
     }
 
