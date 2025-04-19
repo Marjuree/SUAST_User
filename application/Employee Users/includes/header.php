@@ -24,7 +24,9 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
 ?>
 
 <header class="header bg-dark text-white">
-    <a href="#" class="logo"></a>
+<a href="#" class="logo">
+    <img src="../../img/logo1.png" alt="Logo">
+</a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
@@ -187,3 +189,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_profile']) && $e
             });
         });
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.querySelector('.sidebar-toggle');
+
+    if (toggleBtn && sidebar) {
+        toggleBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            sidebar.classList.toggle('sidebar-collapsed');
+        });
+    }
+});
+
+</script>
