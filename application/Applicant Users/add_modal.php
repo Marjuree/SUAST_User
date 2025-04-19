@@ -6,13 +6,7 @@ h5 {
 .form-control{
     border-radius: 30px !important;
 }
-    input[type="file"] {
-    display: block !important;
-    position: relative !important;
-    z-index: 1;
-    opacity: 1 !important;
-    width: 100%;
-}
+   
 
 </style>
 <!-- add_modal.php -->
@@ -183,23 +177,35 @@ h5 {
                         </div>
                         <!-- Profile Image and Document Upload -->
                         <div class="row">
-                            <!-- Profile Image -->
-                            <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">Profile Image</label>
-                                <input type="file" class="form-control" name="image" id="image" accept="image/*"
-                                    required>
-                                <small class="form-text text-muted">Accepted formats: .jpg, .jpeg, .png, .gif</small>
-                            </div>
+    <!-- Profile Image -->
+    <div class="col-12 col-md-6 mb-3">
+        <label for="image" class="form-label">Profile Image</label>
+        <input
+            type="file"
+            class="form-control"
+            name="image"
+            id="image"
+            accept="image/*"
+            style="display: block; position: relative; z-index: 1; opacity: 1;"
+        >
+        <small class="form-text text-muted">Accepted formats: .jpg, .jpeg, .png, .gif</small>
+    </div>
 
-                            <!-- Add Document Upload Input -->
-                            <div class="col-md-6 mb-3">
-                                <label for="document" class="form-label">Upload Document</label>
-                                <input type="file" class="form-control" name="document" id="document"
-                                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
-                                <small class="form-text text-muted">Accepted formats: .pdf, .doc, .docx, .jpg, .jpeg,
-                                    .png</small>
-                            </div>
-                        </div>
+    <!-- Document Upload -->
+    <div class="col-12 col-md-6 mb-3">
+        <label for="document" class="form-label">Upload Document</label>
+        <input
+            type="file"
+            class="form-control"
+            name="document"
+            id="document"
+            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+            style="display: block; position: relative; z-index: 1; opacity: 1;"
+        >
+        <small class="form-text text-muted">Accepted formats: .pdf, .doc, .docx, .jpg, .jpeg, .png</small>
+    </div>
+</div>
+
 
 
 
