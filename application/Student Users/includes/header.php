@@ -24,7 +24,9 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
 ?>
 
 <header class="header bg-dark text-white">
-    <a href="#" class="logo"></a>
+<a href="#" class="logo">
+    <img src="../../img/logo1.png" alt="Logo">
+</a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
