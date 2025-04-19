@@ -3,9 +3,17 @@ h5 {
     font-size: 20px;
     font-weight: bold;
 }
-    .form-control{
-        border-radius: 30px !important;
-    }
+.form-control{
+    border-radius: 30px !important;
+}
+    input[type="file"] {
+    display: block !important;
+    position: relative !important;
+    z-index: 1;
+    opacity: 1 !important;
+    width: 100%;
+}
+
 </style>
 <!-- add_modal.php -->
 <div class="modal fade" id="addApplicantModal" tabindex="-1" role="dialog" aria-labelledby="addApplicantLabel"
