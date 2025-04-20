@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $faculty = $_POST['faculty'];
     $leave_dates = $_POST['leave_dates'];
-    $employee_id = $_SESSION['employee_id']; // Get from session securely
+    $employee_id = $_SESSION['employee_id'];
 
     // File Upload Handling
     $upload_dir = "../AdminHRMO/leave_forms/";
@@ -20,8 +20,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $target_file = $upload_dir . time() . "_" . $file_name;
     $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
+    // Output SweetAlert2 directly if file is invalid
     if (!in_array($file_type, ['pdf', 'doc', 'docx'])) {
-        echo "<script>alert('Invalid file type! Only PDF, DOC, and DOCX allowed.'); window.location.href='request_form.php';</script>";
+        echo "
+        <html>
+        <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File Type!',
+                    text: 'Only PDF, DOC, and DOCX files are allowed.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'request_form.php';
+                });
+            </script>
+        </body>
+        </html>";
         exit();
     }
 
@@ -32,15 +48,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssssssi", $request_type, $date_request, $name, $faculty, $leave_dates, $target_file, $employee_id);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Leave request submitted successfully!'); window.location.href='EmployeeDashboard.php?success=login';</script>";
+            $message = "Leave request submitted successfully!";
+            $success = true;
         } else {
-            echo "<script>alert('Error submitting leave request.'); window.location.href='EmployeeDashboard.php?success=login';</script>";
+            $message = "Error submitting leave request.";
+            $success = false;
         }
         $stmt->close();
     } else {
-        echo "<script>alert('Error uploading file. Please try again.'); window.location.href='EmployeeDashboard.php?success=login';</script>";
+        $message = "Error uploading file. Please try again.";
+        $success = false;
     }
 
     $con->close();
+}
+
+// Show SweetAlert2
+if (isset($message)) {
+    echo "
+    <html>
+    <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+    <body>
+        <script>
+            Swal.fire({
+                icon: '" . ($success ? "success" : "error") . "',
+                title: '" . ($success ? "Success!" : "Oops..." ) . "',
+                text: '$message',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'EmployeeDashboard.php?success=login';
+            });
+        </script>
+    </body>
+    </html>";
 }
 ?>
