@@ -7,13 +7,13 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
 require_once "../application/SystemLog.php";
 
- 
 // Login Handler for Applicant
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['applicant_password'];
+    echo ".";
 
-    // Fetch user from tblapplicant_registration
+    // Fetch user from tbl_applicant_registration
     $query = "SELECT * FROM tbl_applicant_registration WHERE username = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $username);
@@ -32,28 +32,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['middle_name'] = $user['middle_name'];
             $_SESSION['last_name'] = $user['last_name'];
             $_SESSION['university_email'] = $user['university_email'];
-            $_SESSION['role'] = 'Applicant'; // ✅ FIX: Set user role
-              // ✅ Log successful login
-            logMessage("INFO", "Login Success", "Applicant '$username' logged in successfully.");
-            
+            $_SESSION['role'] = 'Applicant'; // ✅ Set user role
 
-            echo "<script>('Login Successful!'); window.location.href='../application/Applicant Users/dashboard.php?success=login';</script>";
+            logMessage("INFO", "Login Success", "Applicant '$username' logged in successfully.");
+
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: 'Welcome back!',
+                        confirmButtonText: 'Proceed'
+                    }).then(() => {
+                        window.location.href='../application/Applicant Users/dashboard.php?success=login';
+                    });
+                  </script>";
             exit();
         } else {
-            // ❌ Log failed login attempt
             logMessage("WARNING", "Login Failed", "Applicant Invalid Password! '$username'.");
-            echo "<script>('Invalid Password!'); window.location.href='landing_page.php';</script>";
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Password',
+                        text: 'Please check your password and try again.',
+                        confirmButtonText: 'Retry'
+                    }).then(() => {
+                        window.location.href='landing_page.php';
+                    });
+                  </script>";
             exit();
         }
     } else {
-        // ❌ Log failed login attempt
         logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
-        echo "<script>('No account found with this username!'); window.location.href='landing_page.php';</script>";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'No Account Found',
+                    text: 'The username you entered does not exist.',
+                    confirmButtonText: 'Go Back'
+                }).then(() => {
+                    window.location.href='landing_page.php';
+                });
+              </script>";
         exit();
     }
 
     $stmt->close();
     $con->close();
 }
-
 ?>
