@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 session_regenerate_id(true); // Prevent session fixation
 
 require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
+require_once "../application/SystemLog.php";
 
 // Login Handler for Applicant
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
