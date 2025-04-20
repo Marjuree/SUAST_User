@@ -6,7 +6,6 @@ require_once "../../configuration/config.php"; // Ensure database connection
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     $_SESSION['error_message'] = "Please login as an applicant.";
-    // Instead of redirecting, just display the error message
     header("Location: ../../php/error.php");
     exit();
 }
@@ -25,7 +24,6 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
     <title>My Application</title>
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 
@@ -54,21 +52,21 @@ table thead th {
     margin-left: 6px;
 }
 .table td, .table th {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 150px; /* Adjust as needed */
-        vertical-align: middle;
-    }
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 150px;
+    vertical-align: middle;
+}
 
-    @media (max-width: 768px) {
-        .table td, .table th {
-            font-size: 14px; /* Smaller font on smaller screens */
-        }
+@media (max-width: 768px) {
+    .table td, .table th {
+        font-size: 14px;
     }
-  .modal-body input{
-        border-radius: 30px !important;
-    }
+}
+.modal-body input {
+    border-radius: 30px !important;
+}
 </style>
 
 <body class="skin-blue">
@@ -90,7 +88,6 @@ table thead th {
             <section class="content">
                 <div class="row">
                     <div class="box">
-                        <!-- ✅ Keep Add Applicant Button -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#addApplicantModal">
@@ -99,19 +96,18 @@ table thead th {
                         </div>
 
                         <div class="box-body table-responsive">
-                            <!-- Display messages -->
                             <?php if (isset($_SESSION['error_message'])): ?>
-                            <div class="alert alert-danger">
-                                <?= $_SESSION['error_message']; ?>
-                            </div>
-                            <?php unset($_SESSION['error_message']); ?>
+                                <div class="alert alert-danger">
+                                    <?= $_SESSION['error_message']; ?>
+                                </div>
+                                <?php unset($_SESSION['error_message']); ?>
                             <?php endif; ?>
 
                             <?php if (isset($_SESSION['success_message'])): ?>
-                            <div class="alert alert-success">
-                                <?= $_SESSION['success_message']; ?>
-                            </div>
-                            <?php unset($_SESSION['success_message']); ?>
+                                <div class="alert alert-success">
+                                    <?= $_SESSION['success_message']; ?>
+                                </div>
+                                <?php unset($_SESSION['success_message']); ?>
                             <?php endif; ?>
 
                             <table id="applicantsTable" class="table table-bordered table-striped">
@@ -128,43 +124,45 @@ table thead th {
                                 </thead>
                                 <tbody>
                                     <?php
-                                // Prepared statement to show ONLY the logged-in user's data
-                                $sql = "SELECT id, lname, fname, mname, image_blob, document_blob FROM tbl_applicants WHERE applicant_id = ?";
-                                
-                                // Prepare the statement
-                                $stmt = $con->prepare($sql);
-                                
-                                if ($stmt === false) {
-                                    // If prepare() fails, log the error and display a message
-                                    error_log("SQL Prepare failed: " . $con->error);
-                                    die("SQL Prepare failed: " . $con->error);
-                                }
+                                    $sql = "SELECT id, lname, fname, mname, image_blob, document_blob FROM tbl_applicants WHERE applicant_id = ?";
+                                    $stmt = $con->prepare($sql);
 
-                                $stmt->bind_param("i", $applicant_id);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-
-                                while ($row = $result->fetch_assoc()) {
-                                    // For image blob, we need to base64 encode it
-                                    $image_base64 = !empty($row['image_blob']) ? base64_encode($row['image_blob']) : '';
-                                    $image_path = !empty($row['image_blob']) ? 'data:image/jpeg;base64,' . $image_base64 : 'path/to/default/image.jpg';
-
-                                    // For document blob, handle it as a downloadable file
-                                    if (!empty($row['document_blob'])) {
-                                        // Create a unique document filename
-                                        $document_filename = "document_" . $row['id'] . ".pdf";
-                                        $document_file_path = 'uploads/' . $document_filename;
-                                        
-                                        // Save the document blob to a file
-                                        file_put_contents($document_file_path, $row['document_blob']);
-                                        
-                                        // Generate a download link for the document
-                                        $document_path = $document_file_path;
-                                    } else {
-                                        $document_path = '';
+                                    if ($stmt === false) {
+                                        error_log("SQL Prepare failed: " . $con->error);
+                                        die("SQL Prepare failed: " . $con->error);
                                     }
 
-                                    echo "<tr class='text-center'>
+                                    $stmt->bind_param("i", $applicant_id);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+
+                                    $upload_dir = 'uploads/';
+                                    if (!is_dir($upload_dir)) {
+                                        mkdir($upload_dir, 0755, true);
+                                    }
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        $image_base64 = !empty($row['image_blob']) ? base64_encode($row['image_blob']) : '';
+                                        $image_path = !empty($row['image_blob']) ? 'data:image/jpeg;base64,' . $image_base64 : 'path/to/default/image.jpg';
+
+                                        $document_path = '';
+                                        $document_filename = '';
+
+                                        if (!empty($row['document_blob'])) {
+                                            $document_filename = "document_" . $row['id'] . ".pdf";
+                                            $document_file_path = $upload_dir . $document_filename;
+
+                                            if (is_writable($upload_dir)) {
+                                                if (!file_exists($document_file_path)) {
+                                                    file_put_contents($document_file_path, $row['document_blob']);
+                                                }
+                                                $document_path = $document_file_path;
+                                            } else {
+                                                error_log("Directory not writable: $upload_dir");
+                                            }
+                                        }
+
+                                        echo "<tr class='text-center'>
                                             <td>{$row['id']}</td>
                                             <td>{$row['lname']}</td>
                                             <td>{$row['fname']}</td>
@@ -174,16 +172,15 @@ table thead th {
                                             </td>
                                             <td>";
 
-                                    // Check if document is available
-                                    if ($document_path) {
-                                        echo "<a href='{$document_path}' download='{$document_filename}' class='btn btn-info btn-sm'>
+                                        if ($document_path) {
+                                            echo "<a href='{$document_path}' download='{$document_filename}' class='btn btn-info btn-sm'>
                                                 <i class='fa fa-file-pdf-o'></i> Download Document
                                             </a>";
-                                    } else {
-                                        echo "No Document";
-                                    }
+                                        } else {
+                                            echo "No Document";
+                                        }
 
-                                    echo "</td>
+                                        echo "</td>
                                             <td>
                                                 <a href='edit_applicant.php?id={$row['id']}' class='btn btn-sm btn-warning'><i class='fa fa-edit'></i> Edit</a>
                                                 <a href='delete_applicant.php?id={$row['id']}' class='btn btn-sm btn-danger' onclick=\"return confirm('Are you sure you want to delete your application?');\">
@@ -191,12 +188,11 @@ table thead th {
                                                 </a>
                                             </td>
                                         </tr>";
-                                }
+                                    }
 
-                                $stmt->close();
-                                ?>
+                                    $stmt->close();
+                                    ?>
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -207,7 +203,6 @@ table thead th {
 
     <?php require_once "../../includes/footer.php"; ?>
 
-    <!-- JS Libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -220,7 +215,7 @@ table thead th {
                 "orderable": false,
                 "targets": []
             }],
-            "lengthChange": false // This will hide the "Show entries" dropdown
+            "lengthChange": false
         });
     });
     </script>
