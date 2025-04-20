@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <!-- Sidebar (Styled) -->
 <aside class="custom-sidebar" id="sidebar">
     <section class="sidebar-content">
-        <div class="user-panel" style="display:none;">
+        <div class="user-panel">
             <div class="user-info">
                 <h4>Hello <?php echo htmlspecialchars($role); ?></h4>
             </div>
@@ -127,7 +127,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 .custom-sidebar-menu {
     list-style: none;
     padding: 0;
-    margin-top: 70px;
+    margin-top: 80px;
 }
 
 .custom-sidebar-menu li {
