@@ -1,8 +1,5 @@
 <?php
-
-require_once "../../configuration/config.php"; // Ensure this file contains your $conn database connection
-
-// Assuming the user is logged in and the employee_id is stored in the session
+require_once "../../configuration/config.php"; // Ensure this file contains your $con database connection
 session_start(); // Start the session to access session variables
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,19 +11,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if employee_id is stored in session
     if (isset($_SESSION['employee_id'])) {
-        $employee_id = $_SESSION['employee_id']; // Get employee_id from session
+        $employee_id = $_SESSION['employee_id'];
     } else {
-        // If employee_id is not set in session, show an error message
-        $message = "Error: Employee ID not found. Please log in again.";
-        echo "<script>alert('$message'); window.location.href='login.php';</script>";
+        // Show SweetAlert2 for session error
+        echo "
+        <html>
+        <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Session Error',
+                    text: 'Employee ID not found. Please log in again.',
+                    confirmButtonText: 'Login'
+                }).then(() => {
+                    window.location.href = 'login.php';
+                });
+            </script>
+        </body>
+        </html>";
         exit();
     }
 
     // Validate inputs
     if (empty($date_request) || empty($name) || empty($faculty) || empty($reason)) {
         $message = "All fields are required!";
+        $success = false;
     } else {
-        // Insert into database with employee_id
+        // Insert into database
         $sql = "INSERT INTO tbl_service_requests (request_type, date_request, name, faculty, reason, employee_id) 
                 VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -35,20 +47,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             $message = "Request submitted successfully!";
+            $success = true;
         } else {
             $message = "Error submitting request.";
+            $success = false;
         }
 
         $stmt->close();
     }
+
     $con->close();
 }
 
-?>
-
-<!-- Redirect back to the form with a message -->
-<?php
+// Show SweetAlert2 popup
 if (isset($message)) {
-    echo "<script>alert('$message'); window.location.href='EmployeeDashboard.php?success=login';</script>";
+    echo "
+    <html>
+    <head>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    </head>
+    <body>
+        <script>
+            Swal.fire({
+                icon: '" . ($success ? "success" : "error") . "',
+                title: '" . ($success ? "Success!" : "Oops...") . "',
+                text: '$message',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'EmployeeDashboard.php?success=login';
+            });
+        </script>
+    </body>
+    </html>";
 }
 ?>
