@@ -21,8 +21,7 @@
         <button class="button" data-toggle="modal" data-target="#requestCertification">Issuance of Certification</button>
         <br>
         <button class="button" data-toggle="modal" data-target="#requestLeaveApplication">Processing of Application for Leave</button>
-        <br>
-        <button class="button" data-toggle="modal" data-target="#requestPersonnelInquiry">Inquiries on Personnel-related Matters</button>
+        
       </div>
       <br><br>
     </div>
