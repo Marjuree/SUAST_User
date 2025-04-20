@@ -4,10 +4,11 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Include configuration and logging files
-require_once "../configuration/config.php";  // Ensure this file does not have whitespace or output
-require_once "../application/SystemLog.php"; // Log file for system logs
+require_once "../configuration/config.php";
+require_once "../application/SystemLog.php";
 
- 
+// Include SweetAlert2 for use
+echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
 if (isset($_POST['register_employee'])) {
     // Retrieve form values
@@ -21,8 +22,17 @@ if (isset($_POST['register_employee'])) {
 
     // Check if passwords match
     if ($password !== $confirm_password) {
-        $_SESSION['register_error'] = "Passwords do not match!";
-        header("Location: ../index.php");
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Mismatch',
+                text: 'Passwords do not match!',
+                confirmButtonText: 'Try Again'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
         exit();
     }
 
@@ -33,24 +43,51 @@ if (isset($_POST['register_employee'])) {
     $sql = "INSERT INTO tbl_employee_registration (first_name, middle_name, last_name, email, username, employee_password) 
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $con->prepare($sql);
-    
+
     // Check for errors in preparing the statement
     if (!$stmt) {
-        $_SESSION['register_error'] = "Failed to prepare statement: " . $con->error;
-        header("Location: ../index.php");
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Database Error',
+                text: 'Failed to prepare statement. Please contact admin.',
+                confirmButtonText: 'Back'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
         exit();
     }
 
     $stmt->bind_param("ssssss", $first_name, $middle_name, $last_name, $email, $username, $hashed_password);
 
     if ($stmt->execute()) {
-        // Successful registration
-        $_SESSION['register_success'] = "Registration successful! Please login.";
-        header("Location: ../index.php");
+        // ✅ Registration success
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful',
+                text: 'Please login to continue.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
     } else {
-        // Registration failed, likely due to existing username or email
-        $_SESSION['register_error'] = "Registration failed! Username or email may already exist.";
-        header("Location: ../index.php");
+        // ❌ Likely duplicate username/email
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: 'Username or email may already exist.',
+                confirmButtonText: 'Back'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
     }
 
     $stmt->close();
