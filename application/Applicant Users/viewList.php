@@ -187,9 +187,16 @@ require_once('../../includes/sidebar.php');
                                             <h5><strong><?= htmlspecialchars($room) ?></strong></h5>
                                         </div>
                                         <div class="text-center" style="border: 1px solid #000; padding: 10px;">
-                                            <h5><strong><?= date('F d, Y', strtotime($students[0]['exam_date'])) ?></strong>
-                                            </h5>
-                                            <h5>Time: <?= date('g:i a', strtotime($students[0]['exam_time'])) ?></h5>
+                                          <?php
+                                        $rawDate = $students[0]['exam_date'];
+                                        $rawTime = $students[0]['exam_time'];
+                                        
+                                        $formattedDate = !empty($rawDate) ? date('F d, Y', strtotime($rawDate)) : 'Date not set';
+                                        $formattedTime = !empty($rawTime) ? date('g:i a', strtotime($rawTime)) : 'Time not set';
+                                        ?>
+                                        <h5><strong><?= $formattedDate ?></strong></h5>
+                                        <h5>Time: <?= $formattedTime ?></h5>
+
                                         </div>
                                     </div>
                                 </div>
