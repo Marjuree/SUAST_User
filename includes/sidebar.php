@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <!-- Sidebar (Styled) -->
 <aside class="custom-sidebar" id="sidebar">
     <section class="sidebar-content">
-        <div class="user-panel">
+        <div class="user-panel" style="display:none;">
             <div class="user-info">
                 <h4>Hello <?php echo htmlspecialchars($role); ?></h4>
             </div>
