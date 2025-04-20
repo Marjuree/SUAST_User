@@ -68,16 +68,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // SQL insert
     $sql = "INSERT INTO tbl_applicants 
-        (applicant_id, lname, fname, mname, bdate, age, religion, nationality, civilstatus, ethnicity, contact, 
-         purok, barangay, municipality, province, first_option, second_option, third_option, campus, gender, email, 
-         n_mother, n_father, c_mother, c_father, m_occupation, f_occupation, m_address, f_address, living_status, 
-         siblings, birth_order, monthly_income, indigenous, basic_sector, image_blob, document_blob, date_applied)
-        VALUES (
-            '$applicant_id', '$lname', '$fname', '$mname', '$bdate', '$age', '$religion', '$nationality', '$civilstatus', '$ethnicity', 
-            '$contact', '$purok', '$barangay', '$municipality', '$province', '$first_option', '$second_option', '$third_option', '$campus', 
-            '$gender', '$email', '$n_mother', '$n_father', '$c_mother', '$c_father', '$m_occupation', '$f_occupation', 
-            '$m_address', '$f_address', '$living_status', '$siblings', '$birth_order', '$monthly_income', '$indigenous', '$basic_sector', 
-            '" . mysqli_real_escape_string($con, $new_image_name) . "', '" . mysqli_real_escape_string($con, $new_document_name) . "', '$date_applied')";
+    (applicant_id, lname, fname, mname, bdate, age, religion, nationality, civilstatus, ethnicity, contact, 
+     purok, barangay, municipality, province, first_option, second_option, third_option, campus, gender, email, 
+     n_mother, n_father, c_mother, c_father, m_occupation, f_occupation, m_address, f_address, living_status, 
+     siblings, birth_order, monthly_income, indigenous, basic_sector, image_blob, document_blob, date_applied)
+    VALUES (
+        '$applicant_id', '$lname', '$fname', '$mname', '$bdate', '$age', '$religion', '$nationality', '$civilstatus', '$ethnicity', 
+        '$contact', '$purok', '$barangay', '$municipality', '$province', '$first_option', '$second_option', '$third_option', '$campus', 
+        '$gender', '$email', '$n_mother', '$n_father', '$c_mother', '$c_father', '$m_occupation', '$f_occupation', 
+        '$m_address', '$f_address', '$living_status', '$siblings', '$birth_order', '$monthly_income', '$indigenous', '$basic_sector', 
+        " . ($image_data !== null ? "'$image_data'" : "NULL") . ", 
+        " . ($document_data !== null ? "'$document_data'" : "NULL") . ", 
+        '$date_applied')";
+
 
     if (mysqli_query($con, $sql)) {
         showSweetAlert('Applicant added successfully!', 'success', 'applicant.php');
