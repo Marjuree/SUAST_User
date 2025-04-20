@@ -64,7 +64,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ["link" => "#", "icon" => "fa-envelope", "label" => "Leave Request", "class" => "toggle-table", "data" => "leaverequest"],
                     ["link" => "#", "icon" => "fa-certificate", "label" => "Certification Request", "class" => "toggle-table", "data" => "certificationRequests"],
                     ["link" => "#", "icon" => "fa-wrench", "label" => "Service Request", "class" => "toggle-table", "data" => "serviceRequests"],
-                    ["link" => "../Employee Users/chat.php", "icon" => "fa-comments", "label" => "Personnel Inquiry"],
                 ],
 
                 "Applicant" => [
