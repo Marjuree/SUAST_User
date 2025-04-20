@@ -4,8 +4,7 @@ require_once "../../configuration/config.php";
 
 // Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
-    $_SESSION['error_message'] = "Please login as an applicant.";
-    displayMessage($_SESSION['error_message'], 'error', '../../php/error.php');
+    showAlert("Please login as an applicant.", "error", "../../php/error.php");
     exit();
 }
 
@@ -14,7 +13,7 @@ $applicant_id = $_POST['applicant_id'];
 $name = $_POST['name'];
 $room = $_POST['room'];
 $venue = $_POST['venue'];
-$exam_time = !empty($_POST['exam_time']) ? $_POST['exam_time'] : NULL;  // If empty, set to NULL
+$exam_time = !empty($_POST['exam_time']) ? $_POST['exam_time'] : NULL;
 
 // Check available slot limit
 $query = "SELECT slot_limit FROM tbl_exam_schedule WHERE room = ? AND venue = ?";
@@ -22,10 +21,10 @@ $stmt = mysqli_prepare($con, $query);
 mysqli_stmt_bind_param($stmt, "ss", $room, $venue);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
+echo ".";
 
-// If query fails
 if (!$result) {
-    displayMessage("An error occurred while checking available slots.", 'error');
+    showAlert("An error occurred while checking available slots.", "error");
     exit();
 }
 
@@ -42,7 +41,7 @@ if ($row) {
         $insert_result = mysqli_stmt_execute($stmt);
 
         if (!$insert_result) {
-            displayMessage("Failed to insert reservation. Please try again.", 'error');
+            showAlert("Failed to insert reservation. Please try again.", "error");
             exit();
         }
 
@@ -54,49 +53,38 @@ if ($row) {
         $update_result = mysqli_stmt_execute($stmt);
 
         if (!$update_result) {
-            displayMessage("Failed to update available slots.", 'error');
+            showAlert("Failed to update available slots.", "error");
             exit();
         }
 
         // Success
-        displayMessage("✅ Reservation successfully made!", 'success');
+        showAlert("Reservation successfully made!", "success");
     } else {
-        displayMessage("No available slots left.", 'error');
+        showAlert("No available slots left.", "error");
     }
 } else {
-    displayMessage("Invalid room or venue.", 'error');
+    showAlert("Invalid room or venue.", "error");
 }
 
 exit();
 
 
-// ✨ Function to show styled message and auto-redirect
-function displayMessage($message, $type, $redirect = 'exam_schedule.php') {
-    $bgColor = $type === 'success' ? '#d4edda' : '#f8d7da';
-    $textColor = $type === 'success' ? '#155724' : '#721c24';
-    $borderColor = $type === 'success' ? '#c3e6cb' : '#f5c6cb';
+// ✅ Function using SweetAlert2
+function showAlert($message, $type, $redirect = 'exam_schedule.php') {
+    $icon = $type === 'success' ? 'success' : 'error';
 
     echo "
-    <div style='
-        max-width: 500px;
-        margin: 100px auto;
-        padding: 20px;
-        background-color: $bgColor;
-        color: $textColor;
-        border: 1px solid $borderColor;
-        border-radius: 8px;
-        font-size: 18px;
-        text-align: center;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    '>
-        $message
-        <br><br><small>Redirecting, please wait...</small>
-    </div>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
     <script>
-        setTimeout(function() {
+        Swal.fire({
+            icon: '$icon',
+            title: '".ucfirst($type)."',
+            text: '$message',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false
+        }).then(() => {
             window.location.href = '$redirect';
-        }, 3000);
-    </script>
-    ";
+        });
+    </script>";
 }
 ?>
