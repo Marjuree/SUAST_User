@@ -12,6 +12,7 @@ $applicant_id = $_SESSION['applicant_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect form data
+    echo ".";
     $lname = $_POST['lname'];
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
