@@ -57,7 +57,8 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
         .responsive-divider span {
             font-size: 0.875rem;
         }
-        .text-right img{
+
+        .text-right img {
             margin-left: -50px !important;
         }
     }
@@ -133,76 +134,77 @@ require_once('../../includes/sidebar.php');
                     <!-- Room and Schedule Info -->
                     <div class="modal-body">
                         <?php
-    $query = "SELECT * FROM tbl_reservation ORDER BY room, name ASC";
-    $result = $con->query($query);
+                        $query = "SELECT * FROM tbl_reservation ORDER BY room, name ASC";
+                        $result = $con->query($query);
 
-    $rooms = [];
-    while ($row = $result->fetch_assoc()) {
-        $room = $row['room'];
-        if (!isset($rooms[$room])) {
-            $rooms[$room] = [];
-        }
-        $rooms[$room][] = $row;
-    }
-    ?>
+                        $rooms = [];
+                        while ($row = $result->fetch_assoc()) {
+                            $room = $row['room'];
+                            if (!isset($rooms[$room])) {
+                                $rooms[$room] = [];
+                            }
+                            $rooms[$room][] = $row;
+                        }
+                        ?>
 
                         <div class="horizontal-scroll" style="padding: 15px 0;">
-    <?php foreach ($rooms as $room => $students): ?>
-    <div class="scroll-box">
-        <div class="row">
-            <div class="col-sm-7">
-                <h5 style="font-weight: bold;">
-                    <?= htmlspecialchars($students[0]['venue']) ?>
-                </h5>
-                <h5>Date and Venue</h5>
+                            <?php foreach ($rooms as $room => $students): ?>
+                            <div class="scroll-box">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <h5 style="font-weight: bold;">
+                                            <?= htmlspecialchars($students[0]['venue']) ?>
+                                        </h5>
+                                        <h5>Date and Venue</h5>
 
-                <?php
-                    // Conditionally apply scroll style
-                    $scrollStyle = count($students) >= 5 ? 'style="max-height: 300px; overflow-y: auto;"' : '';
-                ?>
+                                        <?php
+                                                // Conditionally apply scroll style
+                                                $scrollStyle = count($students) >= 5 ? 'style="max-height: 300px; overflow-y: auto;"' : '';
+                                            ?>
 
-                <div <?= $scrollStyle ?>>
-                    <table class="table table-bordered table-striped mb-0">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="width: 50px;">#</th>
-                                <th>NAME</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($students as $index => $student): ?>
-                                <?php if ($student['status'] === 'approved'): // Check if the status is approved ?>
-                                    <tr>
-                                        <td><?= $index + 1 ?></td>
-                                        <td><?= htmlspecialchars($student['name']) ?></td>
-                                    </tr>
-                                <?php endif; ?>
+                                        <div <?= $scrollStyle ?>>
+                                            <table class="table table-bordered table-striped mb-0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th style="width: 50px;">#</th>
+                                                        <th>NAME</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($students as $index => $student): ?>
+                                                    <?php if ($student['status'] === 'approved'): // Check if the status is approved ?>
+                                                    <tr>
+                                                        <td><?= $index + 1 ?></td>
+                                                        <td><?= htmlspecialchars($student['name']) ?></td>
+                                                    </tr>
+                                                    <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <div class="text-center"
+                                            style="border: 1px solid #000; padding: 10px; margin-bottom: 15px;">
+                                            <h5><strong><?= htmlspecialchars($room) ?></strong></h5>
+                                        </div>
+                                        <div class="text-center" style="border: 1px solid #000; padding: 10px;">
+                                            <?php
+                                            $rawDate = $students[0]['exam_date'];
+                                            $rawTime = $students[0]['exam_time'];
+                                            
+                                            $formattedDate = !empty($rawDate) ? date('F d, Y', strtotime($rawDate)) : 'Date not set';
+                                            $formattedTime = !empty($rawTime) ? date('g:i a', strtotime($rawTime)) : 'Time not set';
+                                            ?>
+                                            <h5><strong><?= $formattedDate ?></strong></h5>
+                                            <h5>Time: <?= $formattedTime ?></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="col-sm-5">
-                <div class="text-center" style="border: 1px solid #000; padding: 10px; margin-bottom: 15px;">
-                    <h5><strong><?= htmlspecialchars($room) ?></strong></h5>
-                </div>
-                <div class="text-center" style="border: 1px solid #000; padding: 10px;">
-                    <?php
-                    $rawDate = $students[0]['exam_date'];
-                    $rawTime = $students[0]['exam_time'];
-                    
-                    $formattedDate = !empty($rawDate) ? date('F d, Y', strtotime($rawDate)) : 'Date not set';
-                    $formattedTime = !empty($rawTime) ? date('g:i a', strtotime($rawTime)) : 'Time not set';
-                    ?>
-                    <h5><strong><?= $formattedDate ?></strong></h5>
-                    <h5>Time: <?= $formattedTime ?></h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php endforeach; ?>
-</div>
+                        </div>
 
                     </div>
 
