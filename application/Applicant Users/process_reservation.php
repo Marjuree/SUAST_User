@@ -11,17 +11,22 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
 // Get form data
 $applicant_id = $_POST['applicant_id'];
 $name = $_POST['name'];
-$room = $_POST['room'];
-$venue = $_POST['venue'];
+$room_raw = $_POST['room'];
+$venue_raw = $_POST['venue'];
 $exam_time = !empty($_POST['exam_time']) ? $_POST['exam_time'] : NULL;
+echo ".";
+
+// Normalize for matching
+$room = trim(strtolower($room_raw));
+$venue = trim(strtolower($venue_raw));
 
 // Check available slot limit
-$query = "SELECT slot_limit FROM tbl_exam_schedule WHERE room = ? AND venue = ?";
+$query = "SELECT slot_limit FROM tbl_exam_schedule 
+          WHERE LOWER(TRIM(room)) = ? AND LOWER(TRIM(venue)) = ?";
 $stmt = mysqli_prepare($con, $query);
 mysqli_stmt_bind_param($stmt, "ss", $room, $venue);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
-echo ".";
 
 if (!$result) {
     showAlert("An error occurred while checking available slots.", "error");
@@ -33,11 +38,11 @@ if ($row) {
     $slot_limit = $row['slot_limit'];
 
     if ($slot_limit > 0) {
-        // Insert reservation
+        // Insert reservation using raw (original format) values
         $insert_query = "INSERT INTO tbl_reservation (applicant_id, name, exam_time, room, venue) 
                          VALUES (?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($con, $insert_query);
-        mysqli_stmt_bind_param($stmt, "issss", $applicant_id, $name, $exam_time, $room, $venue);
+        mysqli_stmt_bind_param($stmt, "issss", $applicant_id, $name, $exam_time, $room_raw, $venue_raw);
         $insert_result = mysqli_stmt_execute($stmt);
 
         if (!$insert_result) {
@@ -47,7 +52,9 @@ if ($row) {
 
         // Update slot limit
         $new_slot_limit = $slot_limit - 1;
-        $update_query = "UPDATE tbl_exam_schedule SET slot_limit = ? WHERE room = ? AND venue = ?";
+        $update_query = "UPDATE tbl_exam_schedule 
+                         SET slot_limit = ? 
+                         WHERE LOWER(TRIM(room)) = ? AND LOWER(TRIM(venue)) = ?";
         $stmt = mysqli_prepare($con, $update_query);
         mysqli_stmt_bind_param($stmt, "iss", $new_slot_limit, $room, $venue);
         $update_result = mysqli_stmt_execute($stmt);
@@ -57,7 +64,6 @@ if ($row) {
             exit();
         }
 
-        // Success
         showAlert("Reservation successfully made!", "success");
     } else {
         showAlert("No available slots left.", "error");
@@ -69,7 +75,7 @@ if ($row) {
 exit();
 
 
-// ✅ Function using SweetAlert2
+// ✅ SweetAlert2 wrapper
 function showAlert($message, $type, $redirect = 'exam_schedule.php') {
     $icon = $type === 'success' ? 'success' : 'error';
 
