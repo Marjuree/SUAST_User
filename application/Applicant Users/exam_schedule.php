@@ -202,8 +202,10 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                 </div>
 
                 <div class="modal-body">
-                    <form action="process_reservation.php" method="POST">
+                    <form action="process_reservation.php" method="POST" onsubmit="splitVenueRoom()">
                         <input type="hidden" name="applicant_id" value="<?= $applicant_id ?>">
+                        <input type="hidden" name="venue" id="hidden_venue">
+                        <input type="hidden" name="room" id="hidden_room">
 
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -215,33 +217,42 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                             <select class="form-control" name="venue_room" id="venue_room" required>
                                 <option value="" disabled selected>Select Room and Venue</option>
                                 <?php
-                            // ✅ Updated SQL: Get only unique room/venue combos
-                            $query_combined = "
-                            SELECT MIN(id) as id, 
-                                   TRIM(venue) AS venue, 
-                                   TRIM(room) AS room
-                            FROM tbl_exam_schedule
-                            GROUP BY TRIM(venue), TRIM(room)
-                            ORDER BY venue, room
-                        ";
-                        
-                            $result_combined = mysqli_query($con, $query_combined);
-                            
-                            while ($row = mysqli_fetch_assoc($result_combined)) {
-                                $venue_room_display = "{$row['venue']} - {$row['room']}";
-                                echo "<option value='$venue_room_display'>$venue_room_display</option>";
-                            }
-                            ?>
+                $query_combined = "
+                    SELECT MIN(id) as id, 
+                        TRIM(venue) AS venue, 
+                        TRIM(room) AS room
+                    FROM tbl_exam_schedule
+                    GROUP BY TRIM(venue), TRIM(room)
+                    ORDER BY venue, room
+                ";
+
+                $result_combined = mysqli_query($con, $query_combined);
+                while ($row = mysqli_fetch_assoc($result_combined)) {
+                    $venue_room_display = "{$row['venue']} - {$row['room']}";
+                    echo "<option value='$venue_room_display'>$venue_room_display</option>";
+                }
+            ?>
                             </select>
                         </div>
 
                         <button type="submit" class="btn btn-success">Confirm Reservation</button>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+    function splitVenueRoom() {
+        const selected = document.getElementById('venue_room').value;
+        const parts = selected.split(' - ');
+        if (parts.length === 2) {
+            document.getElementById('hidden_venue').value = parts[0].trim();
+            document.getElementById('hidden_room').value = parts[1].trim();
+        }
+    }
+    </script>
 
 
 
