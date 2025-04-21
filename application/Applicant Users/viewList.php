@@ -117,7 +117,7 @@ require_once('../../includes/sidebar.php');
                             <strong>REMINDERS</strong>
                         </div>
                         <div class="panel-body text-center">
-                            <ul style="list-style: none; padding: 0;">
+                            <ul style="list-style: disc; display: inline-block; text-align: left; padding-left: 20px;">
                                 <li><strong>Bring your OWN pencil, ball pen, and eraser. Strictly no borrowing.</strong>
                                 </li>
                                 <li><strong>Prepare the EXACT Testing Fee Payment of Php. 150.00</strong></li>
@@ -129,6 +129,7 @@ require_once('../../includes/sidebar.php');
                                 <li><strong>Wear white polo shirt.</strong></li>
                             </ul>
                         </div>
+
                     </div>
 
                     <!-- Room and Schedule Info -->
