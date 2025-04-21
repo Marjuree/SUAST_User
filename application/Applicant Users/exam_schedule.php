@@ -29,6 +29,10 @@ $result = mysqli_query($con, $query);
 // Fetch only the reservations made by the logged-in user (based on applicant_id)
 $query_reservations = "SELECT * FROM tbl_reservation WHERE applicant_id = '$applicant_id'";
 $result_reservations = mysqli_query($con, $query_reservations);
+
+// Check if the user has already made a reservation
+$user_has_reservation = mysqli_num_rows($result_reservations) > 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +55,6 @@ $result_reservations = mysqli_query($con, $query_reservations);
         font-weight: bold;
     }
 
-   
-    
     .status-pending {
         background-color: #f39c12;
         color: white;
@@ -80,10 +82,12 @@ $result_reservations = mysqli_query($con, $query_reservations);
         padding: 2px 8px;
         border-radius: 4px;
     }
-    .modal-body input{
+
+    .modal-body input {
         border-radius: 30px !important;
     }
-    .form-control{
+
+    .form-control {
         border-radius: 30px !important;
     }
     </style>
@@ -105,9 +109,14 @@ $result_reservations = mysqli_query($con, $query_reservations);
             <section class="content">
                 <div class="box">
                     <div class="box-header d-flex justify-content-between align-items-center">
+                        <!-- Only allow the applicant to request a slot if they don't already have a reservation -->
+                        <?php if ($user_has_reservation): ?>
+                        <button class="btn btn-secondary" disabled>Request slot (Already reserved)</button>
+                        <?php else: ?>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
                             + Request slot
                         </button>
+                        <?php endif; ?>
                     </div>
                     <div class="box-header">
                         <h3 class="box-title">Your Exam Reservations</h3>
@@ -180,6 +189,7 @@ $result_reservations = mysqli_query($con, $query_reservations);
         </aside>
     </div>
 
+
     <!-- Modal for Reservation -->
     <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -201,30 +211,27 @@ $result_reservations = mysqli_query($con, $query_reservations);
                         </div>
 
                         <div class="form-group">
-                            <label for="room">Room</label>
-                            <select class="form-control" name="room" id="room" required>
-                                <option value="" disabled selected>Select Room</option>
+                            <label for="venue_room">Venue and Room</label>
+                            <select class="form-control" name="venue_room" id="venue_room" required>
+                                <option value="" disabled selected>Select Room and Venue</option>
                                 <?php
-                                // Fetching available rooms from tbl_exam_schedule
-                                $result_rooms = mysqli_query($con, "SELECT DISTINCT room FROM tbl_exam_schedule");
-                                while ($row = mysqli_fetch_assoc($result_rooms)) {
-                                    echo "<option value='{$row['room']}'>{$row['room']}</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="venue">Venue</label>
-                            <select class="form-control" name="venue" id="venue" required>
-                                <option value="" disabled selected>Select Venue</option>
-                                <?php
-                                // Fetching available venues from tbl_exam_schedule
-                                $result_venues = mysqli_query($con, "SELECT DISTINCT venue FROM tbl_exam_schedule");
-                                while ($row = mysqli_fetch_assoc($result_venues)) {
-                                    echo "<option value='{$row['venue']}'>{$row['venue']}</option>";
-                                }
-                                ?>
+                            // ✅ Updated SQL: Get only unique room/venue combos
+                            $query_combined = "
+                            SELECT MIN(id) as id, 
+                                   TRIM(venue) AS venue, 
+                                   TRIM(room) AS room
+                            FROM tbl_exam_schedule
+                            GROUP BY TRIM(venue), TRIM(room)
+                            ORDER BY venue, room
+                        ";
+                        
+                            $result_combined = mysqli_query($con, $query_combined);
+                            
+                            while ($row = mysqli_fetch_assoc($result_combined)) {
+                                $venue_room_display = "{$row['venue']} - {$row['room']}";
+                                echo "<option value='$venue_room_display'>$venue_room_display</option>";
+                            }
+                            ?>
                             </select>
                         </div>
 
@@ -234,6 +241,10 @@ $result_reservations = mysqli_query($con, $query_reservations);
             </div>
         </div>
     </div>
+
+
+
+
 
     <?php require_once "../../includes/footer.php"; ?>
 
