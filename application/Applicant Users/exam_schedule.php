@@ -217,21 +217,23 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                             <select class="form-control" name="venue_room" id="venue_room" required>
                                 <option value="" disabled selected>Select Room and Venue</option>
                                 <?php
-                $query_combined = "
-                    SELECT MIN(id) as id, 
-                        TRIM(venue) AS venue, 
-                        TRIM(room) AS room
-                    FROM tbl_exam_schedule
-                    GROUP BY TRIM(venue), TRIM(room)
-                    ORDER BY venue, room
-                ";
+                                    $query_combined = "
+                                        SELECT MIN(id) as id, 
+                                            TRIM(venue) AS venue, 
+                                            TRIM(room) AS room
+                                        FROM tbl_exam_schedule
+                                        WHERE status = 'active'
+                                        GROUP BY TRIM(venue), TRIM(room)
+                                        ORDER BY venue, room
+                                    ";
 
-                $result_combined = mysqli_query($con, $query_combined);
-                while ($row = mysqli_fetch_assoc($result_combined)) {
-                    $venue_room_display = "{$row['venue']} - {$row['room']}";
-                    echo "<option value='$venue_room_display'>$venue_room_display</option>";
-                }
-            ?>
+                                    $result_combined = mysqli_query($con, $query_combined);
+                                    while ($row = mysqli_fetch_assoc($result_combined)) {
+                                        $venue_room_display = "{$row['venue']} - {$row['room']}";
+                                        echo "<option value='$venue_room_display'>$venue_room_display</option>";
+                                    }
+                                    ?>
+
                             </select>
                         </div>
 
