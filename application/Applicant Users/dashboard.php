@@ -129,35 +129,51 @@ require_once('../../includes/head_css.php');
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function() {
-    // Remove rows ONLY with slot_limit == 0
+    // First, remove rows where slot == 0
     $('#reservationsTable tbody tr').each(function() {
-        const slot = parseInt($(this).find('.slot').text());
+        const $row = $(this);
+        const slotText = $row.find('.slot').text().trim();
+        const slot = parseInt(slotText);
+
+        // If slot is a valid number and is 0, remove the row
         if (!isNaN(slot) && slot === 0) {
-            $(this).remove(); // Only remove rows where slot is 0
+            $row.remove();
         }
     });
 
-    // Initialize DataTable
-    $('#reservationsTable').DataTable({
+    // Initialize DataTables AFTER removing "full" rows
+    const table = $('#reservationsTable').DataTable({
         "order": [],
         "columnDefs": [
             { "orderable": false, "targets": [0] }
         ]
     });
 
-    // Add availability badge
-    $('#reservationsTable tbody tr').each(function() {
-        const slot = parseInt($(this).find('.slot').text());
-        const $availabilityCell = $(this).find('.availability');
+    // Add availability status badge to the remaining rows
+    function updateAvailability() {
+        $('#reservationsTable tbody tr').each(function() {
+            const $row = $(this);
+            const slotText = $row.find('.slot').text().trim();
+            const slot = parseInt(slotText);
+            const $availabilityCell = $row.find('.availability');
 
-        if (!isNaN(slot)) {
-            $availabilityCell.html('<span class="badge badge-success">Available</span>');
-        } else {
-            $availabilityCell.text('Unknown');
-        }
-    });
+            if (slotText === '' || isNaN(slot)) {
+                $availabilityCell.text('Unknown');
+            } else {
+                $availabilityCell.html('<span class="badge badge-success">Available</span>');
+            }
+        });
+    }
+
+    // Initial call
+    updateAvailability();
+
+    // Also call after pagination/filter changes
+    table.on('draw', updateAvailability);
 });
 </script>
+
+
 
 
 
