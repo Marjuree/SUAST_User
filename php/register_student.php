@@ -13,6 +13,7 @@ if (isset($_POST['register_student'])) {
     $password = $_POST['student_password'];
     $confirm_password = $_POST['student_confirm_password'];
 
+    echo ".";
     if ($password !== $confirm_password) {
         echo "
         <script>
