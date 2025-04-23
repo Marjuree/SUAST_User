@@ -108,16 +108,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
             <!-- View Exam Reservations Table -->
             <section class="content">
                 <div class="box">
-                    <div class="box-header d-flex justify-content-between align-items-center">
-                        <!-- Only allow the applicant to request a slot if they don't already have a reservation -->
-                        <?php if ($user_has_reservation): ?>
-                        <button class="btn btn-secondary" disabled>Request slot (Already reserved)</button>
-                        <?php else: ?>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
-                            + Request slot
-                        </button>
-                        <?php endif; ?>
-                    </div>
+                    
                     <div class="box-header">
                         <h3 class="box-title">Your Exam Reservations</h3>
                     </div>
