@@ -6,6 +6,7 @@ include "../application/SystemLog.php";
 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo ".";
     // Retrieve form data
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'] ?? NULL; // Optional
