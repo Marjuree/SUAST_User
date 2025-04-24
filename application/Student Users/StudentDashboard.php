@@ -32,14 +32,10 @@ $stmt->bind_param('i', $student_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $student_data = $result->fetch_assoc();
-
-// Debugging: Log student data
-error_log("Fetched student data: " . print_r($student_data, true));
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,66 +43,67 @@ error_log("Fetched student data: " . print_r($student_data, true));
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
-    .form-container {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-    .form-group label {
-        font-weight: bold;
-        color: #495057;
-    }
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+        }
 
-    .form-group input,
-    .form-group span {
-        font-size: 1rem;
-        border-radius: 30px !important;
-    }
+        .form-group input,
+        .form-group span {
+            font-size: 1rem;
+            border-radius: 30px !important;
+        }
 
-    .badge {
-        padding: 0.4rem 1rem;
-        font-size: 1rem;
-        font-weight: bold;
-        border-radius: 25px;
-    }
+        .badge {
+            padding: 0.4rem 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+        }
 
-    .btn-success {
-        background-color: #28a745;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 1rem;
-        cursor: pointer;
-    }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
 
-    .btn-success:hover {
-        background-color: #218838;
-    }
+        .btn-success:hover {
+            background-color: #218838;
+        }
 
-    .bg-info {
-        background-color: #17a2b8 !important;
-        color: #fff !important;
-    }
+        .bg-info {
+            background-color: #17a2b8 !important;
+            color: #fff !important;
+        }
 
-    .bg-success {
-        background-color: #28a745 !important;
-        color: #fff !important;
-    }
+        .bg-success {
+            background-color: #28a745 !important;
+            color: #fff !important;
+        }
 
-    .bg-danger {
-        background-color: #dc3545 !important;
-        color: #fff !important;
-    }
-</style>
-
+        .bg-danger {
+            background-color: #dc3545 !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
 
 <body class="skin-blue">
@@ -128,13 +125,12 @@ error_log("Fetched student data: " . print_r($student_data, true));
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- Button to Open Modal -->
-                        <button type="button" class="btn btn-success mb-3" data-toggle="modal"
-                            data-target="#requestClearanceModal">
+                        <!-- Button to Request Clearance -->
+                        <button type="button" class="btn btn-success mb-3" id="requestClearanceBtn">
                             Request Clearance
                         </button>
 
-                        <!-- Request Clearance Section -->
+                        <!-- Request Clearance Section (Optional) -->
                         <div id="requestClearance" class="toggle-section" style="display: none;">
                             <h3>Clearance Requests</h3>
 
@@ -162,25 +158,19 @@ error_log("Fetched student data: " . print_r($student_data, true));
                             <div class="form-container">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="student_id_<?= $row['id'] ?>"
-                                            class="col-sm-3 col-form-label">Student ID</label>
+                                        <label for="student_id_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Student ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="student_id_<?= $row['id'] ?>"
-                                                value="<?= htmlspecialchars($row['student_id']) ?>" readonly>
+                                            <input type="text" class="form-control" id="student_id_<?= $row['id'] ?>" value="<?= htmlspecialchars($row['student_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="date_requested_<?= $row['id'] ?>"
-                                            class="col-sm-3 col-form-label">Date Requested</label>
+                                        <label for="date_requested_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Date Requested</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="date_requested_<?= $row['id'] ?>"
-                                                value="<?= htmlspecialchars($row['date_requested']) ?>" readonly>
+                                            <input type="text" class="form-control" id="date_requested_<?= $row['id'] ?>" value="<?= htmlspecialchars($row['date_requested']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $row['id'] ?>"
-                                            class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <span class="badge bg-<?= $badgeClass ?>"><?= $status ?></span>
                                         </div>
@@ -198,47 +188,33 @@ error_log("Fetched student data: " . print_r($student_data, true));
                             <div class="form-container">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="full_name_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Full Name</label>
+                                        <label for="full_name_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Full Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="full_name_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
+                                            <input type="text" class="form-control" id="full_name_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="email_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Email</label>
+                                        <label for="email_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control"
-                                                id="email_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
+                                            <input type="email" class="form-control" id="email_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="school_id_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">School ID</label>
+                                        <label for="school_id_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">School ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="school_id_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
+                                            <input type="text" class="form-control" id="school_id_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="balance_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Balance</label>
+                                        <label for="balance_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Balance</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="balance_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
+                                            <input type="text" class="form-control" id="balance_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
-                                            <span
-                                                class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
+                                            <span class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
                                         </div>
                                     </div>
                                 </form>
@@ -257,9 +233,61 @@ error_log("Fetched student data: " . print_r($student_data, true));
     <?php require_once "modal.php"; ?>
     <?php require_once "../../includes/footer.php"; ?>
 
-    <script src="../../vendors/js/vendor.bundle.base.js"></script>
-    <script src="../../js/off-canvas.js"></script>
-    <script src="../../js/hoverable-collapse.js"></script>
-</body>
+    <!-- jQuery for AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+    $(document).ready(function() {
+    $('#requestClearanceBtn').click(function() {
+        var school_id = <?php echo json_encode($student_data['school_id']); ?>;  // Fetch school_id from PHP session
+        
+        // Make sure the school_id exists
+        if (school_id) {
+            // Send AJAX request to process the clearance request
+            $.ajax({
+                url: 'request_clearance.php',  // The script to handle the clearance request
+                type: 'POST',
+                data: {
+                    school_id: school_id  // Send school_id as the data
+                },
+                success: function(response) {
+                    // Parse the JSON response
+                    var res = JSON.parse(response);
+                    
+                    if (res.success) {
+                        // If successful, show a success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Request Submitted',
+                            text: res.message,
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = 'StudentDashboard.php?success=request'; // Redirect to dashboard
+                        });
+                    } else {
+                        // If error, show an error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: res.message,
+                            confirmButtonText: 'Try Again'
+                        });
+                    }
+                },
+                error: function() {
+                    // Handle AJAX error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Request Failed',
+                        text: 'There was an issue processing your request. Please try again later.',
+                        showConfirmButton: true
+                    });
+                }
+            });
+        }
+    });
+});
+
+    </script>
+</body>
 </html>
