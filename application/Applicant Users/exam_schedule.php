@@ -44,7 +44,8 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
     <link rel="stylesheet" href="../../css/exam_schedule.css">
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
     .success {
         color: green;
@@ -133,7 +134,9 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                                         <th>Room</th>
                                         <th>Venue</th>
                                         <th>Status</th>
-                                        <th>Reason</th> <!-- New Column -->
+                                        <th>Reason</th>
+                                        <th>Action</th>
+
                                     </tr>
                                 </thead>
 
@@ -194,13 +197,30 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                                                     echo "<td><em>-</em></td>";
                                                 }
 
-                                                echo "</tr>";
-                                            }
-                                        } else {
-                                            echo "<tr><td colspan='7' class='text-center'>No reservations found.</td></tr>";
-                                        }
-                                        ?>
+                                                // Action column with update button
+                                                echo "<td>";
+                                                if ($status === 'rejected') {
+                                                    echo "
+                                                    <form method='POST' action='request_update.php' style='display:inline;' id='updateForm_{$row['id']}'>
+                                                        <input type='hidden' name='reservation_id' value='{$row['id']}'>
+                                                        <button type='button' class='btn btn-xs btn-warning' onclick='showSweetAlert({$row['id']});'>Request Update</button>
+                                                    </form>
+                                                    ";
+                                                } else {
+                                                    echo "<em>-</em>";
+                                                }
+                                                echo "</td>";
+                                    echo "</tr>";
+                                    }
+                                    } else {
+                                    echo "<tr>
+                                        <td colspan='8' class='text-center'>No reservations found.</td>
+                                    </tr>"; // Adjusted colspan to 8 for the new column
+                                    }
+
+                                    ?>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -212,11 +232,30 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
+   
     <?php require_once "../../includes/footer.php"; ?>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+    <!-- // Add JavaScript code for SweetAlert2 confirmation -->
+
+    <script>
+    function showSweetAlert(reservationId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to send an update request to admin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, send request!',
+            cancelButtonText: 'No, cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                document.getElementById('updateForm_' + reservationId).submit();
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>
