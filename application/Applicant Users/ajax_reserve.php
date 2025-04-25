@@ -13,7 +13,18 @@ $name = $_SESSION['first_name']; // or get from DB if needed
 if (isset($_POST['exam_id'])) {
     $exam_id = $_POST['exam_id'];
 
-    // Fetch exam schedule info
+    // ✅ First: Check if this user already has a reservation
+    $check = $con->prepare("SELECT id FROM tbl_reservation WHERE applicant_id = ?");
+    $check->bind_param("i", $applicant_id);
+    $check->execute();
+    $checkResult = $check->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        echo json_encode(['status' => 'error', 'message' => 'You have already made a reservation.']);
+        exit;
+    }
+
+    // ✅ Fetch exam schedule info
     $query = "SELECT * FROM tbl_exam_schedule WHERE id = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $exam_id);
@@ -27,20 +38,20 @@ if (isset($_POST['exam_id'])) {
         $room = $row['room'];
         $slot = $row['slot_limit'];
 
-        // Optionally: Check if slots are still available
+        // ✅ Optional: Check if slot still available
         if ($slot <= 0) {
             echo json_encode(['status' => 'error', 'message' => 'Slot not available']);
             exit;
         }
 
-        // Insert reservation
+        // ✅ Insert reservation
         $insert = "INSERT INTO tbl_reservation (applicant_id, name, exam_date, exam_time, venue, room, status)
                    VALUES (?, ?, ?, ?, ?, ?, 'pending')";
         $stmt_insert = $con->prepare($insert);
         $stmt_insert->bind_param("isssss", $applicant_id, $name, $exam_date, $exam_time, $venue, $room);
 
         if ($stmt_insert->execute()) {
-            // Optionally: Reduce slot in tbl_exam_schedule
+            // ✅ Reduce slot in tbl_exam_schedule
             $update_slot = $con->prepare("UPDATE tbl_exam_schedule SET slot_limit = slot_limit - 1 WHERE id = ?");
             $update_slot->bind_param("i", $exam_id);
             $update_slot->execute();
