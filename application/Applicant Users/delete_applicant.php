@@ -5,28 +5,39 @@ require_once "../../configuration/config.php";
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']);
 
-    // Delete the applicant
+    echo ".";
+    // Attempt to delete the applicant
     $sql = "DELETE FROM tbl_applicants WHERE id = $id";
     $query = mysqli_query($con, $sql);
 
     if ($query) {
-        // Redirect with success message
-        echo "<script>
-                alert('Applicant deleted successfully!');
-                window.location.href = 'applicant.php';  // Redirect back to the applicant list
-              </script>";
+        showSweetAlert("Applicant deleted successfully!", "success", "applicant.php");
     } else {
-        // Redirect with error message
-        echo "<script>
-                alert('Error deleting applicant. Please try again!');
-                window.location.href = 'applicant.php';  // Redirect back to the applicant list
-              </script>";
+        showSweetAlert("Error deleting applicant. Please try again!", "error", "applicant.php");
     }
 } else {
     // Invalid or missing ID
-    echo "<script>
-            alert('Invalid applicant ID.');
-            window.location.href = 'applicant.php';  // Redirect back to the applicant list
-          </script>";
+    showSweetAlert("Invalid applicant ID.", "error", "applicant.php");
 }
+
 exit();
+
+
+// 🔔 SweetAlert2 Alert Function
+function showSweetAlert($message, $type, $redirect) {
+    $icon = $type === 'success' ? 'success' : 'error';
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: '$icon',
+            title: '".ucfirst($type)."',
+            text: `$message`,
+            confirmButtonText: 'OK',
+            allowOutsideClick: false
+        }).then(() => {
+            window.location.href = '$redirect';
+        });
+    </script>";
+}
+?>

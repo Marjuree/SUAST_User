@@ -1,6 +1,9 @@
 <?php
-require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
+require_once "../configuration/config.php";
 require_once "../application/SystemLog.php";
+
+// Load SweetAlert2 JS
+echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
 if (isset($_POST['register_student'])) {
     $full_name = $_POST['student_name'];
@@ -10,24 +13,53 @@ if (isset($_POST['register_student'])) {
     $password = $_POST['student_password'];
     $confirm_password = $_POST['student_confirm_password'];
 
+    echo ".";
     if ($password !== $confirm_password) {
-        header("Location: ../index.php?register_error=Passwords do not match!");
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: 'Passwords do not match.',
+                confirmButtonText: 'Try Again'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
         exit();
     }
 
-    // Hash password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert into database
     $sql = "INSERT INTO tbl_student_users (full_name, email, school_id, username, password) 
             VALUES (?, ?, ?, ?, ?)";
     $stmt = $con->prepare($sql);
     $stmt->bind_param("sssss", $full_name, $email, $school_id, $username, $hashed_password);
 
     if ($stmt->execute()) {
-        header("Location: ../index.php?register_success=Registration successful! Please login.");
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Registered Successfully!',
+                text: 'You can now log in with your credentials.',
+                confirmButtonText: 'Login'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
     } else {
-        header("Location: ../index.php?register_error=Registration failed! Username or email may already exist.");
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: 'Username or email might already be taken.',
+                confirmButtonText: 'Try Again'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
     }
 
     $stmt->close();

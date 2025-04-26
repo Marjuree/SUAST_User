@@ -99,7 +99,7 @@
           </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1" required>
-            <label class="form-check-label" for="privacy_notice">I accept the Privacy Notice</label>
+            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the Privacy Notice</label>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Register</button>
         </form>

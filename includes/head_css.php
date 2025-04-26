@@ -22,8 +22,13 @@
     <!-- Custom CSS for Header -->
     <style>
         .navbar, .logo {
-            background:rgb(0, 59, 222) !important; 
+            background: #002B5B !important; 
             color: #2c3e50; 
+        }
+        .logo img{
+            position: relative;
+            height: 50px;
+            width: 50px;
         }
     </style>
 </head>

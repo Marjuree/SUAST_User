@@ -30,12 +30,12 @@ if (isset($_POST['btn_register'])) {
                   VALUES ('$reg_name', '$reg_email', '$reg_school_id', '$reg_username', '$hashed_password', '$reg_role')";
 
         if (mysqli_query($con, $query)) {
-            echo "<script>alert('Registration successful!'); window.location.href='success.html';</script>";
+            echo "<script>('Registration successful!'); window.location.href='success.html';</script>";
         } else {
-            echo "<script>alert('Error: Could not register user.');</script>";
+            echo "<script>('Error: Could not register user.');</script>";
         }
     } else {
-        echo "<script>alert('Passwords do not match.');</script>";
+        echo "<script>('Passwords do not match.');</script>";
     }
 }
 
@@ -83,12 +83,12 @@ if (isset($_POST['btn_login'])) {
         } else {
              // ❌ Log failed login attempt
             logMessage("WARNING", "Login Failed", "Admin Office Failed login attempt for user '$username'.");
-            echo "<script>alert('Invalid Password!'); window.location.href='invalid.html';</script>";
+            echo "<script>('Invalid Password!'); window.location.href='invalid.html';</script>";
         }
     } else {
          // ❌ Log failed login attempt
          logMessage("WARNING", "Login Failed", "Admin Invalid Role Please Select OFFICE!  '$username'.");
-        echo "<script>alert('Invalid Role Please Select OFFICE! '); window.location.href='invalid.html';</script>";
+        echo "<script>('Invalid Role Please Select OFFICE! '); window.location.href='invalid.html';</script>";
     }
 }
 

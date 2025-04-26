@@ -3,9 +3,9 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+session_regenerate_id(true); // Prevent session fixation
 
 require_once "../configuration/config.php"; // Ensure no output or whitespace
-require_once "../application/SystemLog.php"; // Logging system
 
 // Login Handler for Employee
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,32 +24,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if (password_verify($password, $user['employee_password'])) {
-            session_regenerate_id(true); // Prevent session fixation
 
             $_SESSION['employee_id'] = $user['employee_id'];
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['middle_name'] = $user['middle_name'];
             $_SESSION['last_name'] = $user['last_name'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = 'Employee'; // ✅ Role assigned
+            $_SESSION['role'] = 'Employee';
 
-            // ✅ Log successful login
-            logMessage("INFO", "Login Success", "Employee '$username' logged in successfully.");
-
-            echo "<script>alert('Login Successful!'); window.location.href='../application/Employee Users/EmployeeDashboard.php?success=login';</script>";
+            // SweetAlert2 success message and redirect
+            echo "
+            <html>
+            <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+            <body>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = '../application/Employee Users/EmployeeDashboard.php?success=login';
+                    });
+                </script>
+            </body>
+            </html>";
             exit();
         } else {
-            // ❌ Log failed login attempt
-            logMessage("WARNING", "Login Failed", "Employee Invalid Password! '$username'.");
-
-            echo "<script>alert('Invalid Password!'); window.location.href='landing_page.php';</script>";
+            echo "
+            <html>
+            <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+            <body>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Password!',
+                        text: 'Please try again.',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href = 'landing_page.php';
+                    });
+                </script>
+            </body>
+            </html>";
             exit();
         }
     } else {
-        // ❌ Log failed login attempt
-        logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
-
-        echo "<script>alert('No account found with this username!'); window.location.href='landing_page.php';</script>";
+        echo "
+        <html>
+        <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'User Not Found!',
+                    text: 'No account exists with that username.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'landing_page.php';
+                });
+            </script>
+        </body>
+        </html>";
         exit();
     }
 

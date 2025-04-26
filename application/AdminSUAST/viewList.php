@@ -1,18 +1,10 @@
 <?php
 session_start();
-session_regenerate_id(true);
-
-require_once "../../configuration/config.php"; // Ensure database connection
-
-// Check if the user is logged in and is an applicant
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
-    header("Location: ../../php/error.php?welcome=Please login as an applicant");
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../php/error.php?welcome=Please login to access this page");
     exit();
 }
-
-
-$applicant_id = $_SESSION['applicant_id'];
-$first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,17 +60,15 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 <body class="skin-blue">
 
     <?php 
-require_once('includes/header.php');
-require_once('../../includes/head_css.php'); 
-require_once('../../includes/sidebar.php');
+  require_once('../../includes/header.php');
+  require_once('../../includes/head_css.php'); 
 ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
+        <?php require_once('../../includes/sidebar.php'); ?>
+
         <aside class="right-side">
-            <section class="content-header">
-                <h1>Dashboard</h1>
-                <p>Welcome, <strong><?php echo $first_name; ?></strong></p>
-            </section>
+
 
             <div class="modal-dialog" style="width: 90%;">
                 <div class="modal-content" style="padding: 20px; border-radius: 15px; font-family: Arial, sans-serif;">
@@ -216,7 +206,6 @@ require_once('../../includes/sidebar.php');
     </div>
 
     <?php require_once "../../includes/footer.php"; ?>
-    <?php require_once "view_list_modal.php"; ?>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
