@@ -206,21 +206,22 @@ $infoStmt->close();
         width: max-content;
         min-width: 800px;
     }
-    .progress-tracker li small {
-            display: block;
-            font-size: 10 px !important;
-            color: #666;
-            margin-top: 4px;
-        }
 
-        .progress-tracker li span {
-            display: block;
-            font-size: 10px !important;
-            font-weight: bold;
-            color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+    .progress-tracker li small {
+        display: block;
+        font-size: 10 px !important;
+        color: #666;
+        margin-top: 4px;
+    }
+
+    .progress-tracker li span {
+        display: block;
+        font-size: 10px !important;
+        font-weight: bold;
+        color: #333;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 
 }
 </style>
@@ -346,12 +347,14 @@ $infoStmt->close();
                                                     if (strtolower($completion) === 'completed') $completion_class = 'label-primary';
                                                     elseif (strtolower($completion) === 'done') $completion_class = 'label-success';
 
-                                                    // Attachment
+                                                 // Attachment
                                                     $attachment_html = !empty($row['attachment'])
-                                                        ? "<a href='download_certification.php?request_id={$row['id']}' target='_blank'>
-                                                            <span style='display:inline-block; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' title='" . htmlspecialchars($row['file_name']) . "'>" . htmlspecialchars($row['file_name']) . "</span>
-                                                        </a>"
-                                                        : "<span class='text-muted'>No file</span>";
+                                                    ? "<a href='download_service.php?id={$row['id']}' class='btn btn-sm btn-primary' target='_blank' title='" . htmlspecialchars($row['file_name']) . "'>
+                                                            " . htmlspecialchars($row['file_name']) . "
+                                                    </a>"
+                                                    : "<span class='text-muted'>No file</span>";
+
+                                                
                                                 ?>
                                             <tr>
                                                 <td><?= htmlspecialchars($row['name']) ?></td>
