@@ -7,18 +7,20 @@ error_reporting(E_ALL);
 require_once "../configuration/config.php";
 require_once "../application/SystemLog.php";
 
-// Include SweetAlert2 for use
+// Include SweetAlert2
 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
 if (isset($_POST['register_employee'])) {
+    echo ".";
     // Retrieve form values
-    $first_name = $_POST['employee_first_name'];
-    $middle_name = $_POST['employee_middle_name'];
-    $last_name = $_POST['employee_last_name'];
-    $email = $_POST['employee_email'];
-    $username = $_POST['employee_username'];
+    $first_name = trim($_POST['employee_first_name']);
+    $middle_name = trim($_POST['employee_middle_name']);
+    $last_name = trim($_POST['employee_last_name']);
+    $email = trim($_POST['employee_email']);
+    $username = trim($_POST['employee_username']);
     $password = $_POST['employee_password'];
     $confirm_password = $_POST['employee_confirm_password'];
+    $faculty = trim($_POST['employee_faculty']); // ✅ Added this line
 
     // Check if passwords match
     if ($password !== $confirm_password) {
@@ -39,19 +41,43 @@ if (isset($_POST['register_employee'])) {
     // Hash the password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert the employee data into the database
-    $sql = "INSERT INTO tbl_employee_registration (first_name, middle_name, last_name, email, username, employee_password) 
-            VALUES (?, ?, ?, ?, ?, ?)";
+    // Check for existing username or email
+    $checkSql = "SELECT 1 FROM tbl_employee_registration WHERE username = ? OR email = ?";
+    $stmtCheck = $con->prepare($checkSql);
+    $stmtCheck->bind_param("ss", $username, $email);
+    $stmtCheck->execute();
+    $stmtCheck->store_result();
+
+    if ($stmtCheck->num_rows > 0) {
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: 'Username or email already exists.',
+                confirmButtonText: 'Back'
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
+        $stmtCheck->close();
+        exit();
+    }
+    $stmtCheck->close();
+
+    // Insert into DB with faculty included
+    $sql = "INSERT INTO tbl_employee_registration 
+            (first_name, middle_name, last_name, email, username, employee_password, faculty) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $con->prepare($sql);
 
-    // Check for errors in preparing the statement
     if (!$stmt) {
         echo "
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Database Error',
-                text: 'Failed to prepare statement. Please contact admin.',
+                text: 'Failed to prepare SQL statement.',
                 confirmButtonText: 'Back'
             }).then(() => {
                 window.location.href = '../index.php';
@@ -60,10 +86,9 @@ if (isset($_POST['register_employee'])) {
         exit();
     }
 
-    $stmt->bind_param("ssssss", $first_name, $middle_name, $last_name, $email, $username, $hashed_password);
+    $stmt->bind_param("sssssss", $first_name, $middle_name, $last_name, $email, $username, $hashed_password, $faculty);
 
     if ($stmt->execute()) {
-        // ✅ Registration success
         echo "
         <script>
             Swal.fire({
@@ -76,13 +101,12 @@ if (isset($_POST['register_employee'])) {
             });
         </script>";
     } else {
-        // ❌ Likely duplicate username/email
         echo "
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Registration Failed',
-                text: 'Username or email may already exist.',
+                text: 'An unexpected error occurred. Please try again.',
                 confirmButtonText: 'Back'
             }).then(() => {
                 window.location.href = '../index.php';
