@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <!-- Sidebar (Styled) -->
 <aside class="custom-sidebar" id="sidebar">
     <section class="sidebar-content">
-        <div class="user-panel">
+        <div class="user-panel" style="display: none;">
             <div class="user-info">
                 <h4>Hello <?php echo htmlspecialchars($role); ?></h4>
             </div>
@@ -59,11 +59,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ["link" => "../Student Users/announcement.php", "icon" => "fa-tachometer-alt", "label" => "Announcements"]
                 ],
              "Employee" => [
-                    ["link" => "../Employee Users/EmployeeDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
-                    ["link" => "#", "icon" => "fa-cogs", "label" => "Service", "toggle" => "modal", "target" => "#servicehrmo"],
-                    ["link" => "#", "icon" => "fa-envelope", "label" => "Leave Request", "class" => "toggle-table", "data" => "leaverequest"],
-                    ["link" => "#", "icon" => "fa-certificate", "label" => "Certification Request", "class" => "toggle-table", "data" => "certificationRequests"],
-                    ["link" => "#", "icon" => "fa-wrench", "label" => "Service Request", "class" => "toggle-table", "data" => "serviceRequests"],
+                ["link" => "../Employee Users/leave_requests.php", "icon" => "fa-envelope", "label" => "Leave Request"],
+                ["link" => "../Employee Users/certification_requests.php", "icon" => "fa-certificate", "label" => "Certification Request"],
+                ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service Request"],
+                ["link" => "../Employee Users/chat.php", "icon" => "fa-comments", "label" => "Personnel Inquiry"]
+
                 ],
 
                 "Applicant" => [
@@ -126,7 +126,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 .custom-sidebar-menu {
     list-style: none;
     padding: 0;
-    margin-top: 80px;
+    margin-top: 100px;
 }
 
 .custom-sidebar-menu li {
