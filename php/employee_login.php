@@ -5,7 +5,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once "../configuration/config.php"; // Ensure no output or whitespace
-require_once "../application/SystemLog.php"; // Logging system
 
 // Login Handler for Employee
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -33,9 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['email'] = $user['email'];
             $_SESSION['role'] = 'Employee';
 
-            // ✅ Log successful login
-            logMessage("INFO", "Login Success", "Employee '$username' logged in successfully.");
-
             // SweetAlert2 success message and redirect
             echo "
             <html>
@@ -55,9 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </html>";
             exit();
         } else {
-            // ❌ Log failed login attempt
-            logMessage("WARNING", "Login Failed", "Employee Invalid Password! '$username'.");
-
             echo "
             <html>
             <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
@@ -77,9 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        // ❌ Log failed login attempt
-        logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
-
         echo "
         <html>
         <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
