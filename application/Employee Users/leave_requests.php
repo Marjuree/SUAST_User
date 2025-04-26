@@ -269,8 +269,8 @@ $infoStmt->close();
                                             <th>End of Leave</th>
                                             <th>Current Stage</th>
                                             <th>Completion</th> <!-- Added column for Status -->
-                                            <th>Aproval</th> <!-- Added column for Status -->
-
+                                            <th>Approval</th> <!-- Added column for Status -->
+                                            <th>Leave Form</th> <!-- New column for leave form -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -282,7 +282,7 @@ $infoStmt->close();
                                             $result = $stmt->get_result();
 
                                             while ($row = $result->fetch_assoc()):
-                                            ?>
+                                        ?>
                                         <tr>
                                             <td><?= htmlspecialchars($row['name']) ?></td>
                                             <td><?= htmlspecialchars($row['faculty']) ?></td>
@@ -302,9 +302,9 @@ $infoStmt->close();
                                                     echo "<span class='label label-warning'>Pending</span>";
                                                 }
                                                 ?>
-                                            </td>
-                                            <td>
-                                                <?php 
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php 
                                                 // Display approval_status with corresponding color
                                                 $approval_status = htmlspecialchars($row['approval_status']);
                                                 if ($approval_status === 'Approved') {
@@ -315,11 +315,19 @@ $infoStmt->close();
                                                     echo "<span class='label label-warning'>$approval_status</span>";
                                                 }
                                                 ?>
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php
+                                                // Check if leave form exists and provide a download link
+                                                $leave_form = !empty($row['leave_form']) 
+                                                ? "<a href='download_leave_form.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary' target='_blank' title='Download Leave Form'>" . htmlspecialchars($row['file_name']) . "</a>"
+                                                : "<span class='text-muted'>No form</span>";
+                                                echo $leave_form;
+                                                ?>
                                             </td>
                                         </tr>
                                         <?php endwhile; ?>
                                     </tbody>
-
                                 </table>
                             </div>
 
