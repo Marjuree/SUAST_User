@@ -328,8 +328,8 @@ $infoStmt->close();
 
                                         // Set file download link if BLOB is present
                                         $file_link = !empty($row['certification_file'])
-                                            ? "<a href='download_certification_file.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary' target='_blank'>Download</a>"
-                                            : '<span class="text-muted">No file</span>';
+                                        ? "<a href='download_certification_file.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary' target='_blank' title='Download " . htmlspecialchars($row['file_name']) . "'>" . htmlspecialchars($row['file_name']) . "</a>"
+                                        : '<span class="text-muted">No file</span>';
 
                                         // Get approval status and apply background color
                                         $request_status = !empty($row['request_status']) ? ucfirst($row['request_status']) : 'Pending';
