@@ -69,7 +69,7 @@
                         <input type="email" class="form-control" id="registerEmail" name="employee_email" required>
                     </div>
                     <div class="form-group">
-                        <label for="registerFaculty">Faculty or Staff</label>
+                        <label for="registerFaculty">Position</label>
                         <select class="form-control" id="registerFaculty" name="employee_faculty" required>
                             <option value="">-- Select --</option>
                             <option value="Faculty">Faculty</option>
