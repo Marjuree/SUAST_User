@@ -3,9 +3,9 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-session_regenerate_id(true); // Prevent session fixation
 
 require_once "../configuration/config.php"; // Ensure no output or whitespace
+require_once "../application/SystemLog.php"; // Logging system
 
 // Login Handler for Employee
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if (password_verify($password, $user['employee_password'])) {
+            session_regenerate_id(true); // Prevent session fixation
 
             $_SESSION['employee_id'] = $user['employee_id'];
             $_SESSION['first_name'] = $user['first_name'];
@@ -31,6 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['last_name'] = $user['last_name'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['role'] = 'Employee';
+
+            // ✅ Log successful login
+            logMessage("INFO", "Login Success", "Employee '$username' logged in successfully.");
 
             // SweetAlert2 success message and redirect
             echo "
@@ -44,13 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.href = '../application/Employee Users/EmployeeDashboard.php?success=login';
+                        window.location.href = '../application/Employee Users/leave_requests.php?success=login';
                     });
                 </script>
             </body>
             </html>";
             exit();
         } else {
+            // ❌ Log failed login attempt
+            logMessage("WARNING", "Login Failed", "Employee Invalid Password! '$username'.");
+
             echo "
             <html>
             <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
@@ -70,6 +77,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
+        // ❌ Log failed login attempt
+        logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
+
         echo "
         <html>
         <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
