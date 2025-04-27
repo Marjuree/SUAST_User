@@ -69,8 +69,8 @@ $stmt->fetch();
 $stmt->close();
 
 // Define roles per faculty
-$roles = ['Fill out Form', 'Pay Cashier', 'Present Request', 
-          'Prepare Service Record', 'HR Director Signs', 'Record in Logbook', 'For Releasing', 'Completed'];
+$roles = [ 'Present Request', 
+          'Prepare Service Record','For Releasing', 'Completed'];
 
 // Determine current index
 $currentIndex = array_search($current_stage, array_map('trim', $roles));
@@ -176,7 +176,10 @@ $infoStmt->close();
         font-weight: 500;
     }
 
-
+    table thead {
+    background-color: #343a40;
+    color: #fff;
+}
 
     @media (max-width: 600px) {
         .progress-tracker-wrapper {
@@ -248,32 +251,18 @@ $infoStmt->close();
                                 ?>
                                     <li class="<?= $statusClass ?>" title="<?= htmlspecialchars($role) ?>">
                                         <span><?= htmlspecialchars($role) ?></span>
-                                        <?php if ($role === 'Fill out Form'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($issuance_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($issuance_received) ?></small>
-                                        <?php elseif ($role === 'Pay Cashier'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($cashier_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($cashier_received) ?></small>
-                                        <?php elseif ($role === 'Present Request'): ?>
+
+                                        <?php if ($role === 'Present Request'): ?>
                                         <small>SUBMITTED: <?= formatStageTime($present_request_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($present_request_received) ?></small>
                                         <?php elseif ($role === 'Prepare Service Record'): ?>
-                                        <small>SUBMITTED:
+                                        <small style="color: transparent;">SUBMITTED:
                                             <?= formatStageTime($prepare_service_record_submitted) ?></small><br>
-                                        <small>RECEIVED:
-                                            <?= formatStageTime($prepare_service_record_received) ?></small>
-                                        <?php elseif ($role === 'HR Director Signs'): ?>
-                                        <small>SUBMITTED:
-                                            <?= formatStageTime($hr_director_signs_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($hr_director_signs_received) ?></small>
-                                        <?php elseif ($role === 'Record in Logbook'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($logbook_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($logbook_received) ?></small>
+                                  
+
                                         <?php elseif ($role === 'For Releasing'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($for_releasing_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($for_releasing_received) ?></small>
+                                        <small style="color: transparent;">SUBMITTED: <?= formatStageTime($for_releasing_submitted) ?></small><br>
+                                     
                                         <?php elseif ($role === 'Completed'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($for_releasing_submitted) ?></small><br>
                                         <small>RECEIVED: <?= formatStageTime($for_releasing_received) ?></small>
                                         <?php endif; ?>
                                     </li>
