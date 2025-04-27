@@ -176,7 +176,10 @@ $infoStmt->close();
     color: #666;
     font-weight: 500;
 }
-
+table thead {
+    background-color: #343a40;
+    color: #fff;
+}
 @media (max-width: 600px) {
     .progress-tracker li span {
         font-size: 14px;
