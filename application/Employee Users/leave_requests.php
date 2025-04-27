@@ -42,8 +42,8 @@ $stmt->bind_result(
 $stmt->fetch();
 $stmt->close();
 
-$current_stage = trim($current_stage);
-$faculty = trim($faculty);
+$current_stage = trim($current_stage ?? '');
+$faculty = trim($faculty ?? '');
 
 // Define roles per faculty
 $roles = (strtolower($faculty) === 'faculty')
