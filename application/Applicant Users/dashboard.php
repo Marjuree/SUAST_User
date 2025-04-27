@@ -97,7 +97,8 @@ require_once('../../includes/head_css.php');
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT id, exam_name, exam_date, exam_time, venue, room, slot_limit FROM tbl_exam_schedule";
+                                    // SQL query now checks for active status
+                                    $sql = "SELECT id, exam_name, exam_date, exam_time, venue, room, slot_limit, status FROM tbl_exam_schedule WHERE status = 'active'";
                                     $stmt = $con->prepare($sql);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
@@ -114,8 +115,9 @@ require_once('../../includes/head_css.php');
                                     }
 
                                     $stmt->close();
-                                ?>
+                                    ?>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -132,111 +134,113 @@ require_once('../../includes/head_css.php');
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-   
+
     <script>
-$(document).ready(function() {
-    // Remove rows where slot == 0
-    $('#reservationsTable tbody tr').each(function() {
-        const $row = $(this);
-        const slotText = $row.find('.slot').text().trim();
-        const slot = parseInt(slotText);
-
-        if (!isNaN(slot) && slot === 0) {
-            $row.remove();
-        }
-    });
-
-    const table = $('#reservationsTable').DataTable({
-        "order": [],
-        "columnDefs": [{
-            "orderable": false,
-            "targets": [0, 5]
-        }]
-    });
-
-    function updateAvailability() {
+    $(document).ready(function() {
+        // Remove rows where slot == 0
         $('#reservationsTable tbody tr').each(function() {
             const $row = $(this);
             const slotText = $row.find('.slot').text().trim();
             const slot = parseInt(slotText);
-            const $availabilityCell = $row.find('.availability');
 
-            if (slotText === '' || isNaN(slot)) {
-                $availabilityCell.text('Unknown');
-            } else {
-                $availabilityCell.html('<span class="badge badge-success">Available</span>');
+            if (!isNaN(slot) && slot === 0) {
+                $row.remove();
             }
         });
-    }
 
-    updateAvailability();
-    table.on('draw', updateAvailability);
+        const table = $('#reservationsTable').DataTable({
+            "order": [],
+            "columnDefs": [{
+                "orderable": false,
+                "targets": [0, 5]
+            }]
+        });
 
-    // Handle reservation
-    $(document).on('click', '.btn-reserve', function () {
-    const button = $(this);
-    const examId = button.data('id');
+        function updateAvailability() {
+            $('#reservationsTable tbody tr').each(function() {
+                const $row = $(this);
+                const slotText = $row.find('.slot').text().trim();
+                const slot = parseInt(slotText);
+                const $availabilityCell = $row.find('.availability');
 
-    Swal.fire({
-        title: 'Confirm Reservation',
-        text: "Are you sure you want to reserve this slot?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, reserve it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: 'ajax_reserve.php',
-                type: 'POST',
-                data: { exam_id: examId },
-                success: function (response) {
-                    const res = JSON.parse(response);
-                    if (res.status === 'success') {
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Your reservation has been submitted.',
-                            icon: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-
-                        button
-                            .prop('disabled', true)
-                            .removeClass('btn-primary')
-                            .addClass('btn-success')
-                            .text('Reserved');
-
-                        const slotCell = button.closest('tr').find('.slot');
-                        let currentSlot = parseInt(slotCell.text().trim());
-                        if (!isNaN(currentSlot) && currentSlot > 0) {
-                            slotCell.text(currentSlot - 1);
-                        }
-
-                        updateAvailability();
-                    } else {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: res.message,
-                            icon: 'error'
-                        });
-                    }
-                },
-                error: function () {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An AJAX error occurred.',
-                        icon: 'error'
-                    });
+                if (slotText === '' || isNaN(slot)) {
+                    $availabilityCell.text('Unknown');
+                } else {
+                    $availabilityCell.html('<span class="badge badge-success">Available</span>');
                 }
             });
         }
-    });
-});
 
-});
-</script>
+        updateAvailability();
+        table.on('draw', updateAvailability);
+
+        // Handle reservation
+        $(document).on('click', '.btn-reserve', function() {
+            const button = $(this);
+            const examId = button.data('id');
+
+            Swal.fire({
+                title: 'Confirm Reservation',
+                text: "Are you sure you want to reserve this slot?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, reserve it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'ajax_reserve.php',
+                        type: 'POST',
+                        data: {
+                            exam_id: examId
+                        },
+                        success: function(response) {
+                            const res = JSON.parse(response);
+                            if (res.status === 'success') {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Your reservation has been submitted.',
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+
+                                button
+                                    .prop('disabled', true)
+                                    .removeClass('btn-primary')
+                                    .addClass('btn-success')
+                                    .text('Reserved');
+
+                                const slotCell = button.closest('tr').find('.slot');
+                                let currentSlot = parseInt(slotCell.text().trim());
+                                if (!isNaN(currentSlot) && currentSlot > 0) {
+                                    slotCell.text(currentSlot - 1);
+                                }
+
+                                updateAvailability();
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: res.message,
+                                    icon: 'error'
+                                });
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An AJAX error occurred.',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+    });
+    </script>
 
 
 
