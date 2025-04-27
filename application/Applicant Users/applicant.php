@@ -90,127 +90,99 @@ table thead th {
                 <p>Welcome, <strong><?php echo $first_name; ?></strong></p>
             </section>
 
-            <section class="content">
-                <div class="row">
-                    <div class="box">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#addApplicantModal">
-                                <i class="fa fa-plus"></i> Submit Details
-                            </button>
-                        </div>
+           <section class="content">
+    <div class="row">
+        <div class="box">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addApplicantModal">
+                    <i class="fa fa-plus"></i> Submit Details
+                </button>
+            </div>
 
-                        <div class="box-body table-responsive">
-                            <?php if (isset($_SESSION['error_message'])): ?>
-                            <div class="alert alert-danger">
-                                <?= $_SESSION['error_message']; ?>
-                            </div>
-                            <?php unset($_SESSION['error_message']); ?>
-                            <?php endif; ?>
-
-                            <?php if (isset($_SESSION['success_message'])): ?>
-                            <div class="alert alert-success">
-                                <?= $_SESSION['success_message']; ?>
-                            </div>
-                            <?php unset($_SESSION['success_message']); ?>
-                            <?php endif; ?>
-
-                            <table id="applicantsTable" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th>ID</th>
-                                        <th>Last Name</th>
-                                        <th>First Name</th>
-                                        <th>Middle Name</th>
-                                        <th>Image</th>
-                                        <th>Document</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-    $sql = "SELECT id, lname, fname, mname, image_blob, document_blob FROM tbl_applicants WHERE applicant_id = ?";
-    $stmt = $con->prepare($sql);
-
-    if ($stmt === false) {
-        error_log("SQL Prepare failed: " . $con->error);
-        die("SQL Prepare failed: " . $con->error);
-    }
-
-    $stmt->bind_param("i", $applicant_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $upload_dir = 'uploads/'; // Ensure this folder exists and is writable
-
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0755, true);
-    }
-
-    while ($row = $result->fetch_assoc()) {
-        // Handle the image encoding for display
-        $image_base64 = !empty($row['image_blob']) ? base64_encode($row['image_blob']) : '';
-        $image_path = !empty($row['image_blob']) ? 'data:image/jpeg;base64,' . $image_base64 : 'path/to/default/image.jpg';
-
-        // Handle the document download
-        $document_path = '';
-        $document_filename = '';
-
-        if (!empty($row['document_blob'])) {
-            // Define a unique filename for the document
-            $document_filename = "document_" . $row['id'] . ".pdf"; 
-            $document_file_path = $upload_dir . $document_filename;
-
-            // Save the document to a file if not already saved
-            if (is_writable($upload_dir)) {
-                if (!file_exists($document_file_path)) {
-                    file_put_contents($document_file_path, $row['document_blob']);
-                }
-                $document_path = $document_file_path; // Path to the file for download
-            } else {
-                error_log("Directory not writable: $upload_dir");
-            }
-        }
-
-        // Output the data into the table
-        echo "<tr class='text-center'>
-            <td>{$row['id']}</td>
-            <td>{$row['lname']}</td>
-            <td>{$row['fname']}</td>
-            <td>{$row['mname']}</td>
-            <td>
-                <img src='{$image_path}' alt='Profile Image' class='rounded-circle' width='50' height='50'>
-            </td>
-            <td>";
-
-        // Provide a download link if the document is available
-        if ($document_path) {
-            echo "<a href='{$document_path}' download='{$document_filename}' class='btn btn-info btn-sm'>
-                <i class='fa fa-file-pdf-o'></i> Download Document
-            </a>";
-        } else {
-            echo "No Document";
-        }
-
-        echo "</td>
-            <td>
-                <a href='edit_applicant.php?id={$row['id']}' class='btn btn-sm btn-warning'><i class='fa fa-edit'></i> Edit</a>
-                <a href='delete_applicant.php?id={$row['id']}' class='btn btn-sm btn-danger' onclick=\"return confirm('Are you sure you want to delete your application?');\">
-                    <i class='fa fa-trash'></i> Delete
-                </a>
-            </td>
-        </tr>";
-    }
-
-    $stmt->close();
-    ?>
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
+            <div class="box-body table-responsive">
+                <?php if (isset($_SESSION['error_message'])): ?>
+                <div class="alert alert-danger">
+                    <?= $_SESSION['error_message']; ?>
                 </div>
-            </section>
+                <?php unset($_SESSION['error_message']); ?>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['success_message'])): ?>
+                <div class="alert alert-success">
+                    <?= $_SESSION['success_message']; ?>
+                </div>
+                <?php unset($_SESSION['success_message']); ?>
+                <?php endif; ?>
+
+                <table id="applicantsTable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>ID</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Image</th>
+                            <th>Document</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT id, lname, fname, mname, image_blob, document_blob FROM tbl_applicants WHERE applicant_id = ?";
+                        $stmt = $con->prepare($sql);
+
+                        if ($stmt === false) {
+                            error_log("SQL Prepare failed: " . $con->error);
+                            die("SQL Prepare failed: " . $con->error);
+                        }
+
+                        $stmt->bind_param("i", $applicant_id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        while ($row = $result->fetch_assoc()) {
+                            // Handle the image encoding for display
+                            $image_base64 = !empty($row['image_blob']) ? base64_encode($row['image_blob']) : '';
+                            $image_path = !empty($row['image_blob']) ? 'data:image/jpeg;base64,' . $image_base64 : 'path/to/default/image.jpg';
+
+                            // Handle the document download
+                            $document_filename = "document_" . $row['id'] . ".pdf"; // Document filename
+
+                            // Output the data into the table
+                            echo "<tr class='text-center'>
+                                <td>{$row['id']}</td>
+                                <td>{$row['lname']}</td>
+                                <td>{$row['fname']}</td>
+                                <td>{$row['mname']}</td>
+                                <td>
+                                    <img src='{$image_path}' alt='Profile Image' class='rounded-circle' width='50' height='50'>
+                                </td>
+                                <td>";
+
+                            // Provide a download link for the document
+                            echo "<a href='download_document.php?id={$row['id']}' class='btn btn-info btn-sm'>
+                                    <i class='fa fa-file-pdf-o'></i> Download Document
+                                  </a>";
+
+                            echo "</td>
+                                <td>
+                                    <a href='edit_applicant.php?id={$row['id']}' class='btn btn-sm btn-warning'><i class='fa fa-edit'></i> Edit</a>
+                                    <a href='delete_applicant.php?id={$row['id']}' class='btn btn-sm btn-danger' onclick=\"return confirm('Are you sure you want to delete your application?');\">
+                                        <i class='fa fa-trash'></i> Delete
+                                    </a>
+                                </td>
+                            </tr>";
+                        }
+
+                        $stmt->close();
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
         </aside>
     </div>
 
