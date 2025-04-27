@@ -45,6 +45,7 @@ $stmt->close();
 $current_stage = trim($current_stage ?? '');
 $faculty = trim($faculty ?? '');
 
+
 // Define roles per faculty
 $roles = (strtolower($faculty) === 'faculty')
     ? ['HR', 'VP ACAD', 'HR Received', 'For Releasing', 'Completed']
@@ -153,6 +154,11 @@ $infoStmt->close();
         font-weight: 500;
     }
 
+    table thead {
+        background-color: #343a40;
+        color: #fff;
+    }
+
     @media (max-width: 600px) {
         .progress-tracker li span {
             font-size: 14px;
@@ -216,25 +222,27 @@ $infoStmt->close();
                                     ?>
                                     <li class="<?= $statusClass ?>" title="<?= htmlspecialchars($role) ?>">
                                         <span><?= htmlspecialchars($role) ?></span>
+
                                         <?php if ($role === 'HR'): ?>
                                         <small>SUBMITTED: <?= formatStageTime($hr_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($hr_received) ?></small>
-                                        <?php elseif ($role === 'VP ACAD'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($vp_acad_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($vp_acad_received) ?></small>
+
                                         <?php elseif ($role === 'VP Finance'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($vp_finance_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($vp_finance_received) ?></small>
+                                        <small>FORWARDED: <?= formatStageTime($vp_finance_submitted) ?></small><br>
+
                                         <?php elseif ($role === 'HR Received'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($hr_received_submitted) ?></small><br>
                                         <small>RECEIVED: <?= formatStageTime($hr_received_received) ?></small>
+
                                         <?php elseif ($role === 'For Releasing'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($for_releasing_submitted) ?></small><br>
-                                        <small>RECEIVED: <?= formatStageTime($for_releasing_received) ?></small>
+                                        <span style="color:transparent;">
+                                            SUBMITTED: <br>
+                                        </span>
+
                                         <?php elseif ($role === 'Completed'): ?>
-                                        <small>SUBMITTED: <?= formatStageTime($for_releasing_submitted) ?></small><br>
                                         <small>RECEIVED: <?= formatStageTime($for_releasing_received) ?></small>
+
                                         <?php endif; ?>
+                                    </li>
+
                                     </li>
                                     <?php endforeach; ?>
                                 </ul>
@@ -302,9 +310,9 @@ $infoStmt->close();
                                                     echo "<span class='label label-warning'>Pending</span>";
                                                 }
                                                 ?>
-                                                                        </td>
-                                                                        <td>
-                                                                            <?php 
+                                            </td>
+                                            <td>
+                                                <?php 
                                                 // Display approval_status with corresponding color
                                                 $approval_status = htmlspecialchars($row['approval_status']);
                                                 if ($approval_status === 'Approved') {
@@ -315,9 +323,9 @@ $infoStmt->close();
                                                     echo "<span class='label label-warning'>$approval_status</span>";
                                                 }
                                                 ?>
-                                                                        </td>
-                                                                        <td>
-                                                                            <?php
+                                            </td>
+                                            <td>
+                                                <?php
                                                 // Check if leave form exists and provide a download link
                                                 $leave_form = !empty($row['leave_form']) 
                                                 ? "<a href='download_leave_form.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary' target='_blank' title='Download Leave Form'>" . htmlspecialchars($row['file_name']) . "</a>"
