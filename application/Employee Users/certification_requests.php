@@ -286,7 +286,7 @@ $infoStmt->close();
                             <!-- Submit Leave Button -->
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#requestCertification">
-                                Submit Leave
+                                Submit Certification
                             </button>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
