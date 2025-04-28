@@ -294,7 +294,7 @@ table thead {
                             <!-- Submit Leave Button -->
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#requestServiceRecord">
-                                Submit Leave
+                                Submit Service
                             </button>
                             <!-- Service Requests Table -->
                             <div id="serviceRequests">
