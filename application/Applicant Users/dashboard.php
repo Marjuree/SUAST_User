@@ -10,9 +10,15 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     exit();
 }
 
-
 $applicant_id = $_SESSION['applicant_id'];
-$first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "Applicant";
+$first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "";
+$middle_name = isset($_SESSION['middle_name']) ? htmlspecialchars($_SESSION['middle_name']) : "";
+$last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_name']) : "";
+
+// Combine first, middle, and last name
+$full_name = trim($first_name . ' ' . $middle_name . ' ' . $last_name);
+$full_name = empty($full_name) ? "Applicant" : $full_name;
+
 ?>
 
 <!DOCTYPE html>
