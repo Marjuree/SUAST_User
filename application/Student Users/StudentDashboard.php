@@ -36,6 +36,7 @@ $student_data = $result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,63 +47,63 @@ $student_data = $result->fetch_assoc();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        .form-container {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .form-container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
 
-        .form-group label {
-            font-weight: bold;
-            color: #495057;
-        }
+    .form-group label {
+        font-weight: bold;
+        color: #495057;
+    }
 
-        .form-group input,
-        .form-group span {
-            font-size: 1rem;
-            border-radius: 30px !important;
-        }
+    .form-group input,
+    .form-group span {
+        font-size: 1rem;
+        border-radius: 30px !important;
+    }
 
-        .badge {
-            padding: 0.4rem 1rem;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 25px;
-        }
+    .badge {
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 25px;
+    }
 
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
 
-        .btn-success:hover {
-            background-color: #218838;
-        }
+    .btn-success:hover {
+        background-color: #218838;
+    }
 
-        .bg-info {
-            background-color: #17a2b8 !important;
-            color: #fff !important;
-        }
+    .bg-info {
+        background-color: #17a2b8 !important;
+        color: #fff !important;
+    }
 
-        .bg-success {
-            background-color: #28a745 !important;
-            color: #fff !important;
-        }
+    .bg-success {
+        background-color: #28a745 !important;
+        color: #fff !important;
+    }
 
-        .bg-danger {
-            background-color: #dc3545 !important;
-            color: #fff !important;
-        }
+    .bg-danger {
+        background-color: #dc3545 !important;
+        color: #fff !important;
+    }
     </style>
 </head>
 
@@ -158,19 +159,25 @@ $student_data = $result->fetch_assoc();
                             <div class="form-container">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="student_id_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Student ID</label>
+                                        <label for="student_id_<?= $row['id'] ?>"
+                                            class="col-sm-3 col-form-label">Student ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="student_id_<?= $row['id'] ?>" value="<?= htmlspecialchars($row['student_id']) ?>" readonly>
+                                            <input type="text" class="form-control" id="student_id_<?= $row['id'] ?>"
+                                                value="<?= htmlspecialchars($row['student_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="date_requested_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Date Requested</label>
+                                        <label for="date_requested_<?= $row['id'] ?>"
+                                            class="col-sm-3 col-form-label">Date Requested</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="date_requested_<?= $row['id'] ?>" value="<?= htmlspecialchars($row['date_requested']) ?>" readonly>
+                                            <input type="text" class="form-control"
+                                                id="date_requested_<?= $row['id'] ?>"
+                                                value="<?= htmlspecialchars($row['date_requested']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $row['id'] ?>"
+                                            class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <span class="badge bg-<?= $badgeClass ?>"><?= $status ?></span>
                                         </div>
@@ -188,33 +195,47 @@ $student_data = $result->fetch_assoc();
                             <div class="form-container">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="full_name_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Full Name</label>
+                                        <label for="full_name_<?= $student_data['id'] ?>"
+                                            class="col-sm-3 col-form-label">Full Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="full_name_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
+                                            <input type="text" class="form-control"
+                                                id="full_name_<?= $student_data['id'] ?>"
+                                                value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="email_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Email</label>
+                                        <label for="email_<?= $student_data['id'] ?>"
+                                            class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control" id="email_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
+                                            <input type="email" class="form-control"
+                                                id="email_<?= $student_data['id'] ?>"
+                                                value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="school_id_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">School ID</label>
+                                        <label for="school_id_<?= $student_data['id'] ?>"
+                                            class="col-sm-3 col-form-label">School ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="school_id_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
+                                            <input type="text" class="form-control"
+                                                id="school_id_<?= $student_data['id'] ?>"
+                                                value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="balance_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Balance</label>
+                                        <label for="balance_<?= $student_data['id'] ?>"
+                                            class="col-sm-3 col-form-label">Balance</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="balance_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
+                                            <input type="text" class="form-control"
+                                                id="balance_<?= $student_data['id'] ?>"
+                                                value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $student_data['id'] ?>"
+                                            class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
-                                            <span class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
+                                            <span
+                                                class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
                                         </div>
                                     </div>
                                 </form>
@@ -238,56 +259,53 @@ $student_data = $result->fetch_assoc();
 
     <script>
     $(document).ready(function() {
-    $('#requestClearanceBtn').click(function() {
-        var school_id = <?php echo json_encode($student_data['school_id']); ?>;  // Fetch school_id from PHP session
-        
-        // Make sure the school_id exists
-        if (school_id) {
-            // Send AJAX request to process the clearance request
-            $.ajax({
-                url: 'request_clearance.php',  // The script to handle the clearance request
-                type: 'POST',
-                data: {
-                    school_id: school_id  // Send school_id as the data
-                },
-                success: function(response) {
-                    // Parse the JSON response
-                    var res = JSON.parse(response);
-                    
-                    if (res.success) {
-                        // If successful, show a success message
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Request Submitted',
-                            text: res.message,
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href = 'StudentDashboard.php?success=request'; // Redirect to dashboard
-                        });
-                    } else {
-                        // If error, show an error message
+        $('#requestClearanceBtn').click(function() {
+            var school_id =
+            <?php echo json_encode($student_data['school_id']); ?>; // Fetch school_id from PHP session
+
+            // Make sure the school_id exists
+            if (school_id) {
+                // Send AJAX request to process the clearance request
+                $.ajax({
+                    url: 'request_clearance.php', // The script to handle the clearance request
+                    type: 'POST',
+                    data: {}, // No data needed since student ID is from session
+                    success: function(response) {
+                        var res = JSON.parse(response);
+
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Request Submitted',
+                                text: res.message,
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href =
+                                    'StudentDashboard.php?success=request';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                                confirmButtonText: 'Try Again'
+                            });
+                        }
+                    },
+                    error: function() {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
-                            text: res.message,
-                            confirmButtonText: 'Try Again'
+                            title: 'Request Failed',
+                            text: 'There was an issue processing your request. Please try again later.',
+                            showConfirmButton: true
                         });
                     }
-                },
-                error: function() {
-                    // Handle AJAX error
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Request Failed',
-                        text: 'There was an issue processing your request. Please try again later.',
-                        showConfirmButton: true
-                    });
-                }
-            });
-        }
-    });
-});
+                });
 
+            }
+        });
+    });
     </script>
 </body>
+
 </html>
