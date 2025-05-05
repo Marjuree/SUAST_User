@@ -104,6 +104,10 @@ $student_data = $result->fetch_assoc();
         background-color: #dc3545 !important;
         color: #fff !important;
     }
+    .large-text {
+        font-size: 14px !important;
+        color: #000 !important;
+    }
     </style>
 <body class="skin-blue">
     <?php 
@@ -204,29 +208,29 @@ $student_data = $result->fetch_assoc();
                                     <div class="form-group row">
                                         <label for="full_name_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Full Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="full_name_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
+                                            <input type="text" class="form-control large-text" id="full_name_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="email_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control" id="email_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
+                                            <input type="email" class="form-control large-text" id="email_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="school_id_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">School ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="school_id_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
+                                            <input type="text" class="form-control large-text" id="school_id_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="balance_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Balance</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="balance_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
+                                            <input type="text" class="form-control large-text" id="balance_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label ">Status</label>
                                         <div class="col-sm-9">
                                             <span class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
                                         </div>
