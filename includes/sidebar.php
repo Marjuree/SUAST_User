@@ -61,7 +61,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
              "Employee" => [
                 ["link" => "../Employee Users/leave_requests.php", "icon" => "fa-envelope", "label" => "Leave Request"],
                 ["link" => "../Employee Users/certification_requests.php", "icon" => "fa-certificate", "label" => "Certification Request"],
-                ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service Request"],
+                ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service record request"],
                 ["link" => "../Employee Users/chat.php", "icon" => "fa-comments", "label" => "Personnel Inquiry"]
 
                 ],
