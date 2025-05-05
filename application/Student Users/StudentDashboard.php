@@ -45,8 +45,8 @@ $student_data = $result->fetch_assoc();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
+</head>
+<style>
     .form-container {
         background-color: #f8f9fa;
         padding: 20px;
@@ -105,8 +105,6 @@ $student_data = $result->fetch_assoc();
         color: #fff !important;
     }
     </style>
-</head>
-
 <body class="skin-blue">
     <?php 
     require_once "../../configuration/config.php";
@@ -127,9 +125,24 @@ $student_data = $result->fetch_assoc();
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Button to Request Clearance -->
-                        <button type="button" class="btn btn-success mb-3" id="requestClearanceBtn">
-                            Request Clearance
-                        </button>
+                        <?php if ($student_data['enabled'] == 1): ?>
+                            <!-- Button to Request Clearance -->
+                            <button type="button" class="btn btn-success mb-3" id="requestClearanceBtn">
+                                Request Clearance
+                            </button>
+                        <?php else: ?>
+                            <!-- Hide the Request Clearance button if enabled is 0 -->
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: 'Clearance Disabled',
+                                        text: 'You are currently not allowed to request clearance.',
+                                        confirmButtonText: 'OK'
+                                    });
+                                });
+                            </script>
+                        <?php endif; ?>
 
                         <!-- Request Clearance Section (Optional) -->
                         <div id="requestClearance" class="toggle-section" style="display: none;">
@@ -159,25 +172,19 @@ $student_data = $result->fetch_assoc();
                             <div class="form-container">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="student_id_<?= $row['id'] ?>"
-                                            class="col-sm-3 col-form-label">Student ID</label>
+                                        <label for="student_id_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Student ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="student_id_<?= $row['id'] ?>"
-                                                value="<?= htmlspecialchars($row['student_id']) ?>" readonly>
+                                            <input type="text" class="form-control" id="student_id_<?= $row['id'] ?>" value="<?= htmlspecialchars($row['student_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="date_requested_<?= $row['id'] ?>"
-                                            class="col-sm-3 col-form-label">Date Requested</label>
+                                        <label for="date_requested_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Date Requested</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="date_requested_<?= $row['id'] ?>"
-                                                value="<?= htmlspecialchars($row['date_requested']) ?>" readonly>
+                                            <input type="text" class="form-control" id="date_requested_<?= $row['id'] ?>" value="<?= htmlspecialchars($row['date_requested']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $row['id'] ?>"
-                                            class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $row['id'] ?>" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
                                             <span class="badge bg-<?= $badgeClass ?>"><?= $status ?></span>
                                         </div>
@@ -195,47 +202,33 @@ $student_data = $result->fetch_assoc();
                             <div class="form-container">
                                 <form class="form-horizontal">
                                     <div class="form-group row">
-                                        <label for="full_name_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Full Name</label>
+                                        <label for="full_name_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Full Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="full_name_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
+                                            <input type="text" class="form-control" id="full_name_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['full_name']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="email_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Email</label>
+                                        <label for="email_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control"
-                                                id="email_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
+                                            <input type="email" class="form-control" id="email_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['email']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="school_id_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">School ID</label>
+                                        <label for="school_id_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">School ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="school_id_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
+                                            <input type="text" class="form-control" id="school_id_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['school_id']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="balance_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Balance</label>
+                                        <label for="balance_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Balance</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"
-                                                id="balance_<?= $student_data['id'] ?>"
-                                                value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
+                                            <input type="text" class="form-control" id="balance_<?= $student_data['id'] ?>" value="<?= htmlspecialchars($student_data['balance']) ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_<?= $student_data['id'] ?>"
-                                            class="col-sm-3 col-form-label">Status</label>
+                                        <label for="status_<?= $student_data['id'] ?>" class="col-sm-3 col-form-label">Status</label>
                                         <div class="col-sm-9">
-                                            <span
-                                                class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
+                                            <span class="badge bg-info"><?= htmlspecialchars($student_data['status']) ?: 'Not Set' ?></span>
                                         </div>
                                     </div>
                                 </form>
