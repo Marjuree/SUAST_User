@@ -316,88 +316,87 @@ table thead {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                                $stmt = $con->prepare("SELECT * FROM tbl_service_requests WHERE employee_id = ? ORDER BY created_at DESC");
-                                                $stmt->bind_param("i", $employee_id);
-                                                $stmt->execute();
-                                                $result = $stmt->get_result();
-
-                                                while ($row = $result->fetch_assoc()):
-                                                    $stage = ucfirst(strtolower($row['current_stage']));
-                                                    $status = ucfirst($row['request_status'] ?? 'Pending');
-                                                    $completion = ucfirst($row['completion_status'] ?? 'Pending');
-
-                                                    // Style classes
-                                                    $status_class = 'label-warning';
-                                                    if (strtolower($status) === 'approved') $status_class = 'label-success';
-                                                    elseif (strtolower($status) === 'disapproved') $status_class = 'label-danger';
-
-                                                    $completion_class = 'label-warning';
-                                                    if (strtolower($completion) === 'completed') $completion_class = 'label-primary';
-                                                    elseif (strtolower($completion) === 'done') $completion_class = 'label-success';
-
-                                                 // Attachment
-                                                    $attachment_html = !empty($row['attachment'])
+                                        <?php
+                                            $stmt = $con->prepare("SELECT * FROM tbl_service_requests WHERE employee_id = ? ORDER BY created_at DESC");
+                                            $stmt->bind_param("i", $employee_id);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+                                    
+                                            while ($row = $result->fetch_assoc()):
+                                                $current_stage_value = $row['current_stage'] ?? '';
+                                                $stage = ucfirst(strtolower($current_stage_value));
+                                                
+                                                $status = ucfirst($row['request_status'] ?? 'Pending');
+                                                $completion = ucfirst($row['completion_status'] ?? 'Pending');
+                                    
+                                                // Style classes
+                                                $status_class = 'label-warning';
+                                                if (strtolower($status) === 'Approved') $status_class = 'label-success';
+                                                elseif (strtolower($status) === 'Disapproved') $status_class = 'label-danger';
+                                    
+                                                $completion_class = 'label-warning';
+                                                if (strtolower($completion) === 'Completed') $completion_class = 'label-primary';
+                                                elseif (strtolower($completion) === 'Done') $completion_class = 'label-success';
+                                    
+                                                // Attachment
+                                                $attachment_html = !empty($row['attachment'])
                                                     ? "<a href='download_service.php?id={$row['id']}' class='btn btn-sm btn-primary' target='_blank' title='" . htmlspecialchars($row['file_name']) . "'>
                                                             " . htmlspecialchars($row['file_name']) . "
-                                                    </a>"
+                                                       </a>"
                                                     : "<span class='text-muted'>No file</span>";
-
-                                                
-                                                ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($row['name']) ?></td>
-                                                <td><?= htmlspecialchars($row['request_type']) ?></td>
-                                                <td><?= htmlspecialchars($row['date_request']) ?></td>
-                                                <td><?= htmlspecialchars($row['faculty']) ?></td>
-
-                                                <!-- Reason -->
-                                                <td>
-                                                    <button type="button" class="btn btn-info btn-sm"
+                                        ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($row['name']) ?></td>
+                                            <td><?= htmlspecialchars($row['request_type']) ?></td>
+                                            <td><?= htmlspecialchars($row['date_request']) ?></td>
+                                            <td><?= htmlspecialchars($row['faculty']) ?></td>
+                                    
+                                            <!-- Reason -->
+                                            <td>
+                                                <button type="button" class="btn btn-info btn-sm"
                                                         data-toggle="modal" data-target="#reasonModal<?= $row['id'] ?>">
-                                                        View Reason
-                                                    </button>
-                                                    <div class="modal fade" id="reasonModal<?= $row['id'] ?>"
-                                                        tabindex="-1" role="dialog"
-                                                        aria-labelledby="reasonModalLabel<?= $row['id'] ?>">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close"
+                                                    View Reason
+                                                </button>
+                                                <div class="modal fade" id="reasonModal<?= $row['id'] ?>"
+                                                     tabindex="-1" role="dialog"
+                                                     aria-labelledby="reasonModalLabel<?= $row['id'] ?>">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close"
                                                                         data-dismiss="modal"><span>&times;</span></button>
-                                                                    <h4 class="modal-title"
-                                                                        id="reasonModalLabel<?= $row['id'] ?>">Reason
-                                                                        for Request</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <?= nl2br(htmlspecialchars($row['reason'])) ?></div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default"
+                                                                <h4 class="modal-title"
+                                                                    id="reasonModalLabel<?= $row['id'] ?>">Reason for Request</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <?= nl2br(htmlspecialchars($row['reason'])) ?>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default"
                                                                         data-dismiss="modal">Close</button>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
+                                                </div>
+                                            </td>
+                                    
+                                            <!-- Current Stage -->
+                                            <td><span><?= $stage ?></span></td>
+                                    
+                                            <!-- Status -->
+                                            <td><span class="label <?= $status_class ?>"><?= $status ?></span></td>
+                                    
+                                            <!-- Completion Status -->
+                                            <td><span class="label <?= $completion_class ?>"><?= $completion ?></span></td>
+                                    
+                                            <!-- Attachment -->
+                                            <td><?= $attachment_html ?></td>
+                                    
+                                            <td><?= htmlspecialchars($row['created_at']) ?></td>
+                                        </tr>
+                                        <?php endwhile; ?>
+                                    </tbody>
 
-                                                <!-- Current Stage -->
-                                                <td><span><?= $stage ?></span></td>
-
-                                                <!-- Status -->
-                                                <td><span class="label <?= $status_class ?>"><?= $status ?></span></td>
-
-                                                <!-- Completion Status -->
-                                                <td><span
-                                                        class="label <?= $completion_class ?>"><?= $completion ?></span>
-                                                </td>
-
-                                                <!-- Attachment -->
-                                                <td><?= $attachment_html ?></td>
-
-                                                <td><?= htmlspecialchars($row['created_at']) ?></td>
-                                            </tr>
-                                            <?php endwhile; ?>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
