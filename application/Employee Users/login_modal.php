@@ -51,9 +51,9 @@
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="registerMiddleName">Middle Name</label>
+                        <label for="registerMiddleName">Middle Name (Optional)</label>
                         <input type="text" class="form-control" id="registerMiddleName" name="employee_middle_name"
-                            required>
+                            >
                     </div>
                     <div class="form-group">
                         <label for="registerLastName">Last Name</label>
