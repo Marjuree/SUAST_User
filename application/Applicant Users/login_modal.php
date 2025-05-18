@@ -1,6 +1,5 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-
 <!-- Applicant Login Modal -->
 <div class="modal fade" id="loginApplicant" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -14,12 +13,12 @@
       <div class="modal-body">
         <form action="applicant_auth.php" method="POST">
           <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <label for="usernameLogin">Username</label>
+            <input type="text" class="form-control" id="usernameLogin" name="username" required>
           </div>
           <div class="form-group">
-            <label for="applicant_password">Password</label>
-            <input type="password" class="form-control" id="applicant_password" name="applicant_password" required>
+            <label for="applicant_password_login">Password</label>
+            <input type="password" class="form-control" id="applicant_password_login" name="applicant_password" required>
           </div>
           <button type="submit" name="btn_applicant_login" class="btn btn-primary btn-block">
             <i class="fas fa-lock"></i> Login
@@ -32,7 +31,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- Agreement Modal -->
 <div class="modal fade" id="agreementModal" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel" aria-hidden="true">
@@ -55,7 +53,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">I Disagree</button>
-        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#registerApplicant">I Agree</a>
+        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#registerApplicant" data-dismiss="modal">I Agree</a>
       </div>
     </div>
   </div>
@@ -90,12 +88,13 @@
             <input type="email" class="form-control" id="university_email" name="university_email" required>
           </div>
           <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <label for="usernameRegister">Username</label>
+            <input type="text" class="form-control" id="usernameRegister" name="username" required>
           </div>
           <div class="form-group">
-            <label for="applicant_password">Password</label>
-            <input type="password" class="form-control" id="applicant_password" name="applicant_password" required>
+            <label for="applicant_password_register">Password</label>
+            <input type="password" class="form-control" id="applicant_password_register" name="applicant_password" required minlength="8">
+            <small id="passwordHelp" class="text-muted"></small>
           </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1" required>
@@ -107,6 +106,44 @@
     </div>
   </div>
 </div>
+
+<style>
+  #passwordHelp.strong {
+  color: green !important;
+}
+#passwordHelp.weak {
+  color: red !important;
+}
+
+</style>
+<!-- Password Strength Check Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  const passwordInput = document.getElementById('applicant_password_register');
+  const helpText = document.getElementById('passwordHelp');
+
+  if (!passwordInput) return;
+
+  passwordInput.addEventListener('input', function () {
+    const password = passwordInput.value;
+    const strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
+    if (password.length === 0) {
+      helpText.textContent = '';
+      helpText.classList.remove('strong', 'weak');
+    } else if (!strongPattern.test(password)) {
+      helpText.textContent = 'Password must include uppercase, lowercase, number, special character, and be at least 8 characters.';
+      helpText.classList.add('weak');
+      helpText.classList.remove('strong');
+    } else {
+      helpText.textContent = 'Strong password!';
+      helpText.classList.add('strong');
+      helpText.classList.remove('weak');
+    }
+  });
+});
+
+</script>
 
 <!-- Taker Side Modal -->
 <div id="takerModal" class="modal">
@@ -144,8 +181,9 @@
   </div>
 </div>
 
+<!-- Close modal function -->
 <script>
-function closeModal(modalId) {
+  function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
-}
+  }
 </script>
