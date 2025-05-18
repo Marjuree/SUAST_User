@@ -52,8 +52,7 @@
                     </div>
                     <div class="form-group">
                         <label for="registerMiddleName">Middle Name (Optional)</label>
-                        <input type="text" class="form-control" id="registerMiddleName" name="employee_middle_name"
-                            >
+                        <input type="text" class="form-control" id="registerMiddleName" name="employee_middle_name">
                     </div>
                     <div class="form-group">
                         <label for="registerLastName">Last Name</label>
@@ -80,12 +79,14 @@
                     <div class="form-group">
                         <label for="registerPassword">Password</label>
                         <input type="password" class="form-control" id="registerPassword" name="employee_password"
-                            required>
+                            required minlength="8">
+                        <small id="reg_passwordHelp"></small>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPassword"
-                            name="employee_confirm_password" required>
+                            name="employee_confirm_password" required minlength="8">
+                        <small id="reg_confirmPasswordHelp"></small>
                     </div>
                     <button type="submit" class="btn btn-primary" name="register_employee">Register</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -94,3 +95,4 @@
         </div>
     </div>
 </div>
+
