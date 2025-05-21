@@ -1,29 +1,36 @@
-Develope by:Kenneth N. Genobisa
+Username and Pass
 
-Administrator
-username: Kenstack
-Password: Expertnode
+ADMIN
 
+SUASTOFFICE
+admin123
 
-Student
-username: student404
-Password: Expertnode
+HRMOOFFICE
+admin123
 
-
-Employees
-username: Employees
-Password:Expertnode
-
-Accounting
-username: Accounting
-Password: Expertnode
-
-HRMO
-username: HRMO404
-Password: Expertnode
+ACCOUNTINGOFFICE
+admin123
 
 
-Applicant
-username: Kentot
-Password: Expertnode
+USers
+
+SUAST:
+Anna_Ramos
+Anna123
+
+Bj Keyt Manawatao
+Keyt123
+
+HRMO:
+Biancakes
+Bianca123
+
+Hashmerah2025
+Hashmerah123
+
+ACCOUNTING
+
+Farhanah17
+Farhanah123
+
 
