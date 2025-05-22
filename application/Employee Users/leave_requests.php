@@ -254,7 +254,7 @@ $infoStmt->close();
                                 style="margin-bottom: 20px; padding: 15px 20px; background-color: #e6f9ed; border-left: 6px solid #2ecc71; border-radius: 8px; display: flex; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                                 <span style="font-size: 24px; color: #2ecc71; margin-right: 12px;">✅</span>
                                 <span style="color: #2c3e50; font-weight: 500; font-size: 16px;">
-                                    Your leave request is <strong>ready to cliam!</strong>!
+                                    Your leave request is <strong>ready to claim!</strong>!
                                 </span>
                             </div>
                             <?php endif; ?>
