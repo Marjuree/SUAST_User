@@ -70,7 +70,7 @@ $stmt->close();
 
 // Define roles per faculty
 $roles = [ 'Present Request', 
-          'Prepare Service Record','For Releasing', 'Completed'];
+          'Preparing Certification Record','For Releasing', 'Completed'];
 
 // Determine current index
 $currentIndex = array_search($current_stage, array_map('trim', $roles));
@@ -177,9 +177,9 @@ $infoStmt->close();
     }
 
     table thead {
-    background-color: #343a40;
-    color: #fff;
-}
+        background-color: #343a40;
+        color: #fff;
+    }
 
     @media (max-width: 600px) {
         .progress-tracker-wrapper {
@@ -254,14 +254,15 @@ $infoStmt->close();
 
                                         <?php if ($role === 'Present Request'): ?>
                                         <small>SUBMITTED: <?= formatStageTime($present_request_submitted) ?></small><br>
-                                        <?php elseif ($role === 'Prepare Service Record'): ?>
+                                        <?php elseif ($role === 'Preparing Certification Record'): ?>
                                         <small style="color: transparent;">SUBMITTED:
                                             <?= formatStageTime($prepare_service_record_submitted) ?></small><br>
-                                  
+
 
                                         <?php elseif ($role === 'For Releasing'): ?>
-                                        <small style="color: transparent;">SUBMITTED: <?= formatStageTime($for_releasing_submitted) ?></small><br>
-                                     
+                                        <small style="color: transparent;">SUBMITTED:
+                                            <?= formatStageTime($for_releasing_submitted) ?></small><br>
+
                                         <?php elseif ($role === 'Completed'): ?>
                                         <small>RECEIVED: <?= formatStageTime($for_releasing_received) ?></small>
                                         <?php endif; ?>
@@ -286,7 +287,7 @@ $infoStmt->close();
                             <!-- Submit Leave Button -->
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#requestCertification">
-                                Submit Certification
+                                Submit Leave
                             </button>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
