@@ -2,9 +2,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once "../../configuration/config.php"; // Ensure the database connection is correct
+require_once "../../configuration/config.php";
+session_start();
 
-session_start(); // Start the session
+header('Content-Type: application/json'); // Respond with JSON!
+
+$response = ['success' => false, 'message' => 'Unknown error.'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $request_type = "Certification";
@@ -14,22 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $reason = $_POST['reason'] ?? '';
 
     if (!isset($_SESSION['employee_id'])) {
-        echo "
-        <html>
-        <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
-        <body>
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Session Error',
-                    text: 'Employee ID not found. Please log in again.',
-                    confirmButtonText: 'Login'
-                }).then(() => {
-                    window.location.href = 'login.php';
-                });
-            </script>
-        </body>
-        </html>";
+        $response['message'] = "Employee ID not found. Please log in again.";
+        echo json_encode($response);
         exit();
     }
 
@@ -37,8 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate fields
     if (empty($date_request) || empty($name) || empty($faculty) || empty($reason)) {
-        $message = "All fields are required!";
-        $success = false;
+        $response['message'] = "All fields are required!";
     } else {
         $file_name = null;
         $attachment_data = null;
@@ -56,7 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (!$stmt = $con->prepare($sql)) {
-            die("Error preparing statement: " . $con->error);
+            $response['message'] = "Error preparing statement: " . $con->error;
+            echo json_encode($response);
+            exit();
         }
 
         $stmt->bind_param(
@@ -71,17 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $file_name
         );
 
-        // If there's attachment data, send it
         if ($attachment_data !== null) {
             $stmt->send_long_data(6, $attachment_data);
         }
 
         if ($stmt->execute()) {
-            $message = "Certification request submitted successfully!";
-            $success = true;
+            $response['success'] = true;
+            $response['message'] = "Certification request submitted successfully!";
         } else {
-            $message = "Error submitting request: " . $stmt->error;
-            $success = false;
+            $response['message'] = "Error submitting request: " . $stmt->error;
         }
 
         $stmt->close();
@@ -89,27 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $con->close();
 } else {
-    $message = "No POST request received.";
-    $success = false;
+    $response['message'] = "No POST request received.";
 }
 
-// Final message display
-if (isset($message)) {
-    echo "
-    <html>
-    <head><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
-    <body>
-        <script>
-            Swal.fire({
-                icon: '" . ($success ? "success" : "error") . "',
-                title: '" . ($success ? "Success!" : "Oops...") . "',
-                text: '$message',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                window.location.href = 'certification_requests.php?success=login';
-            });
-        </script>
-    </body>
-    </html>";
-}
+echo json_encode($response);
 ?>
