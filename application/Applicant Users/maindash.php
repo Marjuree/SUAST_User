@@ -1,344 +1,354 @@
 <?php
 session_start();
-session_regenerate_id(true);
-
-require_once "../../configuration/config.php"; // Ensure database connection
-
-
+require_once "../../configuration/config.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Applicant | Dashboard</title>
-    <link rel="shortcut icon" href="../../img/favicon.png" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Exam Calendar</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.css" rel="stylesheet"
+        media="print">
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        h2.text-center {
+            margin: 30px 0 20px 0;
+            color: #333;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Customize FullCalendar header */
+        .fc-toolbar {
+            margin-bottom: 15px;
+            background: #007bff;
+            padding: 12px 20px;
+            border-radius: 5px;
+            color: #fff;
+            box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
+        }
+
+        .fc-toolbar h2 {
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .fc-button {
+            background: #0056b3;
+            border: none;
+            box-shadow: none;
+            color: #fff;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .fc-button:hover,
+        .fc-button:focus,
+        .fc-button:active {
+            background: #003d80;
+            color: #fff;
+            outline: none;
+        }
+
+        /* Dates with exams get distinct background */
+        .fc-day[data-has-event="true"] {
+            background-color: #d4edda !important;
+            color: #155724 !important;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect on dates with events */
+        .fc-day[data-has-event="true"]:hover {
+            background-color: #c3e6cb !important;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Event blocks styling */
+        .fc-event {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.4);
+            color: #fff !important;
+            font-weight: 600;
+            padding: 3px 6px;
+            transition: transform 0.3s ease;
+        }
+
+        .fc-event:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 123, 255, 0.6);
+            cursor: pointer;
+        }
+
+        /* Modal styles */
+        #examModal .modal-content,
+        #listModal .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        #examModal .modal-header,
+        #listModal .modal-header {
+            background: #007bff;
+            color: #fff;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        #examModal .modal-footer,
+        #listModal .modal-footer {
+            border-top: none;
+        }
+
+        #reserveBtn {
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Button to open the list modal */
+        #showListBtn {
+            margin-bottom: 20px;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: #28a745;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            box-shadow: 0 3px 6px rgba(40, 167, 69, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #showListBtn:hover {
+            background: #1e7e34;
+        }
+
+        /* Table in modal */
+        #listModal table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #listModal th,
+        #listModal td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        #listModal th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .fc-day-number {
+            display: inline-block !important;
+            white-space: nowrap !important;
+            line-height: 1 !important;
+            padding: 2px 5px;
+            font-weight: bold;
+
+
+            /* GAMITA RANI IF GUSTO NINYI NAKA CENTER PERO ANG KANANG +MORE MA WALA LANG  */
+            /* position: static !important;
+            float: none !important;
+            width: 100% !important;
+            text-align: center !important;
+            padding-top: 8px;
+            margin-top: 20px !important;
+            font-size: 16px;
+            color: #333;
+            display: inline-block !important;
+            white-space: nowrap !important;
+            line-height: 1 !important;
+            padding: 2px 5px; */
+        }
+    </style>
 </head>
 
-<style>
-    .badge-success {
-        background-color: #28a745 !important;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-    }
-
-    .badge-danger {
-        background-color: #dc3545 !important;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-    }
-
-    div.dataTables_wrapper label {
-        color: #000 !important;
-        font-weight: bold !important;
-    }
-
-    .dataTables_length select,
-    .dataTables_filter input {
-        color: #000 !important;
-    }
-
-    table thead {
-        background-color: #343a40;
-        color: #fff;
-    }
-
-    table thead th {
-        text-align: center;
-    }
-
-    .box-body.table-responsive {
-        padding: 0 20px 0 20px;
-    }
-
-    .custom-modal {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        border: none;
-    }
-
-    .custom-modal-header {
-        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-        color: white;
-        font-weight: 700;
-        font-size: 1.25rem;
-        padding: 1rem 1.5rem;
-        border-bottom: none;
-    }
-
-    .custom-close {
-        color: white;
-        opacity: 1;
-        font-size: 1.5rem;
-        border: none;
-        background: transparent;
-    }
-
-    .custom-close:hover {
-        color: #ff4757;
-        cursor: pointer;
-    }
-
-    .custom-modal-body {
-        background: #f9faff;
-        font-size: 1.1rem;
-        padding: 1.5rem 2rem;
-        color: #333;
-    }
-
-    .custom-modal-body p {
-        margin-bottom: 0.75rem;
-    }
-
-    .custom-modal-footer {
-        background: #f1f3f8;
-        border-top: none;
-        padding: 1rem 1.5rem;
-    }
-
-    .custom-modal-footer .btn-primary {
-        background:rgb(31, 233, 62);
-        border: none;
-        padding: 0.5rem 1.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        transition: background-color 0.3s ease;
-    }
-
-    .custom-modal-footer .btn-primary:hover {
-        background: #6a11cb;
-    }
-
-    #reservationsTable tbody tr:nth-child(odd) {
-        background-color: rgb(230, 229, 229);
-    }
-
-    #reservationsTable tbody tr:nth-child(even) {
-        background-color: #ffffff;
-    }
-</style>
-
-<body class="skin-blue">
-
-
-    <div class="wrapper row-offcanvas row-offcanvas-left">
-
-        <aside class="right-side">
-            <section class="content">
-                <div class="row">
-                    <div class="box">
-                        <div class="box-body table-responsive">
-                            <table id="reservationsTable" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name of Venue</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // SQL query now checks for active status
-                                    $sql = "SELECT id, exam_name, exam_date, exam_time, venue, room, slot_limit, status FROM tbl_exam_schedule WHERE status = 'active'";
-                                    $stmt = $con->prepare($sql);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr class='text-center'>
-                                                <td>{$row['venue']}</td>
-                                           
-                                            <td>
-                                                <button class='btn btn-success btn-sm btn-reserve' data-id='{$row['id']}'>Reserve</button>
-                                                <button class='btn btn-secondary btn-sm btn-show-details' 
-                                                    data-id='{$row['id']}'
-                                                    data-venue='{$row['venue']}'
-                                                    data-date='{$row['exam_date']}'
-                                                    data-time='{$row['exam_time']}'
-                                                    data-room='{$row['room']}'
-                                                    data-slot='{$row['slot_limit']}'>
-                                                    Show Details
-                                                </button>
-                                            </td>
-                                            </tr>";
-                                    }
-
-                                    $stmt->close();
-                                    ?>
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </aside>
+<body>
+    <div class="container">
+        <h2 class="text-center">Exam Schedule Calendar</h2>
+        <button id="showListBtn">Exams List</button>
+        <div id="calendar"></div>
     </div>
-    <!-- Details Modal -->
-    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel"
+
+    <!-- Exam Details Modal -->
+    <div class="modal fade" id="examModal" tabindex="-1" role="dialog" aria-labelledby="examModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content custom-modal">
-                <div class="modal-header custom-modal-header">
-                    <h5 class="modal-title" id="detailsModalLabel">Exam Slot Details</h5>
-                    <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
-                        <span>&times;</span>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="examModalLabel">Exam Details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="color:#fff;opacity:1;">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body custom-modal-body">
-                    <p><strong>Venue:</strong> <span id="detailVenue"></span></p>
-                    <p><strong>Date of Examination:</strong> <span id="detailDate"></span></p>
-                    <p><strong>Time:</strong> <span id="detailTime"></span></p>
-                    <p><strong>Room Number:</strong> <span id="detailRoom"></span></p>
-                    <p><strong>Slot Limit:</strong> <span id="detailSlot"></span></p>
+                <div class="modal-body">
+                    <p><strong>Venue:</strong> <span id="modalVenue"></span></p>
+                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                    <p><strong>Time:</strong> <span id="modalTime"></span></p>
+                    <p><strong>Room:</strong> <span id="modalRoom"></span></p>
+                    <p><strong>Slots:</strong> <span id="modalSlot"></span></p>
                 </div>
-                <div class="modal-footer custom-modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                    <button id="reserveBtn" class="btn btn-success">Reserve</button>
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <?php require_once "../../includes/footer.php"; ?>
+    <!-- List Modal -->
+    <div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" style="max-width: 900px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="listModalLabel">All Exam Events</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="color:#fff;opacity:1;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                    <table id="examsTable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Venue</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Room</th>
+                                <th>Slots</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filled dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Scripts -->
+    <!-- Dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
     <script>
         $(document).ready(function () {
-            // Remove rows where slot == 0
-            $('#reservationsTable tbody tr').each(function () {
-                const $row = $(this);
-                const slotText = $row.find('.slot').text().trim();
-                const slot = parseInt(slotText);
+            var eventDates = {};
+            var allEvents = [];
 
-                if (!isNaN(slot) && slot === 0) {
-                    $row.remove();
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek'
+                },
+                eventLimit: true,
+                events: {
+                    url: 'load_calendar_events.php',
+                    success: function (events) {
+                        allEvents = events;
+
+                        events.forEach(function (event) {
+                            var dateStr = moment(event.start).format('YYYY-MM-DD');
+                            eventDates[dateStr] = true;
+                        });
+                    }
+                },
+                dayRender: function (date, cell) {
+                    var dateString = date.format('YYYY-MM-DD');
+                    if (eventDates[dateString]) {
+                        cell.attr('data-has-event', 'true');
+                    }
+                },
+                eventClick: function (event, jsEvent, view) {
+                    jsEvent.preventDefault();  // <<<<<< Prevent modal auto-close or page navigation
+
+                    $('#modalVenue').text(event.venue);
+                    $('#modalDate').text(event.exam_date);
+                    $('#modalTime').text(event.exam_time);
+                    $('#modalRoom').text(event.room);
+                    $('#modalSlot').text(event.slot_limit);
+                    $('#reserveBtn').data('id', event.id);
+                    $('#examModal').modal('show');
                 }
             });
 
-            const table = $('#reservationsTable').DataTable({
-                "order": [],
-                "columnDefs": [{
-                    "orderable": false,
-                    "targets": [0, 1]
-                }]
+            // Show list modal
+            $('#showListBtn').on('click', function () {
+                var tbody = $('#examsTable tbody');
+                tbody.empty();
+
+                if (allEvents.length === 0) {
+                    tbody.append('<tr><td colspan="5" class="text-center">No exam events found.</td></tr>');
+                } else {
+                    allEvents.forEach(function (event) {
+                        tbody.append(
+                            '<tr>' +
+                            '<td>' + (event.venue || '-') + '</td>' +
+                            '<td>' + (event.exam_date || moment(event.start).format('YYYY-MM-DD')) + '</td>' +
+                            '<td>' + (event.exam_time || '-') + '</td>' +
+                            '<td>' + (event.room || '-') + '</td>' +
+                            '<td>' + (event.slot_limit || '-') + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                }
+
+                $('#listModal').modal('show');
             });
 
-            function updateAvailability() {
-                $('#reservationsTable tbody tr').each(function () {
-                    const $row = $(this);
-                    const slotText = $row.find('.slot').text().trim();
-                    const slot = parseInt(slotText);
-                    const $availabilityCell = $row.find('.availability');
-
-                    if (slotText === '' || isNaN(slot)) {
-                        $availabilityCell.text('Unknown');
-                    } else {
-                        $availabilityCell.html('<span class="badge badge-success">Available</span>');
-                    }
-                });
-            }
-
-            updateAvailability();
-            table.on('draw', updateAvailability);
-
-            // Handle reservation
-            $(document).on('click', '.btn-reserve', function () {
-                const button = $(this);
-                const examId = button.data('id');
-
+            $('#reserveBtn').on('click', function () {
+                var examId = $(this).data('id');
                 Swal.fire({
-                    title: 'Confirm Reservation',
-                    text: "Are you sure you want to reserve this slot?",
+                    title: 'Reserve Slot?',
                     icon: 'question',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, reserve it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $.ajax({
-                            url: 'ajax_reserve.php',
-                            type: 'POST',
-                            data: { exam_id: examId },
-                            success: function (response) {
-                                const res = JSON.parse(response);
-                                if (res.status === 'success') {
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: 'Your reservation has been submitted.',
-                                        icon: 'success',
-                                        timer: 2000,
-                                        showConfirmButton: false
-                                    });
-
-                                    button
-                                        .prop('disabled', true)
-                                        .removeClass('btn-primary')
-                                        .addClass('btn-success')
-                                        .text('Reserved');
-
-                                    const slotCell = button.closest('tr').find('.slot');
-                                    let currentSlot = parseInt(slotCell.text().trim());
-                                    if (!isNaN(currentSlot) && currentSlot > 0) {
-                                        slotCell.text(currentSlot - 1);
-                                    }
-
-                                    updateAvailability();
-                                } else {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: res.message,
-                                        icon: 'error'
-                                    });
-                                }
-                            },
-                            error: function () {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'An AJAX error occurred.',
-                                    icon: 'error'
-                                });
+                        $.post('ajax_reserve.php', { exam_id: examId }, function (res) {
+                            const response = JSON.parse(res);
+                            if (response.status === 'success') {
+                                Swal.fire('Reserved!', 'You have reserved your slot.', 'success');
+                                $('#examModal').modal('hide');
+                            } else {
+                                Swal.fire('Error', response.message, 'error');
                             }
                         });
                     }
                 });
             });
-
-            // Handle Show Details button
-            $(document).on('click', '.btn-show-details', function () {
-                const button = $(this);
-                const venue = button.data('venue');
-                const date = button.data('date');
-                const time = button.data('time');
-                const room = button.data('room');
-                const slot = button.data('slot');
-
-                $('#detailVenue').text(venue);
-                $('#detailDate').text(date);
-                $('#detailTime').text(time);
-                $('#detailRoom').text(room);
-                $('#detailSlot').text(slot);
-
-                $('#detailsModal').modal('show');
-            });
         });
     </script>
-
-
-
-
 </body>
 
 </html>
