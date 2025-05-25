@@ -1,51 +1,81 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require_once "../../configuration/config.php";
 
-if (!isset($_SESSION['role'])) {
-    header("Location: ../../php/error.php?welcome=Please login to access this page");
-    exit();
+// Ensure session is valid
+if (!isset($_SESSION['student_id'])) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Session expired. Please log in again.'
+    ]);
+    exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
-    $id = intval($_POST['id']);
+$student_id = $_SESSION['student_id']; // This is the internal numeric ID
 
-    // Set the correct status based on the button clicked
-    if (isset($_POST['approve'])) {
-        $status = "Approved";
-    } elseif (isset($_POST['disapprove'])) {
-        $status = "Rejected"; // ✅ Fixed: Changed from 'Disapproved' to 'Rejected'
-    } else {
-        error_log("Invalid action received for ID: " . $id);
-        header("Location: dashboard.php?error=Invalid action");
-        exit();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $date_requested = date("Y-m-d H:i:s");
+    $status = 'Pending';
+
+    // Fetch the school_id using the internal student_id
+    $stmt = $con->prepare("SELECT school_id FROM tbl_student_users WHERE id = ?");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $student = $result->fetch_assoc();
+
+    if (!$student || empty($student['school_id'])) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Student record not found or missing school ID.'
+        ]);
+        exit;
     }
 
-    // Debugging: Log the status update attempt
-    error_log("Updating ID $id to status: $status");
+    $school_id = $student['school_id']; // Use this as the student_id in the clearance request table
 
-    // Update the status in the database
-    $query = "UPDATE tbl_clearance_requests SET status = ? WHERE id = ?";
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("si", $status, $id);
+    // Check if a clearance request already exists for this school_id
+    $checkSql = "SELECT COUNT(*) as count FROM tbl_clearance_requests WHERE student_id = ?";
+    $checkStmt = $con->prepare($checkSql);
+    $checkStmt->bind_param("s", $school_id); // school_id is a string
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
+    $row = $result->fetch_assoc();
 
-    if ($stmt->execute()) {
-        error_log("Update successful for ID: $id");
-        header("Location: StudentDashboard.php?success=Status updated successfully");
-        exit();
-    } else {
-        error_log("Update failed for ID $id: " . $stmt->error);
-        header("Location: dashboard.php?error=Failed to update status");
-        exit();
+    if ($row['count'] > 0) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'You have already submitted a clearance request.'
+        ]);
+        exit;
     }
 
-    $stmt->close();
+    // Insert new request using the school_id
+    $insertSql = "INSERT INTO tbl_clearance_requests (student_id, status, date_requested) VALUES (?, ?, ?)";
+    $insertStmt = $con->prepare($insertSql);
+    $insertStmt->bind_param("sss", $school_id, $status, $date_requested);
+
+    if ($insertStmt->execute()) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Clearance request submitted successfully.'
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error submitting request. Please try again.'
+        ]);
+    }
+
+    $insertStmt->close();
     $con->close();
 } else {
-    error_log("Invalid request detected");
-    header("Location: dashboard.php?error=Invalid request");
-    exit();
+    echo json_encode([
+        'success' => false,
+        'message' => 'Invalid request.'
+    ]);
 }
-
-
- 
+?>
