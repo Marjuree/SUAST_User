@@ -1,8 +1,10 @@
 <?php
 session_start();
 
+header('Content-Type: application/json');
+
 if (!isset($_SESSION['applicant_id'])) {
-    showSweetAlert("Access denied. Please log in first.", "error", "../../php/error.php");
+    echo json_encode(['status' => 'error', 'message' => 'Access denied. Please log in first.']);
     exit;
 }
 
@@ -11,7 +13,7 @@ require_once "../../configuration/config.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_applicant'])) {
 
-    echo ".";
+    // Define expected fields
     $fields = [
         'lname', 'fname', 'mname', 'age', 'religion', 'nationality', 'civilstatus',
         'contact', 'ethnicity', 'bdate', 'gender', 'email', 'purok', 'barangay', 'municipality',
@@ -23,9 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_applicant'])) 
 
     $data = [];
     foreach ($fields as $field) {
-        $data[$field] = mysqli_real_escape_string($con, $_POST[$field] ?? '');
+        $data[$field] = isset($_POST[$field]) ? mysqli_real_escape_string($con, $_POST[$field]) : '';
     }
 
+    // Handle file uploads (image and document)
     $image_blob = null;
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $image_blob = file_get_contents($_FILES['image']['tmp_name']);
@@ -36,97 +39,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_applicant'])) 
         $document_blob = file_get_contents($_FILES['document']['tmp_name']);
     }
 
+    // Build SQL with conditional BLOBs
     $sql = "UPDATE tbl_applicants SET
         lname=?, fname=?, mname=?, age=?, religion=?, nationality=?, civilstatus=?, contact=?,
         ethnicity=?, bdate=?, gender=?, email=?, purok=?, barangay=?, municipality=?, province=?,
         first_option=?, second_option=?, third_option=?, campus=?,
         n_mother=?, n_father=?, c_mother=?, c_father=?, m_occupation=?, f_occupation=?,
         m_address=?, f_address=?, living_status=?, siblings=?, birth_order=?, monthly_income=?,
-        indigenous=?, basic_sector=?, date_applied=?"
-        . ($image_blob ? ", image_blob=?" : "") 
-        . ($document_blob ? ", document_blob=?" : "") 
-        . " WHERE applicant_id=?";
+        indigenous=?, basic_sector=?, date_applied=?";
+
+    if ($image_blob) {
+        $sql .= ", image_blob=?";
+    }
+    if ($document_blob) {
+        $sql .= ", document_blob=?";
+    }
+    $sql .= " WHERE applicant_id=?";
 
     $stmt = $con->prepare($sql);
 
-    // Binding logic
-    if ($image_blob && $document_blob) {
-        $stmt->bind_param(
-            "ssssssssssssssssssssssssssssssssssssssssssb",  // Corrected type string for BLOBs (both image and document)
-            $data['lname'], $data['fname'], $data['mname'], $data['age'], $data['religion'], $data['nationality'],
-            $data['civilstatus'], $data['contact'], $data['ethnicity'], $data['bdate'], $data['gender'],
-            $data['email'], $data['purok'], $data['barangay'], $data['municipality'], $data['province'], $data['first_option'],
-            $data['second_option'], $data['third_option'], $data['campus'], $data['n_mother'], $data['n_father'],
-            $data['c_mother'], $data['c_father'], $data['m_occupation'], $data['f_occupation'], $data['m_address'],
-            $data['f_address'], $data['living_status'], $data['siblings'], $data['birth_order'], $data['monthly_income'],
-            $data['indigenous'], $data['basic_sector'], $data['date_applied'], $image_blob, $document_blob, $applicant_id
-        );
-    } elseif ($image_blob) {
-        $stmt->bind_param(
-            "sssssssssssssssssssssssssssssssssssssb",  // Corrected type string for image BLOB only
-            $data['lname'], $data['fname'], $data['mname'], $data['age'], $data['religion'], $data['nationality'],
-            $data['civilstatus'], $data['contact'], $data['ethnicity'], $data['bdate'], $data['gender'],
-            $data['email'], $data['purok'], $data['barangay'], $data['municipality'], $data['province'], $data['first_option'],
-            $data['second_option'], $data['third_option'], $data['campus'], $data['n_mother'], $data['n_father'],
-            $data['c_mother'], $data['c_father'], $data['m_occupation'], $data['f_occupation'], $data['m_address'],
-            $data['f_address'], $data['living_status'], $data['siblings'], $data['birth_order'], $data['monthly_income'],
-            $data['indigenous'], $data['basic_sector'], $data['date_applied'], $image_blob, $applicant_id
-        );
-    } elseif ($document_blob) {
-        $stmt->bind_param(
-            "sssssssssssssssssssssssssssssssssssssb",  // Corrected type string for document BLOB only
-            $data['lname'], $data['fname'], $data['mname'], $data['age'], $data['religion'], $data['nationality'],
-            $data['civilstatus'], $data['contact'], $data['ethnicity'], $data['bdate'], $data['gender'],
-            $data['email'], $data['purok'], $data['barangay'], $data['municipality'], $data['province'], $data['first_option'],
-            $data['second_option'], $data['third_option'], $data['campus'], $data['n_mother'], $data['n_father'],
-            $data['c_mother'], $data['c_father'], $data['m_occupation'], $data['f_occupation'], $data['m_address'],
-            $data['f_address'], $data['living_status'], $data['siblings'], $data['birth_order'], $data['monthly_income'],
-            $data['indigenous'], $data['basic_sector'], $data['date_applied'], $document_blob, $applicant_id
-        );
-    } else {
-        $stmt->bind_param(
-            "sssssssssssssssssssssssssssssssssssi",  // No BLOBs, just strings and integer
-            $data['lname'], $data['fname'], $data['mname'], $data['age'], $data['religion'], $data['nationality'],
-            $data['civilstatus'], $data['contact'], $data['ethnicity'], $data['bdate'], $data['gender'],
-            $data['email'], $data['purok'], $data['barangay'], $data['municipality'], $data['province'], $data['first_option'],
-            $data['second_option'], $data['third_option'], $data['campus'], $data['n_mother'], $data['n_father'],
-            $data['c_mother'], $data['c_father'], $data['m_occupation'], $data['f_occupation'], $data['m_address'],
-            $data['f_address'], $data['living_status'], $data['siblings'], $data['birth_order'], $data['monthly_income'],
-            $data['indigenous'], $data['basic_sector'], $data['date_applied'], $applicant_id
-        );
+    if (!$stmt) {
+        echo json_encode(['status' => 'error', 'message' => 'Database error: '.$con->error]);
+        exit;
     }
 
+    // Bind params dynamically
+    $types = str_repeat('s', count($fields)); // string types for all text fields
+    if ($image_blob) $types .= 'b'; // blob type
+    if ($document_blob) $types .= 'b'; // blob type
+    $types .= 'i'; // integer for applicant_id
+
+    // Build array of params
+    $params = [];
+    foreach ($fields as $field) {
+        $params[] = $data[$field];
+    }
+    if ($image_blob) $params[] = $image_blob;
+    if ($document_blob) $params[] = $document_blob;
+    $params[] = (int)$applicant_id;
+
+    // Use call_user_func_array for dynamic binding
+    // Prepare references for bind_param
+    $bind_names[] = $types;
+    for ($i=0; $i<count($params); $i++) {
+        $bind_name = 'bind' . $i;
+        $$bind_name = $params[$i];
+        $bind_names[] = &$$bind_name;
+    }
+
+    call_user_func_array([$stmt, 'bind_param'], $bind_names);
+
+    // Execute
     if ($stmt->execute()) {
-        showSweetAlert("Applicant updated successfully!", "success", "applicant.php");
+        echo json_encode(['status' => 'success', 'message' => 'Applicant updated successfully!']);
     } else {
-        showSweetAlert("Error updating applicant.", "error", "applicant.php");
+        echo json_encode(['status' => 'error', 'message' => 'Error updating applicant: ' . $stmt->error]);
     }
 
     $stmt->close();
     $con->close();
+    exit;
 
 } else {
-    showSweetAlert("Invalid request", "error", "applicant.php");
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
     exit;
 }
-
-
-// 🔔 SweetAlert2 Alert Function
-function showSweetAlert($message, $type, $redirect) {
-    $icon = $type === 'success' ? 'success' : 'error';
-    echo "
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-    <script>
-        Swal.fire({
-            icon: '$icon',
-            title: '".ucfirst($type)."',
-            text: `$message`,
-            confirmButtonText: 'OK',
-            allowOutsideClick: false
-        }).then(() => {
-            window.location.href = '$redirect';
-        });
-    </script>";
-}
 ?>
-
