@@ -109,17 +109,17 @@ if (empty($full_name))
                     <div class="stepwizard-step" role="tab" aria-selected="true" tabindex="0">
                         <button type="button" class="btn btn-primary btn-circle step-btn" data-step="1"
                             aria-controls="step-content" aria-selected="true" aria-label="Step 1: Profile">1</button>
-                        <p>Step 1</p>
+                        <p>Step 1: Fill out Slot Reservation Form</p>
                     </div>
                     <div class="stepwizard-step" role="tab" aria-selected="false" tabindex="-1">
                         <button type="button" class="btn btn-default btn-circle step-btn" data-step="2"
                             aria-controls="step-content" aria-label="Step 2: Documents">2</button>
-                        <p>Step 2</p>
+                        <p>Step 2: Choose Exam Schedule</p>
                     </div>
                     <div class="stepwizard-step" role="tab" aria-selected="false" tabindex="-1">
                         <button type="button" class="btn btn-default btn-circle step-btn" data-step="3"
                             aria-controls="step-content" aria-label="Step 3: Preview">3</button>
-                        <p>Step 3</p>
+                        <p>Step 3: View Details</p>
 
                     </div>
                 </div>
