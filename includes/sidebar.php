@@ -58,24 +58,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ["link" => "../Student Users/StudentDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
                     ["link" => "../Student Users/announcement.php", "icon" => "fa-tachometer-alt", "label" => "Announcements"]
                 ],
-             "Employee" => [
-                ["link" => "../Employee Users/leave_requests.php", "icon" => "fa-envelope", "label" => "Leave Request"],
-                ["link" => "../Employee Users/certification_requests.php", "icon" => "fa-certificate", "label" => "Certification Request"],
-                ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service record request"],
-                ["link" => "../Employee Users/chat.php", "icon" => "fa-comments", "label" => "Personnel Inquiry"]
-
+                "Employee" => [
+                    ["link" => "../Employee Users/leave_requests.php", "icon" => "fa-envelope", "label" => "Leave Request"],
+                    ["link" => "../Employee Users/certification_requests.php", "icon" => "fa-certificate", "label" => "Certification Request"],
+                    ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service Request"],
+                    ["link" => "../Employee Users/chat.php", "icon" => "fa-comments", "label" => "Personnel Inquiry"]
                 ],
-
                 "Applicant" => [
                     ["link" => "../Applicant Users/dashboard.php", "icon" => "fas fa-tachometer-alt", "label" => "Dashboard"],
                     ["link" => "../Applicant Users/index.php", "icon" => "fas fa-tachometer-alt", "label" => "Reservation"],
-                 
                     ["link" => "../Applicant Users/announcement.php", "icon" => "fa-bullhorn", "label" => "Announcement"],
                     ["link" => "../Applicant Users/contact.php", "icon" => "fa-envelope", "label" => "Contact Us"]
                 ]
             ];
 
-            // Generate dynamic sidebar
             if (isset($menu_items[$role])) {
                 foreach ($menu_items[$role] as $item) {
                     $link = secure_output($item['link']);
@@ -83,11 +79,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     $label = secure_output($item['label']);
                     $is_active = (basename($link) === $current_page) ? "active" : "";
 
-                    // Optional attributes
                     $extra_class = isset($item['class']) ? ' ' . secure_output($item['class']) : '';
                     $toggle_attr = isset($item['toggle']) ? ' data-toggle="' . secure_output($item['toggle']) . '"' : '';
                     $target_attr = isset($item['target']) ? ' data-target="' . secure_output($item['target']) . '"' : '';
-                    $data_attr = isset($item['data']) ? ' data-target="' . secure_output($item['data']) . '"' : ''; // for toggle-table
+                    $data_attr = isset($item['data']) ? ' data-target="' . secure_output($item['data']) . '"' : '';
 
                     echo "<li class='$is_active'>
                             <a href='$link' class='menu-link$extra_class'$toggle_attr$target_attr$data_attr>
@@ -101,7 +96,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </ul>
     </section>
 </aside>
-
 
 <!-- Sidebar Styles -->
 <style>
@@ -120,7 +114,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 }
 
 .custom-sidebar.sidebar-collapsed {
-    transform: translateX(-100%); /* Sidebar is hidden by default when collapsed */
+    transform: translateX(-100%);
 }
 
 .custom-sidebar-menu {
@@ -163,17 +157,45 @@ $current_page = basename($_SERVER['PHP_SELF']);
 @media (max-width: 768px) {
     .custom-sidebar {
         transform: translateX(-100%);
-         
     }
 
     .custom-sidebar.active {
-        transform: translateX(0); 
+        transform: translateX(0);
     }
 
-    /* Show sidebar when active */
     .custom-sidebar.sidebar-collapsed {
-        transform: translateX(0); 
+        transform: translateX(0);
     }
 }
-
 </style>
+
+<!-- Sidebar Toggle Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.querySelector('.sidebar-toggle');
+
+    if (toggleBtn && sidebar) {
+        toggleBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('sidebar-collapsed');
+            }
+        });
+    }
+});
+
+document.addEventListener('click', function (e) {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.querySelector('.sidebar-toggle');
+
+    if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+        if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+            sidebar.classList.remove('active');
+        }
+    }
+});
+</script>
