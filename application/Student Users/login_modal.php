@@ -77,18 +77,38 @@
                             placeholder="Choose a Username" required>
                     </div>
 
+                    <!-- New: Faculty field -->
+                    <div class="form-group">
+                        <label for="student_faculty">Faculty</label>
+                        <input type="text" class="form-control" id="student_faculty" name="student_faculty"
+                            placeholder="Enter Faculty" required>
+                    </div>
+
+                    <!-- New: Year Level field -->
+                    <div class="form-group">
+                        <label for="student_year_level">Year Level</label>
+                        <select class="form-control" id="student_year_level" name="student_year_level" required>
+                            <option value="" disabled selected>Select Year Level</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="student_password">Password</label>
                         <input type="password" class="form-control" id="reg_student_password" name="student_password"
                             placeholder="Password" required minlength="8">
-                        <small id="reg_passwordHelp" ></small>
+                        <small id="reg_passwordHelp"></small>
                     </div>
                     <div class="form-group">
                         <label for="student_confirm_password">Confirm Password</label>
                         <input type="password" class="form-control" id="reg_student_confirm_password"
                             name="student_confirm_password" placeholder="Confirm Password" required minlength="8">
-                        <small id="reg_confirmPasswordHelp" ></small>
+                        <small id="reg_confirmPasswordHelp"></small>
                     </div>
+
 
 
                     <button type="submit" class="btn btn-success" name="register_student">Register</button>
@@ -102,6 +122,7 @@
         </div>
     </div>
 </div>
+
 
 
 <script>
