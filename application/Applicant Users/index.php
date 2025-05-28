@@ -29,6 +29,8 @@ if (empty($full_name))
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="../../css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <style>
         .stepwizard {
             display: flex;
@@ -109,17 +111,17 @@ if (empty($full_name))
                     <div class="stepwizard-step" role="tab" aria-selected="true" tabindex="0">
                         <button type="button" class="btn btn-primary btn-circle step-btn" data-step="1"
                             aria-controls="step-content" aria-selected="true" aria-label="Step 1: Profile">1</button>
-                        <p>Step 1: Fill out Slot Reservation Form</p>
+                        <p>Step 1</p>
                     </div>
                     <div class="stepwizard-step" role="tab" aria-selected="false" tabindex="-1">
                         <button type="button" class="btn btn-default btn-circle step-btn" data-step="2"
                             aria-controls="step-content" aria-label="Step 2: Documents">2</button>
-                        <p>Step 2: Choose Exam Schedule</p>
+                        <p>Step 2</p>
                     </div>
                     <div class="stepwizard-step" role="tab" aria-selected="false" tabindex="-1">
                         <button type="button" class="btn btn-default btn-circle step-btn" data-step="3"
                             aria-controls="step-content" aria-label="Step 3: Preview">3</button>
-                        <p>Step 3: View Details</p>
+                        <p>Step 3</p>
 
                     </div>
                 </div>
@@ -300,11 +302,11 @@ if (empty($full_name))
 
                                     <!-- Document Upload -->
                                     <div class="col-12 col-md-6 mb-3">
-                                        <label for="document" class="form-label">Upload Document</label>
+                                        <label for="document" class="form-label">Suast Appication Form</label>
                                         <input type="file" class="form-control" name="document" id="document"
                                             accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
                                             style="display: block; position: relative; z-index: 1; opacity: 1;">
-                                        <small class="form-text text-muted">Accepted formats: .pdf, .doc, .docx, .jpg,
+                                        <small class="form-text text-muted">Accepted formats: .Certificate, Tor and Card,
                                             .jpeg,
                                             .png</small>
                                     </div>
@@ -598,7 +600,22 @@ if (empty($full_name))
                                     ?>
                                 </div>
 
+                                <!-- Checkbox with link to open modal -->
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="privacy_notice" name="privacy_notice_accepted"
+                                                value="1" required>
+                                            I have read and agree to the <a href="#" data-toggle="modal"
+                                                data-target="#privacyModal">Privacy Policy</a>.
+                                        </label>
+                                    </div>
+                                </div>
+
+
                             </div>
+
+
                         </div>
 
                         <div class="modal-footer">
@@ -607,18 +624,70 @@ if (empty($full_name))
                     </form>
 
                 </div>
-                
+
 
             </section>
         </aside>
     </div>
 
+    <!-- Bootstrap 3 Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="privacyModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="privacyModalLabel">Privacy Policy</h4>
+                </div>
+                <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                    <h5>Data Privacy Statement</h5>
+                    <p>
+                        We value your privacy and are committed to protecting your personal information. The data you
+                        provide during registration will be used solely for the purpose of managing your student account
+                        and providing services related to your academic experience.
+                    </p>
+                    <p>
+                        Your personal information will not be shared with third parties without your explicit consent,
+                        except as required by law. We implement appropriate security measures to safeguard your data
+                        from unauthorized access, alteration, or disclosure.
+                    </p>
+                    <h6>Information Collected</h6>
+                    <!-- <ul>
+                        <li>Full name</li>
+                        <li>Email address</li>
+                        <li>School ID</li>
+                        <li>Username and Password</li>
+                        <li>Faculty and Year Level</li>
+                    </ul> -->
+                    <p>
+                        By agreeing to this privacy policy, you consent to the collection and use of your data as
+                        described above.
+                    </p>
+                    <p>
+                        If you have any questions about our data privacy practices, please contact our support team.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="../../js/jquery.min.js"></script>
     <script src="../../js/bootstrap.bundle.min.js"></script>
 
     <script src="../../assets/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- jQuery (required for Bootstrap JS) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Bootstrap 3 JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </body>
 
