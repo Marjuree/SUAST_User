@@ -9,7 +9,8 @@ $allowed_roles = ["SUAST", "Accounting", "HRMO", "Student", "Employee", "Applica
 $role = in_array($_SESSION['role'], $allowed_roles) ? $_SESSION['role'] : 'Applicant';
 
 // Escape output to prevent XSS
-function secure_output($data) {
+function secure_output($data)
+{
     return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
 }
 
@@ -66,7 +67,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 ],
                 "Applicant" => [
                     ["link" => "../Applicant Users/dashboard.php", "icon" => "fas fa-tachometer-alt", "label" => "Dashboard"],
-                    ["link" => "../Applicant Users/index.php", "icon" => "fas fa-tachometer-alt", "label" => "Reservation"],
+                    ["link" => "../Applicant Users/index.php", "icon" => "fas fa-calendar-check", "label" => "Reservation"],
                     ["link" => "../Applicant Users/announcement.php", "icon" => "fa-bullhorn", "label" => "Announcement"],
                     ["link" => "../Applicant Users/contact.php", "icon" => "fa-envelope", "label" => "Contact Us"]
                 ]
@@ -99,103 +100,179 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <!-- Sidebar Styles -->
 <style>
-.custom-sidebar {
-    width: 220px;
-    background-color: #002B5B;
-    color: #fff;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    font-family: 'Segoe UI', sans-serif;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    transition: transform 0.3s ease;
-}
-
-.custom-sidebar.sidebar-collapsed {
-    transform: translateX(-100%);
-}
-
-.custom-sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin-top: 100px;
-}
-
-.custom-sidebar-menu li {
-    transition: background 0.3s;
-}
-
-.custom-sidebar-menu li a {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    border-left: 4px solid transparent;
-}
-
-.custom-sidebar-menu li a i {
-    margin-right: 12px;
-    font-size: 18px;
-    width: 25px;
-    text-align: center;
-}
-
-.custom-sidebar-menu li:hover,
-.custom-sidebar-menu li.active {
-    background-color: #0056b3;
-}
-
-.custom-sidebar-menu li.active a {
-    font-weight: bold;
-    border-left: 4px solid #FFD700;
-}
-
-@media (max-width: 768px) {
     .custom-sidebar {
-        transform: translateX(-100%);
-    }
-
-    .custom-sidebar.active {
-        transform: translateX(0);
+        width: 220px;
+        background-color: #002B5B;
+        color: #fff;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        font-family: 'Segoe UI', sans-serif;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: transform 0.3s ease;
     }
 
     .custom-sidebar.sidebar-collapsed {
-        transform: translateX(0);
+        transform: translateX(-100%);
     }
-}
+
+    .custom-sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin-top: 100px;
+    }
+
+    .custom-sidebar-menu li {
+        transition: background 0.3s;
+    }
+
+    .custom-sidebar-menu li a {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 15px;
+        border-left: 4px solid transparent;
+    }
+
+    .custom-sidebar-menu li a i {
+        margin-right: 12px;
+        font-size: 18px;
+        width: 25px;
+        text-align: center;
+    }
+
+    .custom-sidebar-menu li:hover,
+    .custom-sidebar-menu li.active {
+        background-color: #0056b3;
+    }
+
+    .custom-sidebar-menu li.active a {
+        font-weight: bold;
+        border-left: none;
+        position: relative;
+    }
+
+    .custom-sidebar-menu li.active a i {
+        position: relative;
+        padding-bottom: 6px;
+    }
+
+    .custom-sidebar-menu li.active a i::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 3px;
+        background-color: #FFD700;
+        border-radius: 2px;
+    }
+
+
+    @media (max-width: 768px) {
+        .custom-sidebar {
+            width: 100%;
+            height: 60px;
+            bottom: 0;
+            left: 0;
+            top: auto;
+            margin-bottom: -10px;
+            transform: translateY(0);
+            background-color: #002B5B;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+        }
+
+        .custom-sidebar-menu {
+            display: flex;
+            margin-top: 0;
+            padding: 0 10px;
+            width: 100%;
+            justify-content: space-around;
+            gap: 25px;
+        }
+
+        .custom-sidebar-menu li {
+            flex: 1 1 auto;
+            text-align: center;
+            margin: 0;
+        }
+
+        .custom-sidebar-menu li a {
+            padding: 8px 0;
+            border-left: none;
+            font-size: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            background: none;
+            /* no background */
+            border-radius: 0;
+            transition: none;
+        }
+
+        .custom-sidebar-menu li a:hover {
+            color: #ffd700;
+            /* optional: subtle color on hover */
+        }
+
+        .custom-sidebar-menu li a i {
+            margin: 0;
+            font-size: 22px;
+            line-height: 1;
+            color: #fff;
+        }
+
+        .custom-sidebar-menu li a span {
+            display: none;
+        }
+
+        /* Remove active style */
+        .custom-sidebar-menu li.active {
+            background: none !important;
+        }
+    }
 </style>
 
 <!-- Sidebar Toggle Script -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.querySelector('.sidebar-toggle');
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.querySelector('.sidebar-toggle');
 
-    if (toggleBtn && sidebar) {
-        toggleBtn.addEventListener('click', function (e) {
-            e.preventDefault();
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener('click', function (e) {
+                e.preventDefault();
 
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle('active');
-            } else {
-                sidebar.classList.toggle('sidebar-collapsed');
-            }
-        });
-    }
-});
-
-document.addEventListener('click', function (e) {
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.querySelector('.sidebar-toggle');
-
-    if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
-        if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-            sidebar.classList.remove('active');
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.toggle('active');
+                } else {
+                    sidebar.classList.toggle('sidebar-collapsed');
+                }
+            });
         }
-    }
-});
+    });
+
+    // Click outside closes sidebar on mobile
+    document.addEventListener('click', function (e) {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.querySelector('.sidebar-toggle');
+
+        if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+            if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        }
+    });
+
 </script>
