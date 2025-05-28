@@ -18,12 +18,14 @@
           </div>
           <div class="form-group">
             <label for="applicant_password_login">Password</label>
-            <input type="password" class="form-control" id="applicant_password_login" name="applicant_password" required>
+            <input type="password" class="form-control" id="applicant_password_login" name="applicant_password"
+              required>
           </div>
           <button type="submit" name="btn_applicant_login" class="btn btn-primary btn-block">
             <i class="fas fa-lock"></i> Login
           </button>
-          <button type="button" class="btn btn-secondary btn-block mt-2" data-toggle="modal" data-target="#agreementModal">
+          <button type="button" class="btn btn-secondary btn-block mt-2" data-toggle="modal"
+            data-target="#agreementModal">
             <i class="fas fa-pencil-alt"></i> Register
           </button>
         </form>
@@ -33,7 +35,8 @@
 </div>
 
 <!-- Agreement Modal -->
-<div class="modal fade" id="agreementModal" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel" aria-hidden="true">
+<div class="modal fade" id="agreementModal" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -45,7 +48,8 @@
       <div class="modal-body">
         <p>By participating in this data collection, you agree to the following:</p>
         <ol>
-          <li>All provided data will be processed in compliance with the Data Privacy Act of 2012 (Republic Act 10173).</li>
+          <li>All provided data will be processed in compliance with the Data Privacy Act of 2012 (Republic Act 10173).
+          </li>
           <li>Your data will be used exclusively for this application.</li>
           <li>You have the right to access, update, and delete your personal data at any time.</li>
         </ol>
@@ -53,7 +57,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">I Disagree</button>
-        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#registerApplicant" data-dismiss="modal">I Agree</a>
+        <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#registerApplicant"
+          data-dismiss="modal">I Agree</a>
       </div>
     </div>
   </div>
@@ -93,15 +98,24 @@
           </div>
           <div class="form-group">
             <label for="applicant_password_register">Password</label>
-            <input type="password" class="form-control" id="applicant_password_register" name="applicant_password" required minlength="8">
+            <input type="password" class="form-control" id="applicant_password_register" name="applicant_password"
+              required minlength="8">
             <small id="passwordHelp" class="text-muted"></small>
           </div>
+          <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required
+              minlength="8">
+          </div>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1" required>
-            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the Privacy Notice</label>
+            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
+              required>
+            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the Privacy
+              Notice</label>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Register</button>
         </form>
+
       </div>
     </div>
   </div>
@@ -109,41 +123,84 @@
 
 <style>
   #passwordHelp.strong {
-  color: green !important;
-}
-#passwordHelp.weak {
-  color: red !important;
-}
+    color: green !important;
+  }
 
+  #passwordHelp.weak {
+    color: red !important;
+  }
 </style>
 <!-- Password Strength Check Script -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-  const passwordInput = document.getElementById('applicant_password_register');
-  const helpText = document.getElementById('passwordHelp');
+    const passwordInput = document.getElementById('applicant_password_register');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const helpText = document.getElementById('passwordHelp');
+    const form = document.querySelector('form');
 
-  if (!passwordInput) return;
+    if (!passwordInput || !confirmPasswordInput || !form) return;
 
-  passwordInput.addEventListener('input', function () {
-    const password = passwordInput.value;
-    const strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+    // Password strength validation
+    passwordInput.addEventListener('input', function () {
+      const password = passwordInput.value;
+      const strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
-    if (password.length === 0) {
-      helpText.textContent = '';
-      helpText.classList.remove('strong', 'weak');
-    } else if (!strongPattern.test(password)) {
-      helpText.textContent = 'Password must include uppercase, lowercase, number, special character, and be at least 8 characters.';
-      helpText.classList.add('weak');
-      helpText.classList.remove('strong');
-    } else {
-      helpText.textContent = 'Strong password!';
-      helpText.classList.add('strong');
-      helpText.classList.remove('weak');
+      if (password.length === 0) {
+        helpText.textContent = '';
+        helpText.classList.remove('strong', 'weak');
+      } else if (!strongPattern.test(password)) {
+        helpText.textContent = 'Password must include uppercase, lowercase, number, special character, and be at least 8 characters.';
+        helpText.classList.add('weak');
+        helpText.classList.remove('strong');
+      } else {
+        helpText.textContent = 'Strong password!';
+        helpText.classList.add('strong');
+        helpText.classList.remove('weak');
+      }
+
+      checkPasswordsMatch();
+    });
+
+    // Real-time password matching check
+    confirmPasswordInput.addEventListener('input', checkPasswordsMatch);
+
+    function checkPasswordsMatch() {
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      // Create or select the helper text for confirm password
+      let confirmHelper = document.getElementById('confirmPasswordHelp');
+      if (!confirmHelper) {
+        confirmHelper = document.createElement('small');
+        confirmHelper.id = 'confirmPasswordHelp';
+        confirmHelper.classList.add('text-muted');
+        confirmPasswordInput.parentNode.appendChild(confirmHelper);
+      }
+
+      if (confirmPassword.length === 0) {
+        confirmHelper.textContent = '';
+      } else if (password !== confirmPassword) {
+        confirmHelper.textContent = 'Passwords do not match!';
+        confirmHelper.style.color = 'red';
+      } else {
+        confirmHelper.textContent = 'Passwords match!';
+        confirmHelper.style.color = 'green';
+      }
     }
-  });
-});
 
+    // Confirm password matching on form submission
+    form.addEventListener('submit', function (e) {
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+      }
+    });
+  });
 </script>
+
 
 <!-- Taker Side Modal -->
 <div id="takerModal" class="modal">
