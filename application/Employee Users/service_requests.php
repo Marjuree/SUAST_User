@@ -237,17 +237,20 @@ $infoStmt->close();
         <?php require_once('../../includes/sidebar.php'); ?>
 
         <aside class="right-side">
-            <section class="content-header">
-                <h1>Dashboard</h1>
-                <p>Welcome, <strong><?php echo $first_name; ?></strong></p>
-            </section>
+
 
             <section class="content">
                 <div class="row">
                     <div class="box">
+                        <a href="EmployeeDashboard.php" class="btn btn-primary mb-3"
+                            style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
+                            <i class="fas fa-arrow-left curved"></i>
+                        </a>
                         <div class="box-body">
-                            <h4>Service Request Progress</h4>
-
+                            <section class="content-header text-center">
+                                <h1>Dashboard</h1>
+                                <p>Welcome, <strong><?php echo $first_name; ?></strong></p>
+                            </section>
                             <p><strong><?= htmlspecialchars($faculty) ?>:</strong></p>
                             <div class="progress-tracker-wrapper">
 
@@ -299,7 +302,7 @@ $infoStmt->close();
 
 
                             <div id="serviceRequests">
-  <div
+                                <div
                                     style="position: absolute; border-top-left-radius: 30px;
                                      border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px;  max-width: 350px; width: 337px;">
                                     <h5
@@ -452,7 +455,7 @@ $infoStmt->close();
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <div class="col-sm-12 text-center">
+                                                    <div class="col-sm-12 text-left">
                                                         <button class="btn btn-sm btn-info edit-btn"
                                                             data-id="<?= $row['id'] ?>" data-name="<?= $name ?>"
                                                             data-request_type="<?= $requestType ?>"
@@ -460,13 +463,13 @@ $infoStmt->close();
                                                             data-faculty="<?= $faculty ?>"
                                                             data-reason="<?= htmlspecialchars($row['reason']) ?>"
                                                             title="Edit Request"
-                                                            style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important; width: 80px; margin-right: 10px;">
+                                                            style="font-size: 12px; height: 30px; width: 80px; margin-right: 10px;">
                                                             Edit
                                                         </button>
 
                                                         <button class="btn btn-sm btn-danger delete-btn"
                                                             data-id="<?= $row['id'] ?>" title="Delete Request"
-                                                            style="font-size: 12px; height: 30px; border-radius: 50px !important; width: 80px;">
+                                                            style="font-size: 12px; height: 30px; width: 80px;">
                                                             Delete
                                                         </button>
                                                     </div>
@@ -474,7 +477,43 @@ $infoStmt->close();
                                             </form>
                                         </div>
                                     </div>
+                                    <style>
+                                        .edit-btn {
+                                            background-color: #003366 !important;
+                                            border-radius: 50px !important;
+                                            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+                                        }
 
+                                        .edit-btn:hover,
+                                        .edit-btn:focus {
+                                            background-color: #002244 !important;
+                                            cursor: pointer;
+                                            box-shadow: 0 0 8px #003366;
+                                        }
+
+                                        .edit-btn:active {
+                                            background-color: #001122 !important;
+                                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+                                        }
+
+                                        .delete-btn {
+                                            background-color: #dc3545 !important;
+                                            border-radius: 50px !important;
+                                            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+                                        }
+
+                                        .delete-btn:hover,
+                                        .delete-btn:focus {
+                                            background-color: #b02a37 !important;
+                                            cursor: pointer;
+                                            box-shadow: 0 0 8px #dc3545;
+                                        }
+
+                                        .delete-btn:active {
+                                            background-color: #7a1e23 !important;
+                                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+                                        }
+                                    </style>
                                     <!-- Reason Modal -->
                                     <div class="modal fade" id="reasonModal<?= $row['id'] ?>" tabindex="-1" role="dialog"
                                         aria-labelledby="reasonModalLabel<?= $row['id'] ?>" aria-hidden="true">
