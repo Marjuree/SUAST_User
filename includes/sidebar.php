@@ -38,7 +38,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ["link" => "../AdminSUAST/exam_schedule.php", "icon" => "fa-calendar", "label" => "Manage Classroom"],
                     ["link" => "../AdminSUAST/manage_reservations.php", "icon" => "fa-book", "label" => "Manage Reservation"],
                     ["link" => "../AdminSUAST/contact.php", "icon" => "fa-envelope", "label" => "Manage Contact"],
-                    ["link" => "../AdminSUAST/announcement.php", "icon" => "fa-bullhorn", "label" => "Announcement"],
+                    ["link" => "../AdminSUAST/announcement.php", "icon" => "fa-bell", "label" => "Announcement"],
                     ["link" => "../logs/logs.php", "icon" => "fa-history", "label" => "Login History"],
                 ],
                 "Accounting" => [
@@ -46,7 +46,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     ["link" => "../AdminAccounting/permit.php", "icon" => "fa-file", "label" => "Permit Request"],
                     ["link" => "../AdminAccounting/clearance.php", "icon" => "fa-clipboard-check", "label" => "Clearance Request"],
                     ["link" => "../AdminAccounting/student_balances.php", "icon" => "fa-book", "label" => "Student Record"],
-                    ["link" => "../AdminAccounting/announcement.php", "icon" => "fa-bullhorn", "label" => "Announcement"],
+                    ["link" => "../AdminAccounting/announcement.php", "icon" => "fa-bell", "label" => "Announcement"],
                 ],
                 "HRMO" => [
                     ["link" => "../AdminHRMO/HRMODashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
@@ -57,18 +57,20 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 ],
                 "Student" => [
                     ["link" => "../Student Users/StudentDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
-                    ["link" => "../Student Users/announcement.php", "icon" => "fa-tachometer-alt", "label" => "Announcements"]
+                    ["link" => "../Student Users/announcement.php", "icon" => "fa-bell", "label" => "Announcements"]
                 ],
                 "Employee" => [
-                    ["link" => "../Employee Users/leave_requests.php", "icon" => "fa-envelope", "label" => "Leave Request"],
-                    ["link" => "../Employee Users/certification_requests.php", "icon" => "fa-certificate", "label" => "Certification Request"],
-                    ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service Request"],
-                    // ["link" => "../Employee Users/chat.php", "icon" => "fa-comments", "label" => "Personnel Inquiry"]
+                    ["link" => "../Employee Users/EmployeeDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
+                    ["link" => "../Employee Users/contact.php", "icon" => "fa-envelope", "label" => "Manage Contact"],
+
+                    // ["link" => "../Employee Users/leave_requests.php", "icon" => "fa-envelope", "label" => "Leave Request"],
+                    // ["link" => "../Employee Users/certification_requests.php", "icon" => "fa-certificate", "label" => "Certification Request"],
+                    // ["link" => "../Employee Users/service_requests.php", "icon" => "fa-wrench", "label" => "Service Request"],
                 ],
                 "Applicant" => [
                     ["link" => "../Applicant Users/dashboard.php", "icon" => "fas fa-tachometer-alt", "label" => "Dashboard"],
                     ["link" => "../Applicant Users/index.php", "icon" => "fas fa-calendar-check", "label" => "Reservation"],
-                    ["link" => "../Applicant Users/announcement.php", "icon" => "fa-bullhorn", "label" => "Announcement"],
+                    ["link" => "../Applicant Users/announcement.php", "icon" => "fa-bell", "label" => "Announcement"],
                     ["link" => "../Applicant Users/contact.php", "icon" => "fa-envelope", "label" => "Contact Us"]
                 ]
             ];
@@ -93,7 +95,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 }
             }
             ?>
-            <li><a href="../../logout.php"><i class="fa fa-sign-out-alt"></i> <span>Logout</span></a></li>
+            <!-- <li><a href="../../logout.php"><i class="fa fa-sign-out-alt"></i> <span>Logout</span></a></li> -->
         </ul>
     </section>
 </aside>
