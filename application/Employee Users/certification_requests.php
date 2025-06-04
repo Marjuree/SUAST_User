@@ -240,16 +240,20 @@ $infoStmt->close();
         <?php require_once('../../includes/sidebar.php'); ?>
 
         <aside class="right-side">
-            <section class="content-header">
-                <h1>Certification Request</h1>
-                <p>Welcome, <strong><?= $first_name ?></strong></p>
-            </section>
+
 
             <section class="content">
                 <div class="row">
                     <div class="box">
+                        <a href="EmployeeDashboard.php" class="btn btn-primary mb-3"
+                            style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
+                            <i class="fas fa-arrow-left curved"></i>
+                        </a>
                         <div class="box-body">
-                            <h4>Certification Request Progress</h4>
+                            <section class="content-header text-center">
+                                <h1>Certification Request</h1>
+                                <p>Welcome, <strong><?= $first_name ?></strong></p>
+                            </section>
 
                             <p><strong><?= htmlspecialchars($faculty) ?>:</strong></p>
                             <div class="progress-tracker-wrapper">
