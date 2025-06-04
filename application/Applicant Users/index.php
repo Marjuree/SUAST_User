@@ -198,7 +198,7 @@ if (empty($full_name))
                                         $personal = [
                                             "lname" => "Last Name",
                                             "fname" => "First Name",
-                                            "mname" => "Middle Name",
+                                            "mname" => "Middle Name (Optional)",
                                             "religion" => "Religion",
                                             "nationality" => "Nationality",
                                             "civilstatus" => "Civil Status"
