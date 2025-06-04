@@ -106,7 +106,7 @@
 
 <!-- Applicant Registration Modal -->
 <div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
-  style="margin-top: 70px; margin-top: 40px;">
+  style="margin-top: 70px; ">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <!-- Centered and small modal -->
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border:none;">
@@ -123,7 +123,7 @@
         </button>
       </div>
 
-      <div class="modal-body px-3 px-sm-4" style="outline: none !important; box-shadow: none !important; border:none;">
+      <div class="modal-body px-3 px-sm-4" style="outline: none !important; box-shadow: none !important; border:none; margin-bottom: 100px;">
         <form action="register_applicant.php" method="POST">
           <div class="form-group">
             <label for="first_name">First Name</label>
