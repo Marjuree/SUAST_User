@@ -1,5 +1,5 @@
 <!-- Login Modal -->
-<div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Updated Modal Header -->
@@ -48,7 +48,7 @@
 
 <!-- Agreement Modal -->
 <div class="modal fade" id="agreementModal2" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel"
-  aria-hidden="true">
+  aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -95,7 +95,7 @@
 </div>
 
 <!-- Employee Registration Modal -->
-<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border: none;">
       <div class="modal-header flex-column align-items-center">
