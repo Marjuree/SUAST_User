@@ -34,12 +34,12 @@ $total_statuses = ($status && strtolower($status) !== 'pending') ? 1 : 0;
         <img src="../../img/uni.png" alt="Logo" style="width: 70px; height: auto;">
     </a>
     <nav class="navbar navbar-static-top">
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
+        <!-- <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </a>
+        </a> -->
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Message Modal Trigger -->
@@ -160,7 +160,7 @@ $total_statuses = ($status && strtolower($status) !== 'pending') ? 1 : 0;
                                 margin: 0 auto 20px auto;">
                             <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                         </div>
-                        <h3 style="margin-bottom: 10px;"><?php echo $fullName; ?></h3>
+                        <h3 style="margin-bottom: 10px; font-family: 'Poppins', sans-serif !important;"><?php echo $fullName; ?></h3>
                         <p style="margin-bottom: 25px; color: #555;"><?php echo $email; ?></p>
                         <div style="max-width: 200px; margin-left: 30px; font-size: 16px; font-weight: 500;">
                             <!-- Edit Profile Link -->
@@ -194,6 +194,12 @@ $total_statuses = ($status && strtolower($status) !== 'pending') ? 1 : 0;
     </div>
 </div>
 
+<style>
+    .form-group {
+        width: 100%;
+        max-width: 500px;
+    }
+</style>
 
 
 
@@ -217,6 +223,7 @@ $total_statuses = ($status && strtolower($status) !== 'pending') ? 1 : 0;
                     if ($row = $result->fetch_assoc()) { ?>
                         <div class="form-group">
                             <label>Full Name:</label>
+
                             <input name="full_name" class="form-control" type="text"
                                 value="<?php echo htmlspecialchars($row['full_name']); ?>" required />
                         </div>
