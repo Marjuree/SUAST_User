@@ -20,6 +20,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <!-- Font Awesome (icons) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 <!-- Sidebar (Styled) -->
 <aside class="custom-sidebar" id="sidebar">
@@ -82,10 +83,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
         position: fixed;
         top: 0;
         left: 0;
-        font-family: 'Segoe UI', sans-serif;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         z-index: 1000;
         transition: transform 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+
     }
 
     .custom-sidebar.sidebar-collapsed {
@@ -100,8 +102,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     .custom-sidebar-menu li {
         transition: background 0.3s;
-        margin-bottom: 32px;
-        gap: 20px;
+        margin-bottom: 22px;
     }
 
     .custom-sidebar-menu li a {
@@ -158,6 +159,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             justify-content: center;
             align-items: center;
             z-index: 1050;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         .custom-sidebar-menu {
@@ -173,6 +176,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             text-align: center;
             margin: 0;
             padding: 10px;
+            margin-bottom: -10px;
         }
 
         .custom-sidebar-menu li a {
