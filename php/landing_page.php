@@ -82,7 +82,7 @@ require_once  "../configuration/config.php";
 
     .button {
         font-size: 1.1em;
-        background-color: #02457A;
+        background-color: #002B5B;
         color: white;
         padding: 14px 28px;
         border: 1px solid white;

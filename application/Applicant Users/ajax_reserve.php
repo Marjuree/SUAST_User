@@ -1,14 +1,24 @@
 <?php
 session_start();
-require_once "../../configuration/config.php";
+session_regenerate_id(true);
 
-if (!isset($_SESSION['applicant_id'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Not logged in']);
-    exit;
+require_once "../../configuration/config.php"; // Ensure database connection
+
+// Check if the user is logged in and is an applicant
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
+    header("Location: ../../php/error.php?welcome=Please login as an applicant");
+    exit();
 }
 
 $applicant_id = $_SESSION['applicant_id'];
-$name = $_SESSION['first_name']; // or get from DB if needed
+$first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first_name']) : "";
+$middle_name = isset($_SESSION['middle_name']) ? htmlspecialchars($_SESSION['middle_name']) : "";
+$last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_name']) : "";
+
+// Combine first, middle, and last name
+$full_name = trim($last_name . ', ' . $first_name . ' ' . $middle_name . '.');
+
+$full_name = empty($full_name) ? "Applicant" : $full_name; 
 
 if (isset($_POST['exam_id'])) {
     $exam_id = $_POST['exam_id'];
@@ -44,11 +54,11 @@ if (isset($_POST['exam_id'])) {
             exit;
         }
 
-        // ✅ Insert reservation
+        // ✅ Insert reservation with combined full name
         $insert = "INSERT INTO tbl_reservation (applicant_id, name, exam_date, exam_time, venue, room, status)
                    VALUES (?, ?, ?, ?, ?, ?, 'pending')";
         $stmt_insert = $con->prepare($insert);
-        $stmt_insert->bind_param("isssss", $applicant_id, $name, $exam_date, $exam_time, $venue, $room);
+        $stmt_insert->bind_param("isssss", $applicant_id, $full_name, $exam_date, $exam_time, $venue, $room);
 
         if ($stmt_insert->execute()) {
             // ✅ Reduce slot in tbl_exam_schedule

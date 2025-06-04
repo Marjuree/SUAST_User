@@ -12,8 +12,9 @@ if (isset($_POST['register_student'])) {
     $username = $_POST['student_username'];
     $password = $_POST['student_password'];
     $confirm_password = $_POST['student_confirm_password'];
+    $faculty = $_POST['student_faculty'];
+    $year_level = $_POST['student_year_level'];
 
-    echo ".";
     if ($password !== $confirm_password) {
         echo "
         <script>
@@ -31,10 +32,11 @@ if (isset($_POST['register_student'])) {
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO tbl_student_users (full_name, email, school_id, username, password) 
-            VALUES (?, ?, ?, ?, ?)";
+    // Update the INSERT statement to include faculty and year_level
+    $sql = "INSERT INTO tbl_student_users (full_name, email, school_id, username, password, faculty, year_level) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $con->prepare($sql);
-    $stmt->bind_param("sssss", $full_name, $email, $school_id, $username, $hashed_password);
+    $stmt->bind_param("sssssss", $full_name, $email, $school_id, $username, $hashed_password, $faculty, $year_level);
 
     if ($stmt->execute()) {
         echo "

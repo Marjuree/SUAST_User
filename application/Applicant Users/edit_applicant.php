@@ -1067,8 +1067,9 @@ h5 {
                                     'Bachelor of Science in Mathematics with Research and Statistics (Non-Board Course)',
                                     'Bachelor of Science in Mathematics (Non-Board Course)',
                                     'Bachelor of Science in Civil Engineering (Board Course)',
-                                    'Bachelor of Science in Nursing (Board Course)'
-                                ];
+                                    'Bachelor of Science in Psychology (Board Course)',
+                                    'Bachelor of Science in Nursing (Board Course)',
+                                    'Bachelor of Arts in Political Science'                                ];
 
                                 // Campus options
                                 $campus_options = ['Main Campus', 'banaybanay', 'cateel', 'baganga', 'san isidro', 'taragonna'];

@@ -1,42 +1,78 @@
 <?php
-// Enable error reporting to display errors
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once "../../configuration/config.php"; // Include your database connection file
+session_start();
+require_once "../../configuration/config.php";
+
+// Ensure session is valid
+if (!isset($_SESSION['student_id'])) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Session expired. Please log in again.'
+    ]);
+    exit;
+}
+
+$student_id = $_SESSION['student_id']; // This is the internal numeric ID
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $school_id = $_POST['school_id']; // Get school ID from POST
-    $date_requested = date("Y-m-d H:i:s"); // Get current timestamp
-    $status = 'Pending'; // Default status
+    $date_requested = date("Y-m-d H:i:s");
+    $status = 'Pending';
 
-    // Prepare the SQL query to insert the clearance request into the database
-    $sql = "INSERT INTO tbl_clearance_requests (student_id, status, date_requested) VALUES (?, ?, ?)";
-    $stmt = $con->prepare($sql);
+    // Fetch the school_id using the internal student_id
+    $stmt = $con->prepare("SELECT school_id FROM tbl_student_users WHERE id = ?");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $student = $result->fetch_assoc();
 
-    // Bind the parameters to the prepared statement
-    $stmt->bind_param("sss", $school_id, $status, $date_requested);
+    if (!$student || empty($student['school_id'])) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Student record not found or missing school ID.'
+        ]);
+        exit;
+    }
 
-    // Execute the statement and check if it was successful
-    if ($stmt->execute()) {
-        // Send a JSON response with success status and message
+    $school_id = $student['school_id']; // Use this as the student_id in the clearance request table
+
+    // Check if a clearance request already exists for this school_id
+    $checkSql = "SELECT COUNT(*) as count FROM tbl_clearance_requests WHERE student_id = ?";
+    $checkStmt = $con->prepare($checkSql);
+    $checkStmt->bind_param("s", $school_id); // school_id is a string
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['count'] > 0) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'You have already submitted a clearance request.'
+        ]);
+        exit;
+    }
+
+    // Insert new request using the school_id
+    $insertSql = "INSERT INTO tbl_clearance_requests (student_id, status, date_requested) VALUES (?, ?, ?)";
+    $insertStmt = $con->prepare($insertSql);
+    $insertStmt->bind_param("sss", $school_id, $status, $date_requested);
+
+    if ($insertStmt->execute()) {
         echo json_encode([
             'success' => true,
             'message' => 'Clearance request submitted successfully.'
         ]);
     } else {
-        // Send a JSON response with error status and message
         echo json_encode([
             'success' => false,
             'message' => 'Error submitting request. Please try again.'
         ]);
     }
 
-    // Close the statement and connection
-    $stmt->close();
+    $insertStmt->close();
     $con->close();
 } else {
-    // If the request is not POST, send an invalid request response
     echo json_encode([
         'success' => false,
         'message' => 'Invalid request.'

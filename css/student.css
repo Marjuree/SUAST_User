@@ -119,3 +119,111 @@
 .glyphicon {
     margin-right: 8px;
 }
+
+    .form-container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .form-group input,
+    .form-group span {
+        font-size: 1rem;
+        border-radius: 30px !important;
+    }
+
+    .badge {
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 25px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .bg-info {
+        background-color: #17a2b8 !important;
+        color: #fff !important;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+        color: #fff !important;
+    }
+
+    .bg-danger {
+        background-color: #dc3545 !important;
+        color: #fff !important;
+    }
+
+    .large-text {
+        font-size: 14px !important;
+        color: #000 !important;
+    }
+
+    /* Custom card style to mimic Bootstrap 4 cards */
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 25px;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #337ab7;
+        }
+
+        .badge-custom {
+            font-size: 13px;
+            padding: 5px 10px;
+        }
+
+        .btn-icon {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .btn-icon .glyphicon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+        .toggle-section {
+            display: none;
+        }
+           .glyphicon {
+        margin-right: 8px; /* Add some space after the icon */
+    }

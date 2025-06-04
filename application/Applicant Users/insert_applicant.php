@@ -2,9 +2,12 @@
 session_start();
 require_once "../../configuration/config.php";
 
+// Set header for JSON response
+header('Content-Type: application/json');
+
 // Ensure the user is logged in
 if (!isset($_SESSION['applicant_id'])) {
-    showSweetAlert('User not logged in.', 'error', '../../php/error.php?welcome=Please login first');
+    sendJsonResponse('User not logged in.', 'error');
     exit();
 }
 
@@ -12,7 +15,6 @@ $applicant_id = $_SESSION['applicant_id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collect form data
-    echo ".";
     $lname = $_POST['lname'];
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
@@ -82,30 +84,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     )";
 
     if (mysqli_query($con, $sql)) {
-        showSweetAlert('Applicant added successfully!', 'success', 'applicant.php');
+        sendJsonResponse('Step 1 is complete!', 'success');
     } else {
         error_log("SQL Error: " . mysqli_error($con) . " | Query: " . $sql, 3, 'error_log.txt');
-        showSweetAlert("Error: " . mysqli_error($con), 'error', 'applicant.php');
+        sendJsonResponse("Error: " . mysqli_error($con), 'error');
     }
 }
 
 mysqli_close($con);
 
-// SweetAlert2 function
-function showSweetAlert($message, $type, $redirect) {
-    $icon = $type === 'success' ? 'success' : 'error';
-    echo "
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-    <script>
-        Swal.fire({
-            icon: '$icon',
-            title: '".ucfirst($type)."',
-            text: `$message`,
-            confirmButtonText: 'OK',
-            allowOutsideClick: false
-        }).then(() => {
-            window.location.href = '$redirect';
-        });
-    </script>";
+// JSON Response Function
+function sendJsonResponse($message, $type) {
+    echo json_encode([
+        'type' => $type,
+        'message' => $message
+    ]);
+    exit();
 }
 ?>

@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_profile']) && $e
         }
 
         if ($stmt->execute()) {
-            echo "<script>alert('Profile updated successfully!'); window.location.href='dashboard.php';</script>";
+            echo "<script>alert('Profile updated successfully!'); window.location.href='leave_requests.php';</script>";
         } else {
             echo "<script>alert('Error updating profile!');</script>";
         }
