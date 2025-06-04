@@ -127,7 +127,7 @@ $infoStmt->close();
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
 
     <style>
-     .progress-tracker {
+        .progress-tracker {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -252,7 +252,7 @@ $infoStmt->close();
                             <h4>Certification Request Progress</h4>
 
                             <p><strong><?= htmlspecialchars($faculty) ?>:</strong></p>
-                            <div class="progress-tracker-wrapper" >
+                            <div class="progress-tracker-wrapper">
 
                                 <ul class="progress-tracker">
                                     <?php
@@ -320,9 +320,9 @@ $infoStmt->close();
                                         overflow: hidden; 
                                         white-space: nowrap; 
                                         text-overflow: ellipsis;' target='_blank' title='Download " . htmlspecialchars($row['file_name']) . "'>"
-                                                                    . htmlspecialchars($row['file_name']) . "</a>";
-                                                            } else {
-                                                                $file_link = '<input type="text" class="form-control" readonly
+                                            . htmlspecialchars($row['file_name']) . "</a>";
+                                    } else {
+                                        $file_link = '<input type="text" class="form-control" readonly
                                         style="font-size: 12px; height: 30px; width: 230px; border-radius: 50px !important; color: #888;" value="No file">';
                                     }
 
@@ -508,7 +508,7 @@ $infoStmt->close();
                                 <!-- No data found — show empty form -->
                                 <div
                                     style="position: absolute; border-top-left-radius: 30px;
-                                     border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px;  max-width: 350px; width: 327px;">
+                                     border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px;  max-width: 350px; width: 338px;">
                                     <h5
                                         style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;">
                                         <i class="fas fa-file-alt" style="margin-right: 8px;"></i>Complete Details
@@ -602,23 +602,25 @@ $infoStmt->close();
                                                 </div>
                                             </div>
 
-                                            <button type="button" class="btn btn-sm btn-info edit-btn" data-toggle="modal"
-                                                data-target="#editCertificationModal" data-id="<?= $row['id'] ?>"
-                                                data-name="<?= !empty($row['name']) ? htmlspecialchars($row['name']) : 'N/A' ?>"
-                                                data-request_type="<?= !empty($row['request_type']) ? htmlspecialchars($row['request_type']) : 'N/A' ?>"
-                                                data-date_request="<?= !empty($row['date_request']) ? htmlspecialchars($row['date_request']) : 'N/A' ?>"
-                                                data-faculty="<?= !empty($row['faculty']) ? htmlspecialchars($row['faculty']) : 'N/A' ?>"
-                                                data-reason="<?= !empty($row['reason']) ? htmlspecialchars($row['reason']) : 'N/A' ?>"
-                                                style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
-                                                Edit
-                                            </button>
-
-
-
-                                            <button class="btn btn-sm btn-danger delete-btn" data-id="<?= $row['id'] ?>"
-                                                style="font-size: 12px; height: 30px; border-radius: 50px !important;">
-                                                Delete
-                                            </button>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12 text-left">
+                                                    <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
+                                                        data-target="#editCertificationModal" data-id="<?= $row['id'] ?>"
+                                                        data-name="<?= htmlspecialchars($row['name']) ?>"
+                                                        data-request_type="<?= htmlspecialchars($row['request_type']) ?>"
+                                                        data-date_request="<?= htmlspecialchars($row['date_request']) ?>"
+                                                        data-faculty="<?= htmlspecialchars($row['faculty']) ?>"
+                                                        data-reason="<?= htmlspecialchars($row['reason']) ?>"
+                                                        style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
+                                                        Edit
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger delete-btn"
+                                                        data-id="<?= $row['id'] ?>"
+                                                        style="font-size: 12px; height: 30px; border-radius: 50px !important;">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
 
                                         </form>
                                     </div>
