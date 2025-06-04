@@ -56,10 +56,53 @@ if ($res && $row = $res->fetch_assoc()) {
     <link href="../../css/button.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="../../css/dashboard.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 
 
 
 </head>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .d-grid.gap-2 a.btn {
+        border-radius: 30px;
+    }
+
+    /* Normal hover */
+    #submitMdoal .btn {
+        transition: background-color 0.3s ease, transform 0.1s ease;
+        border-radius: 30px;
+    }
+
+    #submitMdoal .btn:hover {
+        background-color: #00509e;
+        color: #fff;
+    }
+
+    /* Click/active effect */
+    #submitMdoal .btn:active {
+        background-color: #00254d;
+        /* even darker blue */
+        transform: scale(0.98);
+        /* slight shrink */
+        color: #fff;
+    }
+
+    #submitMdoal {
+        margin-top: 40px
+    }
+
+    .form-group {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-body p {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
 
 <body class="skin-blue">
     <?php
@@ -87,7 +130,7 @@ if ($res && $row = $res->fetch_assoc()) {
                     margin-right: -50vw;
                     margin-top: -50px;
                 ">
-                    <h4 style="margin: 0; font-weight: bold;">Dashboard</h4>
+                    <h4 style="margin: 0; font-weight: bold; font-family: 'Poppins', sans-serif;">Dashboard</h4>
                     <hr class="my-2" style="border-top: 2px solid white; width: 190px;">
 
                 </div>
@@ -108,10 +151,12 @@ if ($res && $row = $res->fetch_assoc()) {
                     border-bottom-right-radius: 30px;
 
                 ">
-                    <h1 style="font-size: 26px; font-weight: bold; margin-top: -20px;">Hello,<br>
+                    <h1
+                        style="font-size: 26px; font-weight: bold; margin-top: -20px; font-family: 'Poppins', sans-serif;">
+                        Hello,<br>
                         <span style="color:rgb(255, 145, 0);"><?php echo $first_name . ' ' . $last_name . '!'; ?></span>
                     </h1>
-                    <p style="font-size: 14px; margin-top: 10px;">
+                    <p style="font-size: 14px; margin-top: 10px; font-family: 'Poppins', sans-serif; ">
                         "Where Every Request Matters."<br>
                         Connect. Process. Progress.
                     </p>
@@ -129,7 +174,8 @@ if ($res && $row = $res->fetch_assoc()) {
                             <div style="font-size: 28px; color: #003366;"><i class="fas fa-file-alt"></i></div>
                             <h5 class="card-title" style="font-weight: bold; margin-top: 10px; color: #003366;">Services
                             </h5>
-                            <p class="card-text" style="font-size: 13px;"><strong>Click here</strong>
+                            <p class="card-text" style="font-size: 13px; font-family: 'Poppins', sans-serif;">
+                                <strong>Click here</strong>
                                 to submit a request for leave, certification, or services record at Davao Oriental State
                                 University.</p>
                         </div>
@@ -141,9 +187,12 @@ if ($res && $row = $res->fetch_assoc()) {
                         style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                         <div class="card-body" style="background-color: #B1D4E0;">
                             <div style="font-size: 28px; color: #003366;"><i class="fas fa-calendar-check"></i></div>
-                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px; color: #003366;">Track
+                            <h5 class="card-title"
+                                style="font-weight: bold; margin-top: 10px; color: #003366; font-family: 'Poppins', sans-serif;">
+                                Track
                                 Your Process</h5>
-                            <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to view your
+                            <p class="card-text" style="font-size: 13px; font-family: 'Poppins', sans-serif;">
+                                <strong>Click here</strong> to view your
                                 request status and track your progress.</p>
                         </div>
                     </div>
@@ -165,24 +214,35 @@ if ($res && $row = $res->fetch_assoc()) {
                         style="position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #003366; cursor: pointer;">&times;</span>
 
                     <!-- Logo at the top -->
-                    <img src="../../img/uni.png" alt="Logo" style="max-width: 80px; margin-bottom: 10px;">
+                    <img src="../../img/uni.png" alt="Logo" style="max-width: 120px; margin-bottom: 10px;">
                     <!-- Text below the logo -->
-                    <h5 style="margin-bottom: 20px;"><strong>Choose a Service</strong></h5>
+                    <h5 style="margin-bottom: 20px; font-family: 'Poppins', sans-serif;"><strong>Choose a
+                            Service</strong></h5>
 
                     <!-- Request Options -->
-                    <p>Please choose one of the following request types:</p>
+                    <p style=" font-family: 'Poppins', sans-serif;">Please choose one of the following request types:
+                    </p>
                     <div class="d-grid gap-2">
                         <a href="leave_requests.php" class="btn btn-block my-2"
-                            style="background-color: #003366; color: #fff;">LEAVE REQUEST</a>
+                            style="background-color: #003366; color: #fff; border-radius: 30px;  font-family: 'Poppins', sans-serif;">
+                            LEAVE REQUEST
+                        </a>
                         <a href="certification_requests.php" class="btn btn-block my-2"
-                            style="background-color: #003366; color: #fff;">CERTIFICATION REQUEST</a>
+                            style="background-color: #003366; color: #fff; border-radius: 30px;  font-family: 'Poppins', sans-serif;">
+                            CERTIFICATION REQUEST
+                        </a>
                         <a href="service_requests.php" class="btn btn-block my-2"
-                            style="background-color: #003366; color: #fff;">SERVICE RECORD REQUEST</a>
+                            style="background-color: #003366; color: #fff; border-radius: 30px;  font-family: 'Poppins', sans-serif;">
+                            SERVICE RECORD REQUEST
+                        </a>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+
 
 
     <div class="modal fade" id="submitMdoal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel"
@@ -195,25 +255,29 @@ if ($res && $row = $res->fetch_assoc()) {
                         style="position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #003366; cursor: pointer;">&times;</span>
 
                     <!-- Logo at the top -->
-                    <img src="../../img/uni.png" alt="Logo" style="max-width: 80px; margin-bottom: 10px;">
+                    <img src="../../img/uni.png" alt="Logo" style="max-width: 120px; margin-bottom: 10px;">
 
                     <!-- Text below the logo -->
-                    <h5 style="margin-bottom: 20px;"><strong>Choose a Service</strong></h5>
+                    <h5 style="margin-bottom: 20px;  font-family: 'Poppins', sans-serif;"><strong>Choose a
+                            Service</strong></h5>
                     <p>Please choose one of the following request types:</p>
 
                     <!-- Request Option Buttons -->
                     <div class="d-grid gap-2">
-                        <button class="btn btn-block my-2" style="background-color: #003366; color: #fff;"
+                        <button class="btn btn-block my-2"
+                            style="background-color: #003366; color: #fff;  font-family: 'Poppins', sans-serif;"
                             data-toggle="modal" data-target="#requestLeaveApplication" data-dismiss="modal">
                             SUBMIT LEAVE REQUEST
                         </button>
 
-                        <button class="btn btn-block my-2" style="background-color: #003366; color: #fff;"
+                        <button class="btn btn-block my-2"
+                            style="background-color: #003366; color: #fff;  font-family: 'Poppins', sans-serif;"
                             data-toggle="modal" data-target="#requestCertification" data-dismiss="modal">
                             SUBMIT CERTIFICATION REQUEST
                         </button>
 
-                        <button class="btn btn-block my-2" style="background-color: #003366; color: #fff;"
+                        <button class="btn btn-block my-2"
+                            style="background-color: #003366; color: #fff;  font-family: 'Poppins', sans-serif;"
                             data-toggle="modal" data-target="#requestServiceRecord" data-dismiss="modal">
                             SUBMIT SERVICE RECORD REQUEST
                         </button>
@@ -224,6 +288,8 @@ if ($res && $row = $res->fetch_assoc()) {
     </div>
 
 
+
+
     <!-- Certification Request -->
     <div class="modal fade" id="requestCertification" tabindex="-1" role="dialog" aria-hidden="true"
         data-backdrop="static" data-keyboard="false">
@@ -232,7 +298,7 @@ if ($res && $row = $res->fetch_assoc()) {
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Request Certification</h4>
+                    <h4 class="modal-title" style=" font-family: 'Poppins', sans-serif;">Request Certification</h4>
                 </div>
 
                 <div class="modal-body">
@@ -277,7 +343,8 @@ if ($res && $row = $res->fetch_assoc()) {
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary" style="background-color: #003366;">Submit
                                 Request</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: red; color:white;">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                style="background-color: red; color:white;">Close</button>
                         </div>
                     </form>
                 </div>
@@ -343,8 +410,10 @@ if ($res && $row = $res->fetch_assoc()) {
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" style="background-color: #003366;">Submit Request</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: red; color: white;">Close</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: #003366;">Submit
+                        Request</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        style="background-color: red; color: white;">Close</button>
                 </div>
             </div>
         </div>
@@ -398,8 +467,10 @@ if ($res && $row = $res->fetch_assoc()) {
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" style="background-color: #003366;">Submit Request</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: red; color: #fff;">Close</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #003366;">Submit
+                            Request</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                            style="background-color: red; color: #fff;">Close</button>
                     </div>
                 </form>
             </div>
