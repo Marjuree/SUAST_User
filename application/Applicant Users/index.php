@@ -193,7 +193,6 @@ if (empty($full_name))
                                     <!-- Personal Information -->
                                     <h5 class="mt-3">Personal Information</h5>
                                     <div class="row">
-                                        <!-- Other fields including Age -->
                                         <?php
                                         $personal = [
                                             "lname" => "Last Name",
@@ -205,12 +204,14 @@ if (empty($full_name))
                                         ];
 
                                         foreach ($personal as $name => $label) {
+                                            $required = ($name === "mname") ? "" : "required";
                                             echo "<div class='col-md-4 mb-3'>
                                             <label for='{$name}'>{$label}</label>
-                                            <input type='text' class='form-control' name='{$name}' id='{$name}' required>
+                                            <input type='text' class='form-control' name='{$name}' id='{$name}' {$required}>
                                         </div>";
                                         }
                                         ?>
+
 
                                         <!-- Age and Birthdate side-by-side -->
                                         <div class="col-md-6 mb-3">
