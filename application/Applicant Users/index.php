@@ -30,8 +30,15 @@ if (empty($full_name))
     <link href="../../css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 
     <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+
+        }
+
         .stepwizard {
             display: flex;
             justify-content: space-between;
@@ -779,29 +786,29 @@ if (empty($full_name))
 
     <!-- Bootstrap 3 JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   
-<script>
-  document.getElementById('bdate').addEventListener('change', function () {
-    const birthDate = new Date(this.value);
-    const today = new Date();
 
-    if (birthDate > today) {
-      // Invalid birthdate in the future
-      alert('Birthdate cannot be in the future.');
-      this.value = '';
-      document.getElementById('age').value = '';
-      return;
-    }
+    <script>
+        document.getElementById('bdate').addEventListener('change', function () {
+            const birthDate = new Date(this.value);
+            const today = new Date();
 
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
+            if (birthDate > today) {
+                // Invalid birthdate in the future
+                alert('Birthdate cannot be in the future.');
+                this.value = '';
+                document.getElementById('age').value = '';
+                return;
+            }
 
-    document.getElementById('age').value = age >= 0 ? age : '';
-  });
-</script>
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            document.getElementById('age').value = age >= 0 ? age : '';
+        });
+    </script>
 </body>
 
 </html>
