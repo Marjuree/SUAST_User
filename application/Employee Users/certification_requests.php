@@ -454,25 +454,23 @@ $infoStmt->close();
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12 text-right">
-                                                        <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
-                                                            data-target="#editCertificationModal" data-id="<?= $row['id'] ?>"
-                                                            data-name="<?= htmlspecialchars($row['name']) ?>"
-                                                            data-request_type="<?= htmlspecialchars($row['request_type']) ?>"
-                                                            data-date_request="<?= htmlspecialchars($row['date_request']) ?>"
-                                                            data-faculty="<?= htmlspecialchars($row['faculty']) ?>"
-                                                            data-reason="<?= htmlspecialchars($row['reason']) ?>"
-                                                            style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
-                                                            Edit
-                                                        </button>
-                                                        <button class="btn btn-sm btn-danger delete-btn"
-                                                            data-id="<?= $row['id'] ?>"
-                                                            style="font-size: 12px; height: 30px; border-radius: 50px !important;">
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
+                                                    data-target="#editCertificationModal"
+                                                    data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                    data-name="<?= htmlspecialchars($row['name'] ?? '') ?>"
+                                                    data-request_type="<?= htmlspecialchars($row['request_type'] ?? '') ?>"
+                                                    data-date_request="<?= htmlspecialchars($row['date_request'] ?? '') ?>"
+                                                    data-faculty="<?= htmlspecialchars($row['faculty'] ?? '') ?>"
+                                                    data-reason="<?= htmlspecialchars($row['reason'] ?? '') ?>"
+                                                    style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
+                                                    Edit
+                                                </button>
+                                                <button class="btn btn-sm btn-danger delete-btn"
+                                                    data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                    style="font-size: 12px; height: 30px; border-radius: 50px !important;">
+                                                    Delete
+                                                </button>
+
 
                                             </form>
                                         </div>
@@ -602,25 +600,23 @@ $infoStmt->close();
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
-                                                <div class="col-sm-12 text-left">
-                                                    <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
-                                                        data-target="#editCertificationModal" data-id="<?= $row['id'] ?>"
-                                                        data-name="<?= htmlspecialchars($row['name']) ?>"
-                                                        data-request_type="<?= htmlspecialchars($row['request_type']) ?>"
-                                                        data-date_request="<?= htmlspecialchars($row['date_request']) ?>"
-                                                        data-faculty="<?= htmlspecialchars($row['faculty']) ?>"
-                                                        data-reason="<?= htmlspecialchars($row['reason']) ?>"
-                                                        style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
-                                                        Edit
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger delete-btn"
-                                                        data-id="<?= $row['id'] ?>"
-                                                        style="font-size: 12px; height: 30px; border-radius: 50px !important;">
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
+                                                data-target="#editCertificationModal"
+                                                data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                data-name="<?= htmlspecialchars($row['name'] ?? '') ?>"
+                                                data-request_type="<?= htmlspecialchars($row['request_type'] ?? '') ?>"
+                                                data-date_request="<?= htmlspecialchars($row['date_request'] ?? '') ?>"
+                                                data-faculty="<?= htmlspecialchars($row['faculty'] ?? '') ?>"
+                                                data-reason="<?= htmlspecialchars($row['reason'] ?? '') ?>"
+                                                style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-btn"
+                                                data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                style="font-size: 12px; height: 30px; border-radius: 50px !important;">
+                                                Delete
+                                            </button>
+
 
                                         </form>
                                     </div>
