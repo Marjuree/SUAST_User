@@ -1,5 +1,5 @@
 <!-- Login Modal FOR Student -->
-<div class="modal fade" id="StudentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+<div class="modal fade" id="StudentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true" style="margin-top: 70px;">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Header with logo and titles -->
@@ -72,7 +72,7 @@
 
 <!-- Agreement Modal -->
 <div id="agreementModalStudent" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel"
-    aria-hidden="true">
+    aria-hidden="true" style="margin-top: 70px;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -121,7 +121,7 @@
 </div>
 <!-- Registration Modal for Student -->
 <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true"
-    data-backdrop="static" data-keyboard="false">
+    data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content" style="outline: none !important; box-shadow: none !important; border:none;">
 
