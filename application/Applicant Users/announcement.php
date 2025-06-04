@@ -15,7 +15,6 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,61 +27,58 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .announcement-container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 30px;
-            border-radius: 20px;
-            background: #fff;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+      .announcements-section {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .announcement-container img {
-            width: 80px;
-            margin-bottom: 15px;
-        }
+.section-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    color: #111;
+}
+.announcement-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-        .announcement-container h1 {
-            font-size: 36px;
-            color: #1a1a1a;
-            margin-bottom: 10px;
-        }
+.announcement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
 
-        .announcement-container p {
-            font-size: 16px;
-            color: #444;
-            margin: 10px 0 20px;
-        }
 
-        .notice-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: #2196f3;
-            color: #fff;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s ease;
-        }
+.announcement-card.new {
+    background: #cbe7f0;
+}
 
-        .notice-btn:hover {
-            background: #1769aa;
-        }
+.announcement-card.earlier {
+    background: #cbe7f0;
+}
 
-        .announcement-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #777;
-        }
+.timestamp {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+}
 
-        .announcement-footer strong {
-            display: block;
-            color: #111;
-        }
+.section-separator {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.section-separator .dot {
+    width: 8px;
+    height: 8px;
+    background: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
     </style>
 </head>
 
@@ -97,7 +93,9 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 
         <aside class="right-side">
             <section class="content">
-                <div id="announcementList"></div>
+                <div class="announcement-wrapper" id="announcementList">
+                    <!-- Dynamic announcements will be loaded here -->
+                </div>
             </section>
         </aside>
     </div>
@@ -117,5 +115,4 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 
     <?php require_once "../../includes/footer.php"; ?>
 </body>
-
 </html>
