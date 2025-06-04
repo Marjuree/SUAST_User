@@ -5,7 +5,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once "../configuration/config.php"; // Ensure this file does not have whitespace or output
-require_once "../application/SystemLog.php";
 
 // Login Handler for Applicant
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    echo".";
+    echo ".";
+
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
         
@@ -34,8 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['university_email'] = $user['university_email'];
             $_SESSION['role'] = 'Applicant'; // ✅ Set user role
 
-            logMessage("INFO", "Login Success", "Applicant '$username' logged in successfully.");
-
             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
             echo "<script>
                     Swal.fire({
@@ -49,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   </script>";
             exit();
         } else {
-            logMessage("WARNING", "Login Failed", "Applicant Invalid Password! '$username'.");
             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
             echo "<script>
                     Swal.fire({
@@ -64,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        logMessage("WARNING", "Login Failed", "No account found with this username! '$username'.");
         echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
         echo "<script>
                 Swal.fire({
