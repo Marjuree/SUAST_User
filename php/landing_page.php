@@ -173,7 +173,7 @@ require_once "../configuration/config.php";
         <div class="welcome-container">
             <img src="../img/uni.png" alt="SUAST Logo" class="logo">
             <h3>Welcome to UniReserve</h3>
-            <p class="tiny-text">Choose a Service</strong></p>
+            <p class="tiny-text"><strong> Choose a Service</strong></p>
             <!-- View List Button -->
             <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
 
@@ -193,7 +193,7 @@ require_once "../configuration/config.php";
 
     <!-----------------------------------Service Modal----------------------------------------->
     <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true"
-        style="height: 400px;">
+        style="height: 400px; margin-top: 60px;">
         <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Smaller for better mobile fit -->
             <div class="modal-content text-center p-2"
                 style="border-radius: 15px; border: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
@@ -205,7 +205,7 @@ require_once "../configuration/config.php";
 
                 <!-- Logo -->
                 <div class="d-flex justify-content-center mb-1">
-                    <img src="../img/uni.png" alt="Logo" class="logo" style = "margin-bottom:-30px;">
+                    <img src="../img/uni.png" alt="Logo" class="logo" style="margin-bottom:-30px;">
                 </div>
 
                 <!-- Title -->
@@ -221,7 +221,6 @@ require_once "../configuration/config.php";
             </div>
         </div>
     </div>
-
 
 
 
