@@ -302,7 +302,24 @@ if ($res && $row = $res->fetch_assoc()) {
         </div>
     </div>
 
+<style>
+    /* Modal buttons hover */
+#requestModal .btn,
+#submitMdoal .btn {
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  border-radius: 30px !important; /* enforce rounded corners */
+}
 
+#requestModal .btn:hover,
+#requestModal .btn:focus,
+#submitMdoal .btn:hover,
+#submitMdoal .btn:focus {
+  background-color: #002244 !important; /* darker blue on hover */
+  box-shadow: 0 4px 10px rgba(0, 51, 102, 0.6);
+  cursor: pointer;
+}
+
+</style>
 
 
     <!-- Certification Request -->
