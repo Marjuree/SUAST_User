@@ -15,6 +15,7 @@ require_once "../configuration/config.php";
     <link rel="shortcut icon" href="../img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -35,12 +36,16 @@ require_once "../configuration/config.php";
         margin: 0;
         display: flex;
         flex-direction: column;
+        font-family: 'Poppins', sans-serif;
+
     }
 
     body {
         font-family: Arial, sans-serif;
         background: url('../img/logo3.jpg') no-repeat center 25% fixed;
         background-size: cover;
+        font-family: 'Poppins', sans-serif;
+
     }
 
 
@@ -73,8 +78,15 @@ require_once "../configuration/config.php";
         color: white;
         margin-top: 50px;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7) !important;
+        font-family: 'Poppins', sans-serif;
+
     }
 
+    .welcome-container h3,
+    p {
+        font-family: 'Poppins', sans-serif;
+
+    }
 
     .logo {
         height: 200px;
@@ -147,6 +159,9 @@ require_once "../configuration/config.php";
     .form-control {
         border-radius: 30px !important;
     }
+    h3{
+        font-size: 20px;
+    }
 </style>
 
 <body>
@@ -160,15 +175,15 @@ require_once "../configuration/config.php";
         <!-- Welcome Section -->
         <div class="welcome-container">
             <img src="../img/uni.png" alt="SUAST Logo" class="logo">
-            <h3>Welcome to UniReserve</h3>
-            <p class="tiny-text"><strong> Choose a Service</strong></p>
+            <h3 >Welcome to UniReserve</h3>
+            <p ><strong> Choose a Service</strong></p>
             <!-- View List Button -->
             <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
 
         </div>
 
         <!-- Buttons for Register and Login -->
-        <div class="buttons-container">
+        <div class="buttons-container" style="font-family: 'Poppins', sans-serif;">
             <button class="button" data-toggle="modal" data-target="#loginApplicant">SUAST SLOT RESERVATION</button>
             <br>
             <button class="button" data-toggle="modal" data-target="#serviceModal">FRONTLINE SERVICE
@@ -180,34 +195,36 @@ require_once "../configuration/config.php";
 
 
     <!-----------------------------------Service Modal----------------------------------------->
-  <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true"
-    style="height: 400px; margin-top: 60px;">
-    <div class="modal-dialog modal-sm"> <!-- Removed modal-dialog-centered as it's BS4+ -->
-        <div class="modal-content text-center p-2"
-            style="border-radius: 15px; border: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;">
-            
-            <!-- Close button in top left -->
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                style="position: absolute; right: 10px; top: 10px; background: none; color: black; border: none; font-size: 1.5rem;">
-                <span aria-hidden="true">&times;</span>
-            </button>
+    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true"
+        style="height: 400px; margin-top: 60px;">
+        <div class="modal-dialog modal-sm"> <!-- Removed modal-dialog-centered as it's BS4+ -->
+            <div class="modal-content text-center p-2"
+                style="border-radius: 15px; border: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;">
 
-            <!-- Logo -->
-            <div class="text-center mb-1">
-                <img src="../img/uni.png" alt="Logo" class="logo" style="margin-bottom:-30px;">
-            </div>
+                <!-- Close button in top left -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    style="position: absolute; right: 10px; top: 10px; background: none; color: black; border: none; font-size: 1.5rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
 
-            <!-- Title -->
-            <h5 class="fw-bold mt-0 mb-2 text-uppercase text-dark"><strong>Choose a Frontline Service</strong></h5>
+                <!-- Logo -->
+                <div class="text-center mb-1">
+                    <img src="../img/uni.png" alt="Logo" class="logo" style="margin-bottom:-30px;">
+                </div>
 
-            <!-- Buttons -->
-            <div class="buttons-container">
-                <button class="button mb-1" data-toggle="modal" data-target="#StudentModal">ACCOUNTING OFFICE</button>
-                <button class="button" data-toggle="modal" data-target="#empModal">HUMAN RESOURCE MANAGEMENT</button>
+                <!-- Title -->
+                <h5 class="fw-bold mt-0 mb-2 text-uppercase text-dark"><strong>Choose a Frontline Service</strong></h5>
+
+                <!-- Buttons -->
+                <div class="buttons-container">
+                    <button class="button mb-1" data-toggle="modal" data-target="#StudentModal">ACCOUNTING
+                        OFFICE</button>
+                    <button class="button" data-toggle="modal" data-target="#empModal">HUMAN RESOURCE
+                        MANAGEMENT</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
