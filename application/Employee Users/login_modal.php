@@ -37,7 +37,7 @@
           <div class="form-group position-relative">
             <label for="loginPassword">Password</label>
             <input type="password" class="form-control" id="loginPassword" name="employee_password" required>
-            <span id="toggleEmpPassword" style="position: absolute; right: 10px; top: 38px; cursor: pointer; user-select: none; margin-top: 8px;">
+            <span id="toggleEmpPassword" style="position: absolute; right: 10px; top: 38px; cursor: pointer; user-select: none; margin-top: -8px;">
               <!-- Eye icon SVG -->
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
