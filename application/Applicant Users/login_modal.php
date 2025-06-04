@@ -1,6 +1,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <!-- Applicant Login Modal -->
-<div class="modal fade" id="loginApplicant" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginApplicant" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Add the logo at the top of the modal -->
@@ -49,7 +49,7 @@
 
 <!-- Agreement Modal -->
 <div class="modal fade" id="agreementModal" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel"
-  aria-hidden="true">
+  aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -96,7 +96,7 @@
 </div>
 
 <!-- Applicant Registration Modal -->
-<div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+<div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <!-- Centered and small modal -->
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border:none;">
