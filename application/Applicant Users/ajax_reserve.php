@@ -2,9 +2,8 @@
 session_start();
 session_regenerate_id(true);
 
-require_once "../../configuration/config.php"; // Ensure database connection
+require_once "../../configuration/config.php";
 
-// Check if the user is logged in and is an applicant
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Applicant') {
     header("Location: ../../php/error.php?welcome=Please login as an applicant");
     exit();
@@ -15,15 +14,13 @@ $first_name = isset($_SESSION['first_name']) ? htmlspecialchars($_SESSION['first
 $middle_name = isset($_SESSION['middle_name']) ? htmlspecialchars($_SESSION['middle_name']) : "";
 $last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_name']) : "";
 
-// Combine first, middle, and last name
 $full_name = trim($last_name . ', ' . $first_name . ' ' . $middle_name . '.');
-
-$full_name = empty($full_name) ? "Applicant" : $full_name; 
+$full_name = empty($full_name) ? "Applicant" : $full_name;
 
 if (isset($_POST['exam_id'])) {
-    $exam_id = $_POST['exam_id'];
+    $exam_id = intval($_POST['exam_id']);
 
-    // ✅ First: Check if this user already has a reservation
+    // Check if user already has a reservation
     $check = $con->prepare("SELECT id FROM tbl_reservation WHERE applicant_id = ?");
     $check->bind_param("i", $applicant_id);
     $check->execute();
@@ -34,45 +31,59 @@ if (isset($_POST['exam_id'])) {
         exit;
     }
 
-    // ✅ Fetch exam schedule info
-    $query = "SELECT * FROM tbl_exam_schedule WHERE id = ?";
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("i", $exam_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Begin transaction for atomic check + insert
+    $con->begin_transaction();
 
-    if ($row = $result->fetch_assoc()) {
-        $exam_date = $row['exam_date'];
-        $exam_time = $row['exam_time'];
-        $venue = $row['venue'];
-        $room = $row['room'];
-        $slot = $row['slot_limit'];
+    try {
+        // Fetch slot_limit and count existing reservations for this exam_id
+        $slotQuery = $con->prepare("
+            SELECT slot_limit, 
+                   (SELECT COUNT(*) FROM tbl_reservation WHERE exam_id = ?) AS reserved_count,
+                   exam_date, exam_time, venue, room
+            FROM tbl_exam_schedule
+            WHERE id = ?
+            FOR UPDATE
+        ");
+        $slotQuery->bind_param("ii", $exam_id, $exam_id);
+        $slotQuery->execute();
+        $slotResult = $slotQuery->get_result();
 
-        // ✅ Optional: Check if slot still available
-        if ($slot <= 0) {
-            echo json_encode(['status' => 'error', 'message' => 'Slot not available']);
-            exit;
-        }
+        if ($row = $slotResult->fetch_assoc()) {
+            $slot_limit = (int)$row['slot_limit'];
+            $reserved_count = (int)$row['reserved_count'];
+            $remaining_slots = $slot_limit - $reserved_count;
 
-        // ✅ Insert reservation with combined full name
-        $insert = "INSERT INTO tbl_reservation (applicant_id, name, exam_date, exam_time, venue, room, status)
-                   VALUES (?, ?, ?, ?, ?, ?, 'pending')";
-        $stmt_insert = $con->prepare($insert);
-        $stmt_insert->bind_param("isssss", $applicant_id, $full_name, $exam_date, $exam_time, $venue, $room);
+            if ($remaining_slots <= 0) {
+                $con->rollback();
+                echo json_encode(['status' => 'error', 'message' => 'No slots available']);
+                exit;
+            }
 
-        if ($stmt_insert->execute()) {
-            // ✅ Reduce slot in tbl_exam_schedule
-            $update_slot = $con->prepare("UPDATE tbl_exam_schedule SET slot_limit = slot_limit - 1 WHERE id = ?");
-            $update_slot->bind_param("i", $exam_id);
-            $update_slot->execute();
+            // Insert reservation
+            $insert = $con->prepare("INSERT INTO tbl_reservation (applicant_id, exam_id, name, exam_date, exam_time, venue, room, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')");
+            $insert->bind_param("iisssss", $applicant_id, $exam_id, $full_name, $row['exam_date'], $row['exam_time'], $row['venue'], $row['room']);
+            $insert->execute();
 
-            echo json_encode(['status' => 'success']);
+            if ($insert->affected_rows > 0) {
+                // Optionally update slot_limit or keep consistent with counting reservations only.
+                // You can either update slot_limit, or leave it, since you calculate available slots dynamically.
+
+                $con->commit();
+                echo json_encode(['status' => 'success']);
+            } else {
+                $con->rollback();
+                echo json_encode(['status' => 'error', 'message' => 'Failed to save reservation']);
+            }
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Reservation failed']);
+            $con->rollback();
+            echo json_encode(['status' => 'error', 'message' => 'Invalid exam ID']);
         }
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid exam ID']);
+
+    } catch (Exception $e) {
+        $con->rollback();
+        echo json_encode(['status' => 'error', 'message' => 'Server error: ' . $e->getMessage()]);
     }
+
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Missing exam ID']);
 }
