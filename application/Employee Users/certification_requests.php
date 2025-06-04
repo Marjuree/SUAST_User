@@ -480,6 +480,45 @@ $infoStmt->close();
                                         </div>
                                     </div>
 
+                                    <style>
+                                        .edit-btn {
+                                            background-color: #003366 !important;
+                                            border-radius: 50px !important;
+                                            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+                                        }
+
+                                        .edit-btn:hover,
+                                        .edit-btn:focus {
+                                            background-color: #002244 !important;
+                                            cursor: pointer;
+                                            box-shadow: 0 0 8px #003366;
+                                        }
+
+                                        .edit-btn:active {
+                                            background-color: #001122 !important;
+                                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+                                        }
+
+                                        .delete-btn {
+                                            background-color: #dc3545 !important;
+                                            border-radius: 50px !important;
+                                            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+                                        }
+
+                                        .delete-btn:hover,
+                                        .delete-btn:focus {
+                                            background-color: #b02a37 !important;
+                                            cursor: pointer;
+                                            box-shadow: 0 0 8px #dc3545;
+                                        }
+
+                                        .delete-btn:active {
+                                            background-color: #7a1e23 !important;
+                                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+                                        }
+                                    </style>
+
+
                                     <!-- Reason Modal -->
                                     <div class="modal fade" id="reasonModal<?= $row['id'] ?>" tabindex="-1" role="dialog"
                                         aria-labelledby="reasonModalLabel<?= $row['id'] ?>">
