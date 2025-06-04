@@ -123,16 +123,20 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
             user-select: none;
         }
 
-        .info-card.clickable:hover {
-            background: rgb(199, 201, 201);
-            box-shadow: 0 6px 12px rgba(19, 132, 150, 0.6);
-            text-decoration: none;
-        }
+        .card.clickable {
+        transition: background-color 0.3s, transform 0.2s;
+    }
 
-        /* Remove button inside card when card is clickable */
-        .info-card.clickable button {
-            display: none;
-        }
+    .card.clickable:hover {
+        background-color: #e6f0ff; /* light blue on hover */
+        transform: translateY(-3px);
+    }
+
+    .card.clickable:active {
+        background-color: #cce0ff; /* darker blue on click */
+        transform: scale(0.98);
+    }
+        
     </style>
 </head>
 
@@ -202,36 +206,47 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                     style="gap: 15px; display: flex; flex-direction: column; align-items: center;">
 
                     <!-- Make a Reservation Card -->
-                    <div class="card" onclick="window.location.href='index.php';"
-                        style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
-                        <div class="card-body">
-                            <div style="font-size: 28px; color: #003366;"><i class="fas fa-file-alt"></i></div>
-                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Make a Reservation</h5>
-                            <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to make a
-                                reservation and secure a
-                                slot for the State University Admission and Scholarship Test (SUAST) of Davao Oriental
-                                State University (DORSU).</p>
+                    <?php if ($user_has_reservation): ?>
+                        <div class="card"
+                            style="width: 100%; max-width: 350px; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; background-color: #f0f0f0; opacity: 0.6; cursor: not-allowed;">
+                            <div class="card-body">
+                                <div style="font-size: 28px; color: #999;"><i class="fas fa-file-alt"></i></div>
+                                <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Reservation Submitted
+                                </h5>
+                                <p class="card-text" style="font-size: 13px;">You have already submitted a reservation.
+                                    Please wait for confirmation or check your status.</p>
+                            </div>
                         </div>
-                    </div>
+                    <?php else: ?>
+                        <div class="card clickable" onclick="window.location.href='index.php';"
+                            style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
+                            <div class="card-body">
+                                <div style="font-size: 28px; color: #003366;"><i class="fas fa-file-alt"></i></div>
+                                <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Make a Reservation</h5>
+                                <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to make a
+                                    reservation and secure a slot for the State University Admission and Scholarship Test
+                                    (SUAST) of DORSU.</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Exam Schedule Card -->
-                    <div class="card" data-toggle="modal" data-target="#examScheduleModal"
+                    <div class="card clickable" data-toggle="modal" data-target="#examScheduleModal"
                         style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                         <div class="card-body">
                             <div style="font-size: 28px; color: #003366;"><i class="fas fa-calendar-check"></i></div>
                             <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Your Exam Schedule</h5>
                             <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to view your exam
-                                schedule and
-                                reservation status.</p>
+                                schedule and reservation status.</p>
                         </div>
                     </div>
 
-                    <div class="card" data-toggle="modal" data-target="#personalDetails"
+                    <!-- Personal Details Card -->
+                    <div class="card clickable" data-toggle="modal" data-target="#personalDetails"
                         style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                         <div class="card-body">
-                            <div style="font-size: 28px; color: #003366;"><i class="fas fa-book"></i>
-                            </div>
-                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Personal Deetails</h5>
+                            <div style="font-size: 28px; color: #003366;"><i class="fas fa-book"></i></div>
+                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Personal Details</h5>
                             <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to view and edit
                                 your submitted details on the slot reservation.</p>
                         </div>
