@@ -12,13 +12,10 @@
   style="margin-top: 70px;">
   <div class="modal-dialog">
     <div class="modal-content">
-      <!-- Add the logo at the top of the modal -->
       <div class="modal-header flex-column align-items-center"
         style="outline: none !important; box-shadow: none !important; border:none;">
-        <!-- Logo -->
         <img src="../img/uni.png" alt="Logo" style="width: 200px; height: auto; margin-bottom: 10px; margin-top:-40px;">
-        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Applicant!
-        </h4>
+        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Applicant!</h4>
         <h4 class="modal-title" id="loginModalLabel" style="font-size: 10px;">please login your account</h4>
 
         <button type="button" class="close position-absolute" style="right: 10px; top: 10px;" data-dismiss="modal"
@@ -32,10 +29,16 @@
             <label for="usernameLogin">Username</label>
             <input type="text" class="form-control" id="usernameLogin" name="username" required>
           </div>
-          <div class="form-group">
+          <div class="form-group position-relative">
             <label for="applicant_password_login">Password</label>
-            <input type="password" class="form-control" id="applicant_password_login" name="applicant_password"
-              required>
+            <input type="password" class="form-control" id="applicant_password_login" name="applicant_password" required>
+            <span id="togglePassword" style="position: absolute; right: 10px; top: 38px; cursor: pointer; user-select: none; margin-top: -8px;">
+              <!-- Eye icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
+                <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+              </svg>
+            </span>
           </div>
           <button type="submit" name="btn_applicant_login" class="btn btn-block"
             style="background-color: #02457A; color: white;">
@@ -53,6 +56,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  const togglePassword = document.querySelector('#togglePassword');
+  const passwordInput = document.querySelector('#applicant_password_login');
+
+  togglePassword.addEventListener('click', () => {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    togglePassword.innerHTML = type === 'password' 
+      ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
+          <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+        </svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+          <path d="M13.359 11.238l1.388 1.388a.5.5 0 0 1-.708.708l-1.388-1.388a8.06 8.06 0 0 1-4.651 1.323C3 13.269 0 8 0 8a13.134 13.134 0 0 1 3.112-3.93L1.72 2.68a.5.5 0 1 1 .708-.708l11 11a.5.5 0 0 1-.708.708l-1.36-1.36zM5.754 6.185a3 3 0 0 0 4.256 4.256L5.754 6.185z"/>
+          <path d="M10.793 12.458a8.06 8.06 0 0 0 4.607-3.94s-3-5.5-8-5.5a7.49 7.49 0 0 0-3.093.612l.987.987a3 3 0 0 1 3.986 3.986l.113.113z"/>
+        </svg>`;
+  });
+</script>
+
 
 
 
