@@ -3,12 +3,11 @@
 ob_start();
 
 // Include necessary PHP files
-require_once "../configuration/config.php";
+require_once  "../configuration/config.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Welcome Applicants</title>
@@ -27,20 +26,20 @@ require_once "../configuration/config.php";
     <link href="../css/button.css" rel="stylesheet">
 
     <script src="../js/jquery-1.12.3.js"></script>
-</head>
-<style>
+</head><style>
     html,
     body {
+        height: 100%;
         margin: 0;
         display: flex;
         flex-direction: column;
     }
 
     body {
-        font-family: Arial, sans-serif;
-        background: url('../img/logo3.jpg') no-repeat center 25% fixed;
-        background-size: cover;
-    }
+    font-family: Arial, sans-serif;
+    background: url('../img/logo3.jpg') no-repeat center 25% fixed;
+    background-size: cover;
+}
 
 
     .modal-backdrop {
@@ -74,11 +73,7 @@ require_once "../configuration/config.php";
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7) !important;
     }
 
-    .welcome-container h3 {
-        margin-top: -60px;
-        font-weight: 700;
-    }
-
+   
     .logo {
         height: 200px;
         width: 200px;
@@ -86,10 +81,9 @@ require_once "../configuration/config.php";
         filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.6));
         /* Shadow behind logo */
     }
-
     .button {
         font-size: 1.1em;
-        background-color: #02457A;
+        background-color: #002B5B;
         color: white;
         padding: 14px 28px;
         border: 1px solid white;
@@ -128,64 +122,49 @@ require_once "../configuration/config.php";
             flex-direction: column;
             align-items: center;
         }
-
-        .tiny-text {
-            margin-top: 130px !important;
-        }
     }
 
     .title {
         color: white !important;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     }
-
-    p {
-        color: white !important;
+    p{
+      color: white !important;
     }
-
     .tiny-text {
-        font-size: 2px;
-    }
-
-    .modal-body input {
+    font-size: 2px;
+}
+    .modal-body input{
         border-radius: 30px !important;
     }
-
-    .form-control {
+    .form-control{
         border-radius: 30px !important;
     }
-
-    .tiny-text {
-        margin-top: 10px !important;
-        font-size: 8px !;
-    }
-</style>
-
+    </style>
 <body>
+    
+   
+<!-- Include the View List Modal -->
+<?php include 'view_list_modal.php'; ?>
 
+<div class="blur-overlay">
 
-    <!-- Include the View List Modal -->
-    <?php include 'view_list_modal.php'; ?>
+    <!-- Welcome Section -->
+    <div class="welcome-container">
+        <img src="../img/uni.png" alt="SUAST Logo" class="logo">
+        <h3>Welcome to UniReserve</h3>
+        <p class="tiny-text"  ><strong> Choose a Service</strong></p>
+         <!-- View List Button -->
+    <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
 
-    <div class="blur-overlay">
+    </div>
 
-        <!-- Welcome Section -->
-        <div class="welcome-container">
-            <img src="../img/uni.png" alt="SUAST Logo" class="logo">
-            <h3>Welcome to UniReserve</h3>
-            <p class="tiny-text"><strong> Choose a Service</strong></p>
-            <!-- View List Button -->
-            <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
-
-        </div>
-
-        <!-- Buttons for Register and Login -->
-        <div class="buttons-container">
-            <button class="button" data-toggle="modal" data-target="#loginApplicant">SUAST SLOT RESERVATION</button>
-            <br>
-            <button class="button" data-toggle="modal" data-target="#serviceModal">FRONTLINE SERVICE
-                TRANSACTION</button>
-        </div>
+    <!-- Buttons for Register and Login -->
+    <div class="buttons-container">
+        <button  class="button"  data-toggle="modal" data-target="#loginApplicant">SUAST SLOT RESERVATION</button>
+        <br>
+        <button class="button" data-toggle="modal" data-target="#serviceModal">FRONTLINE SERVICE TRANSACTION</button>
+    </div>
 
     </div> <!-- /.blur-overlay -->
 
@@ -222,13 +201,13 @@ require_once "../configuration/config.php";
         </div>
     </div>
 
+    
+ 
+<?php include "../controller/controller.php"; ?>
 
-
-    <?php include "../controller/controller.php"; ?>
-
-    <?php include "../includes/foot.php"; ?>
-
-
+<?php include "../includes/foot.php"; ?>
+    
+ 
 
     <!-- Bootstrap JS and other necessary scripts -->
     <script src="../js/bootstrap.min.js" type="text/javascript"></script>
@@ -243,23 +222,25 @@ require_once "../configuration/config.php";
     <script src="../js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
     <!-- Bootstrap JS and dependencies (for modal) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $("#table").dataTable({
-                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 5] }],
-                "aaSorting": [],
+                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0,5] }], 
+                "aaSorting": [], 
                 "dom": '<"search"f><"top"l>rt<"bottom"ip><"clear">'
             });
         });
     </script>
 </body>
-
 </html>
 
 <?php
 // End output buffering and flush content
 ob_end_flush();
 ?>
+ 
+
+ 
