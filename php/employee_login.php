@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+session_regenerate_id(true);
 
 require_once "../configuration/config.php";
 
@@ -36,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['employee_password'])) {
-            session_regenerate_id(true);
 
             $_SESSION['employee_id'] = $user['employee_id'];
             $_SESSION['first_name'] = $user['first_name'];
