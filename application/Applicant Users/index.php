@@ -184,6 +184,7 @@ if (empty($full_name))
                                     <!-- Personal Information -->
                                     <h5 class="mt-3">Personal Information</h5>
                                     <div class="row">
+                                        <!-- Other fields including Age -->
                                         <?php
                                         $personal = [
                                             "lname" => "Last Name",
@@ -198,11 +199,10 @@ if (empty($full_name))
                                         foreach ($personal as $name => $label) {
                                             echo "<div class='col-md-4 mb-3'>
                                             <label for='{$name}'>{$label}</label>
-                                            <input type='text' class='form-control' name='{$name}' id='{$name}' required>
-                                        </div>";
+                                            <input type='text' class='form-control' name='{$name}' id='{$name}' " . ($name === 'age' ? "readonly" : "required") . ">
+                                            </div>";
                                         }
                                         ?>
-
                                         <!-- Ethnicity Dropdown -->
                                         <div class="col-md-4 mb-3">
                                             <label for="ethnicity">Ethnicity</label>
@@ -779,56 +779,29 @@ if (empty($full_name))
 
     <!-- Bootstrap 3 JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!-- 
-    <script>
-      $(document).ready(function () {
-    let currentStep = 1;
-    highlightStepButton(currentStep);
+   
+<script>
+  document.getElementById('bdate').addEventListener('change', function () {
+    const birthDate = new Date(this.value);
+    const today = new Date();
 
-    $('.step-btn').click(function () {
-        const step = $(this).data('step');
-        currentStep = step;
-        highlightStepButton(step);
-        loadStepContent(step);
-    });
-
-    $('#nextButton').click(function () {
-        if (currentStep < 3) {
-            currentStep++;
-            $('.step-btn[data-step="' + currentStep + '"]').click();
-        }
-    });
-
-    function loadStepContent(step) {
-        if (step === 1) {
-            $('#step-content').load('profile_form.php');
-            $('#nextButton').show();
-        } else if (step === 2) {
-            $('#step-content').html('<iframe id="dashboardFrame" src="maindash.php" style="width:100%; height:600px; border:none;"></iframe>');
-            $('#nextButton').show();
-
-            $('#dashboardFrame').on('load', function () {
-                const iframe = this;
-                try {
-                    const iframeBody = iframe.contentWindow.document.body;
-                    const newHeight = iframeBody.scrollHeight;
-                    $(iframe).height(newHeight + 20);
-                } catch (e) {
-                    $(iframe).height(800);
-                }
-            });
-        } else if (step === 3) {
-            $('#step-content').html('<p>Loading Preview...</p>');
-            $('#step-content').load('preview.php');
-            $('#nextButton').hide(); // Hide the Next button in step 3
-        }
+    if (birthDate > today) {
+      // Invalid birthdate in the future
+      alert('Birthdate cannot be in the future.');
+      this.value = '';
+      document.getElementById('age').value = '';
+      return;
     }
 
-    // Load the initial step content
-    loadStepContent(currentStep);
-}); -->
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
 
-    </script>
+    document.getElementById('age').value = age >= 0 ? age : '';
+  });
+</script>
 </body>
 
 </html>
