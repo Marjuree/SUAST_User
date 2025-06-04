@@ -1,8 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 session_regenerate_id(true);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require_once "../../configuration/config.php"; // Your config
 
@@ -206,9 +207,9 @@ if (empty($full_name))
                                         foreach ($personal as $name => $label) {
                                             $required = ($name === "mname") ? "" : "required";
                                             echo "<div class='col-md-4 mb-3'>
-                                            <label for='{$name}'>{$label}</label>
-                                            <input type='text' class='form-control' name='{$name}' id='{$name}' {$required}>
-                                        </div>";
+                                        <label for='{$name}'>{$label}</label>
+                                        <input type='text' class='form-control' name='{$name}' id='{$name}' {$required}>
+                                    </div>";
                                         }
                                         ?>
 
@@ -836,17 +837,25 @@ if (empty($full_name))
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.type === 'success') {
-                        alert(data.message);
-                    } else {
-                        alert("Error: " + data.message);
+                .then(response => response.text())  // get raw text first
+                .then(text => {
+                    console.log("Raw response:", text);
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.type === 'success') {
+                            alert(data.message);
+                        } else {
+                            alert("Error: " + data.message);
+                        }
+                    } catch (e) {
+                        alert("Response is not valid JSON. Check console.");
+                        console.error("JSON parse error:", e, "Response text:", text);
                     }
                 })
                 .catch(error => {
                     console.error('AJAX Error:', error);
                 });
+
         });
 
 
