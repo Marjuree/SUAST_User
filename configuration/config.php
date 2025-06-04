@@ -1,9 +1,9 @@
 <?php
-$dbhost = "bwygtvcqnww3bwtcc8mw-mysql.services.clever-cloud.com";
+$dbhost = "bhbpbkbkbka7m7taolud-mysql.services.clever-cloud.com";
 $dbusername = "uwfbf1jptm3pg6p0";
 $dbpassword = "mjLQ9V30EsAOUNyr3u1G";
-$dbname = "bwygtvcqnww3bwtcc8mw";
-$dbport = 3306; // Explicitly specify the port
+$dbname = "bhbpbkbkbka7m7taolud";
+$dbport = 20712; // Explicitly specify the port
 
 try {
     // Attempt to connect
