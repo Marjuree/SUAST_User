@@ -47,7 +47,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    
+
 </head>
 
 <body class="skin-blue">
