@@ -96,7 +96,7 @@
 </div>
 
 <!-- Applicant Registration Modal -->
-<div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px;">
+<div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px; margin-top: 40px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <!-- Centered and small modal -->
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border:none;">
@@ -160,6 +160,13 @@
   </div>
 </div>
 
+<style>
+  #registerApplicant .modal-body {
+    min-height: 350px;
+    padding-bottom: 60px;
+    overflow-y: auto;
+  }
+</style>
 
 <style>
   #passwordHelp.strong {
