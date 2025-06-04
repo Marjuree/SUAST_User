@@ -603,8 +603,8 @@ if (empty($full_name))
                                 </div>
 
                                 <!-- Additional Details -->
-                                <h5 class="mt-4">Other Details</h5>
-                                <div class="row">
+                                <!-- <h5 class="mt-4">Other Details</h5> -->
+                                <!-- <div class="row">
                                     <?php
                                     $other = [
                                         "living_status" => "Living Status",
@@ -617,7 +617,6 @@ if (empty($full_name))
                                     ];
 
                                     foreach ($other as $name => $label) {
-                                        // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
                                         $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
 
                                         echo "<div class='col-md-4 mb-3'>
@@ -631,7 +630,7 @@ if (empty($full_name))
                                         <input type="date" class="form-control" name="date_applied" id="date_applied"
                                             required>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Educational Preferences -->
                                 <h5 class="mt-4">Educational Preferences</h5>
                                 <div class="row">
@@ -690,7 +689,14 @@ if (empty($full_name))
                                         </div>";
                                     }
                                     ?>
+                                     <div class="col-md-4 mb-3">
+                                    <label for="date_applied">Date Applied</label>
+                                    <input type="date" class="form-control" name="date_applied" id="date_applied"
+                                        required>
                                 </div>
+                                </div>
+
+                               
 
                                 <!-- Checkbox with link to open modal -->
                                 <div class="form-group">
