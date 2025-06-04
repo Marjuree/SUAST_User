@@ -84,7 +84,7 @@ if ($res && $row = $res->fetch_assoc()) {
 
     /* Click/active effect */
     #submitMdoal .btn:active {
-        background-color: #00254d;
+        background-color: #00509e;
         /* even darker blue */
         transform: scale(0.98);
         /* slight shrink */
@@ -101,6 +101,21 @@ if ($res && $row = $res->fetch_assoc()) {
 
     .modal-body p {
         font-family: 'Poppins', sans-serif;
+    }
+       .request-btn {
+        background-color: #003366;
+        color: #fff;
+        border-radius: 30px;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .request-btn:hover {
+        background-color: #00509e; /* slightly lighter blue */
+        color: #fff;
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
     }
 </style>
 
