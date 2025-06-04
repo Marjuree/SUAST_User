@@ -3,11 +3,12 @@
 ob_start();
 
 // Include necessary PHP files
-require_once  "../configuration/config.php";
+require_once "../configuration/config.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Welcome Applicants</title>
@@ -26,7 +27,8 @@ require_once  "../configuration/config.php";
     <link href="../css/button.css" rel="stylesheet">
 
     <script src="../js/jquery-1.12.3.js"></script>
-</head><style>
+</head>
+<style>
     html,
     body {
         height: 100%;
@@ -36,10 +38,10 @@ require_once  "../configuration/config.php";
     }
 
     body {
-    font-family: Arial, sans-serif;
-    background: url('../img/logo3.jpg') no-repeat center 25% fixed;
-    background-size: cover;
-}
+        font-family: Arial, sans-serif;
+        background: url('../img/logo3.jpg') no-repeat center 25% fixed;
+        background-size: cover;
+    }
 
 
     .modal-backdrop {
@@ -73,7 +75,7 @@ require_once  "../configuration/config.php";
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7) !important;
     }
 
-   
+
     .logo {
         height: 200px;
         width: 200px;
@@ -81,6 +83,7 @@ require_once  "../configuration/config.php";
         filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.6));
         /* Shadow behind logo */
     }
+
     .button {
         font-size: 1.1em;
         background-color: #002B5B;
@@ -128,86 +131,92 @@ require_once  "../configuration/config.php";
         color: white !important;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     }
-    p{
-      color: white !important;
+
+    p {
+        color: white !important;
     }
+
     .tiny-text {
-    font-size: 2px;
-}
-    .modal-body input{
+        font-size: 2px;
+    }
+
+    .modal-body input {
         border-radius: 30px !important;
     }
-    .form-control{
+
+    .form-control {
         border-radius: 30px !important;
     }
-    </style>
+</style>
+
 <body>
-    
-   
-<!-- Include the View List Modal -->
-<?php include 'view_list_modal.php'; ?>
 
-<div class="blur-overlay">
 
-    <!-- Welcome Section -->
-    <div class="welcome-container">
-        <img src="../img/uni.png" alt="SUAST Logo" class="logo">
-        <h3>Welcome to UniReserve</h3>
-        <p class="tiny-text"  ><strong> Choose a Service</strong></p>
-         <!-- View List Button -->
-    <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
+    <!-- Include the View List Modal -->
+    <?php include 'view_list_modal.php'; ?>
 
-    </div>
+    <div class="blur-overlay">
 
-    <!-- Buttons for Register and Login -->
-    <div class="buttons-container">
-        <button  class="button"  data-toggle="modal" data-target="#loginApplicant">SUAST SLOT RESERVATION</button>
-        <br>
-        <button class="button" data-toggle="modal" data-target="#serviceModal">FRONTLINE SERVICE TRANSACTION</button>
-    </div>
+        <!-- Welcome Section -->
+        <div class="welcome-container">
+            <img src="../img/uni.png" alt="SUAST Logo" class="logo">
+            <h3>Welcome to UniReserve</h3>
+            <p class="tiny-text"><strong> Choose a Service</strong></p>
+            <!-- View List Button -->
+            <!-- <a class="" data-toggle="modal" data-target="#viewListModal">View List</a> -->
+
+        </div>
+
+        <!-- Buttons for Register and Login -->
+        <div class="buttons-container">
+            <button class="button" data-toggle="modal" data-target="#loginApplicant">SUAST SLOT RESERVATION</button>
+            <br>
+            <button class="button" data-toggle="modal" data-target="#serviceModal">FRONTLINE SERVICE
+                TRANSACTION</button>
+        </div>
 
     </div> <!-- /.blur-overlay -->
 
 
 
     <!-----------------------------------Service Modal----------------------------------------->
-    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true"
-        style="height: 400px; margin-top: 60px;">
-        <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Smaller for better mobile fit -->
-            <div class="modal-content text-center p-2"
-                style="border-radius: 15px; border: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
-                <!-- Close button in top right -->
-                <button type="button" class="close position-absolute end-0 mt-2 me-2" data-dismiss="modal"
-                    aria-label="Close" style="background: none; color: black; border: none; font-size: 1.5rem;">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true"
+    style="height: 400px; margin-top: 60px;">
+    <div class="modal-dialog modal-sm"> <!-- Removed modal-dialog-centered as it's BS4+ -->
+        <div class="modal-content text-center p-2"
+            style="border-radius: 15px; border: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;">
+            
+            <!-- Close button in top left -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                style="position: absolute; right: 10px; top: 10px; background: none; color: black; border: none; font-size: 1.5rem;">
+                <span aria-hidden="true">&times;</span>
+            </button>
 
-                <!-- Logo -->
-                <div class="d-flex justify-content-center mb-1">
-                    <img src="../img/uni.png" alt="Logo" class="logo" style="margin-bottom:-30px;">
-                </div>
+            <!-- Logo -->
+            <div class="text-center mb-1">
+                <img src="../img/uni.png" alt="Logo" class="logo" style="margin-bottom:-30px;">
+            </div>
 
-                <!-- Title -->
-                <h5 class="fw-bold mt-0 mb-2 text-uppercase text-dark"><strong>Choose a Frontline Service</strong> </h5>
+            <!-- Title -->
+            <h5 class="fw-bold mt-0 mb-2 text-uppercase text-dark"><strong>Choose a Frontline Service</strong></h5>
 
-                <!-- Buttons -->
-                <div class="buttons-container">
-                    <button class="button mb-1" data-toggle="modal" data-target="#StudentModal">ACCOUNTING
-                        OFFICE</button>
-                    <button class="button" data-toggle="modal" data-target="#empModal">HUMAN RESOURCE
-                        MANAGEMENT</button>
-                </div>
+            <!-- Buttons -->
+            <div class="buttons-container">
+                <button class="button mb-1" data-toggle="modal" data-target="#StudentModal">ACCOUNTING OFFICE</button>
+                <button class="button" data-toggle="modal" data-target="#empModal">HUMAN RESOURCE MANAGEMENT</button>
             </div>
         </div>
     </div>
+</div>
 
-    
- 
-<?php include "../controller/controller.php"; ?>
 
-<?php include "../includes/foot.php"; ?>
-    
- 
+
+
+    <?php include "../controller/controller.php"; ?>
+
+    <?php include "../includes/foot.php"; ?>
+
+
 
     <!-- Bootstrap JS and other necessary scripts -->
     <script src="../js/bootstrap.min.js" type="text/javascript"></script>
@@ -222,25 +231,23 @@ require_once  "../configuration/config.php";
     <script src="../js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
     <!-- Bootstrap JS and dependencies (for modal) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#table").dataTable({
-                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0,5] }], 
-                "aaSorting": [], 
+                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 5] }],
+                "aaSorting": [],
                 "dom": '<"search"f><"top"l>rt<"bottom"ip><"clear">'
             });
         });
     </script>
 </body>
+
 </html>
 
 <?php
 // End output buffering and flush content
 ob_end_flush();
 ?>
- 
-
- 
