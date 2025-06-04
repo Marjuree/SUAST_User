@@ -301,7 +301,7 @@ $infoStmt->close();
                             <div id="serviceRequests">
   <div
                                     style="position: absolute; border-top-left-radius: 30px;
-                                     border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px; margin-left: 16px !important; max-width: 350px; width: 350px;">
+                                     border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px;  max-width: 350px; width: 337px;">
                                     <h5
                                         style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;">
                                         <i class="fas fa-file-alt" style="margin-right: 8px;"></i>Complete Details
