@@ -187,12 +187,10 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                     border-bottom-right-radius: 30px;
 
                 ">
-                    <h1 style="font-size: 26px; font-weight: bold;  font-family: 'Poppins', sans-serif;
-">Hello<br>
+                    <h1 style="font-size: 26px; font-weight: bold;  font-family: 'Poppins', sans-serif;">Hello<br>
                         <span style="color:#004085;"><?php echo $full_name; ?></span>!
                     </h1>
-                    <p style="font-size: 14px; margin-top: 10px;  font-family: 'Poppins', sans-serif;
-">
+                    <p style="font-size: 14px; margin-top: 10px;  font-family: 'Poppins', sans-serif;">
                         "Your First Step to DORSU Starts Here."<br>
                         Reserve. Secure. Succeed.
                     </p>
@@ -234,8 +232,8 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                             <div style="font-size: 28px; color: #003366;"><i class="fas fa-book"></i>
                             </div>
                             <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Personal Deetails</h5>
-                            <p class="card-text" style="font-size: 13px;">Click here to view your exam schedule and
-                                assigned location.</p>
+                            <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to view and edit
+                                your submitted details on the slot reservation.</p>
                         </div>
                     </div>
 
@@ -394,7 +392,8 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                         style="color: white; opacity: 1; font-size: 2rem;">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="applicationStatusModalLabel" style="font-family: 'Poppins', sans-serif;">
+                    <h4 class="modal-title" id="applicationStatusModalLabel"
+                        style="font-family: 'Poppins', sans-serif;">
                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"
                             style="margin-right: 8px;"></span>
                         Application Status
@@ -457,7 +456,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                         style="color: #003366; opacity: 1; font-size: 2rem;">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="examScheduleModalLabel" >
+                    <h4 class="modal-title" id="examScheduleModalLabel">
                         <i class="fas fa-calendar-check" aria-hidden="true" style="margin-right: 8px; "></i>
                         Exam Schedule
                     </h4>
