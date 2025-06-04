@@ -49,7 +49,15 @@ $student_data = $result->fetch_assoc();
 
     <!-- Bootstrap 3 CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 </head>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif !important;
+
+    }
+</style>
 
 <body class="skin-blue">
     <?php
@@ -75,13 +83,13 @@ $student_data = $result->fetch_assoc();
                      border-bottom-left-radius: 30px;
                     border-bottom-right-radius: 30px;">
             <!-- Dashboard Title -->
-            <h4 class="text-center mb-0">Dashboard</h4>
-            <hr class="my-2" style="border-top: 1px solid  rgb(117, 118, 120);">
+            <h4 class="text-center mb-0" style="font-family: 'Poppins', sans-serif !important;">Dashboard</h4>
+            <hr class="my-2" style="border-top: 1px solid  rgb(117, 118, 120); ">
 
             <!-- Hello and Student Full Name -->
             <div class="text-center my-3">
-                <h2 class="mb-1"><Strong>Hello</Strong> </h2>
-                <h4 class="text-center"><strong><?= $first_name ?>!</strong></h4>
+                <h2 class="mb-1" style="font-family: 'Poppins', sans-serif !important;"><Strong>Hello</Strong> </h2>
+                <h4 class="text-center" style="font-family: 'Poppins', sans-serif !important;"><strong><?= $first_name ?>!</strong></h4>
             </div>
 
             <?php if ($student_data['enabled'] == 1): ?>
@@ -103,7 +111,7 @@ $student_data = $result->fetch_assoc();
         <!-- Clearance Requests Section -->
         <div class="card" id="requestClearance">
             <div class="card-header">
-                <span class="glyphicon glyphicon-list-alt"> Clearance Requests</span>
+                <span style="font-family: 'Poppins', sans-serif !important;" > Clearance Requests</span>
             </div>
 
             <?php
