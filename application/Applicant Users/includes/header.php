@@ -10,15 +10,31 @@ include "../../configuration/config.php"; // Adjust path if needed
 $role = $_SESSION['role'] ?? 'Applicant';
 $applicant_id = $_SESSION['applicant_id'] ?? 0;
 
-// Fetch messages only for Accounting (make sure to include `role` in SELECT)
-$sql = "SELECT admin_name, message, role, created_at 
-        FROM tbl_announcement 
-        WHERE role = 'SUAST' 
-        ORDER BY created_at DESC";
-$result = $con->query($sql);
-$num = $result ? $result->num_rows : 0; // Handle potential query failure
+$reservation_approved = 0;
+$reservation_rejected = 0;
 
+if ($applicant_id > 0) {
+    // Reservation Approved
+    $stmt = $con->prepare("SELECT COUNT(*) FROM tbl_reservation WHERE status = 'Approved' AND applicant_id = ?");
+    $stmt->bind_param("i", $applicant_id);
+    $stmt->execute();
+    $stmt->bind_result($reservation_approved);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Reservation Rejected
+    $stmt = $con->prepare("SELECT COUNT(*) FROM tbl_reservation WHERE status = 'Rejected' AND applicant_id = ?");
+    $stmt->bind_param("i", $applicant_id);
+    $stmt->execute();
+    $stmt->bind_result($reservation_rejected);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+// Total notifications for modal badge (approved + rejected)
+$total_requests = $reservation_approved + $reservation_rejected;
 ?>
+
 
 <header class="header bg-dark text-white">
     <a href="#" class="logo">
@@ -53,7 +69,7 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                             text-align: center;
                             line-height: 1;
                             ">
-                            <?php echo $num; ?>
+                            <?php echo $total_requests; ?>
                         </span>
                     </a>
                 </li>
@@ -73,38 +89,44 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
 
 
 <!-- Messages Modal -->
-<div id="messagesModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm modal-md modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white" style="background-color:#003366;">
-                <h5 class="modal-title">You have <?php echo $num; ?> new Announcement</h5>
-                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+<div class="modal fade" id="messagesModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow">
+
+            <!-- Red header with bullhorn icon -->
+            <div class="modal-header text-white" style="background-color: #c62828;">
+                <i class="fa fa-bullhorn mr-2" style="font-size: 22px; color: #fff;"></i>
+                <button type="button" class="close text-white ml-auto" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body overflow-auto" style="max-height: 60vh;">
-                <?php if ($num > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) { ?>
-                        <div class="message-item d-flex flex-column mb-2">
-                            <small class="text-muted"><?php echo date('M d, Y h:i A', strtotime($row['created_at'])); ?></small>
-                            <div class="alert alert-light rounded-lg shadow-sm p-2 position-relative w-100"
-                                style="word-break: break-word;">
-                                <p class="mb-1"><strong>From:
-                                        <?php echo htmlspecialchars($row['role'] ?? 'Unknown'); ?></strong></p>
-                                <p class="mb-0"><strong><?php echo htmlspecialchars($row['admin_name']); ?>:</strong>
-                                    <?php echo htmlspecialchars($row['message']); ?></p>
-                            </div>
-                        </div>
-                    <?php }
-                } else { ?>
-                    <p class="text-muted text-center">No new Announcement.</p>
-                <?php } ?>
+
+            <!-- Modal Body -->
+            <div class="modal-body p-4" style="background-color: #fff; font-size: 16px;">
+                <div class="mb-4">
+                    <h6 class="font-weight-bold">Reservation Requests</h6>
+                    <?php if ($reservation_approved > 0): ?>
+                        <p class="text-success mb-2">🎉 Congratulations, your reservation request(s) is/are
+                            <strong>Approved</strong>!</p>
+                    <?php endif; ?>
+                    <?php if ($reservation_rejected > 0): ?>
+                        <p class="text-danger mb-2">😞 Sorry, your reservation request(s) is/are <strong>Rejected</strong>.
+                        </p>
+                    <?php endif; ?>
+                    <?php if ($reservation_approved === 0 && $reservation_rejected === 0): ?>
+                        <p class="text-muted mb-2">No reservation requests found.</p>
+                    <?php endif; ?>
+                </div>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <a href="./announcement.php" class="btn btn-primary btn-sm" style="background-color:#003366;">View all messages</a>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" style="background-color:red; color: white;">Close</button>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger px-4" data-dismiss="modal">CLOSE</button>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <!-- View Profile Modal -->
@@ -233,8 +255,8 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                             </div>
                             <div class="form-group">
                                 <label for="txt_confirm_password">Confirm Password:</label>
-                                <input id="txt_confirm_password" name="txt_confirm_password" class="form-control" type="password"
-                                    placeholder="Re-enter new password" />
+                                <input id="txt_confirm_password" name="txt_confirm_password" class="form-control"
+                                    type="password" placeholder="Re-enter new password" />
                             </div>
                         <?php }
                         $stmt->close();
@@ -244,8 +266,10 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                     ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:red; color: white;">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="btn_saveeditProfile" style="background-color:#003366;">Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        style="background-color:red; color: white;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" name="btn_saveeditProfile"
+                        style="background-color:#003366;">Save Changes</button>
                 </div>
             </div>
         </div>
