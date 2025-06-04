@@ -1,13 +1,24 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+  .modal,
+  .modal * {
+    font-family: 'Poppins', sans-serif !important;
+  }
+</style>
 <!-- Login Modal -->
-<div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" style="margin-top: 70px;">
+<div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+  style="margin-top: 70px;">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Updated Modal Header -->
       <div class="modal-header flex-column align-items-center"
         style="outline: none !important; box-shadow: none !important; border: none;">
         <!-- Logo -->
-        <img src="../img/uni.png" alt="Logo" style="width: 200px; height: auto; margin-bottom: 10px; margin-top: -40px;">
-        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Employee!</h4>
+        <img src="../img/uni.png" alt="Logo"
+          style="width: 200px; height: auto; margin-bottom: 10px; margin-top: -40px;">
+        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Employee!
+        </h4>
         <h4 class="modal-title" style="font-size: 10px;">please login your account</h4>
 
         <button type="button" class="close position-absolute" style="right: 10px; top: 10px;" data-dismiss="modal"
@@ -27,8 +38,7 @@
             <label for="loginPassword">Password</label>
             <input type="password" class="form-control" id="loginPassword" name="employee_password" required>
           </div>
-          <button type="submit" class="btn btn-block"
-            style="background-color: #02457A; color: white;">Login</button>
+          <button type="submit" class="btn btn-block" style="background-color: #02457A; color: white;">Login</button>
 
           <p class="mt-2 text-center">
             <span style="color: black;">New User?</span>
@@ -103,7 +113,8 @@
   }
 </style>
 <!-- Employee Registration Modal -->
-<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px;">
+<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+  style="margin-top: 70px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border: none;">
       <div class="modal-header flex-column align-items-center">
@@ -151,21 +162,25 @@
           </div>
           <div class="form-group">
             <label for="registerPassword">Password</label>
-            <input type="password" class="form-control" id="registerPassword" name="employee_password" required minlength="8">
+            <input type="password" class="form-control" id="registerPassword" name="employee_password" required
+              minlength="8">
             <small id="reg_passwordHelp" class="text-muted"></small>
           </div>
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="employee_confirm_password" required minlength="8">
+            <input type="password" class="form-control" id="confirmPassword" name="employee_confirm_password" required
+              minlength="8">
           </div>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1" required>
-            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy notice</label>
+            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
+              required>
+            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy
+              notice</label>
           </div>
-          <button type="submit" class="btn btn-primary btn-block" name="register_employee" style="background-color: #02457A;">Register</button>
+          <button type="submit" class="btn btn-primary btn-block" name="register_employee"
+            style="background-color: #02457A;">Register</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-
