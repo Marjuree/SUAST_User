@@ -1,5 +1,13 @@
-<!-- Login Modal FOR Student -->
-<div class="modal fade" id="StudentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true" style="margin-top: 70px;">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+    .modal,
+    .modal * {
+        font-family: 'Poppins', sans-serif !important;
+    }
+</style><!-- Login Modal FOR Student -->
+<div class="modal fade" id="StudentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true"
+    style="margin-top: 70px;">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Header with logo and titles -->
@@ -121,11 +129,11 @@
 </div>
 
 <style>
-  #regModal .modal-body {
-    min-height: 350px;
-    padding-bottom: 80px;
-    overflow-y: auto;
-  }
+    #regModal .modal-body {
+        min-height: 350px;
+        padding-bottom: 80px;
+        overflow-y: auto;
+    }
 </style>
 <!-- Registration Modal for Student -->
 <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true"
@@ -201,13 +209,15 @@
                     </div>
 
                     <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
-              required>
-            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy
-              notice</label>
-          </div>
+                        <input type="checkbox" class="form-check-input" id="privacy_notice"
+                            name="privacy_notice_accepted" value="1" required>
+                        <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the
+                            privacy
+                            notice</label>
+                    </div>
 
-                    <button type="submit" class="btn btn-success btn-block" name="register_student" style="background-color: #02457A;">Register</button>
+                    <button type="submit" class="btn btn-success btn-block" name="register_student"
+                        style="background-color: #02457A;">Register</button>
                 </form>
                 <div id="error" class="text-danger text-right mt-2">
                     <?php if (isset($_GET['register_error']))
