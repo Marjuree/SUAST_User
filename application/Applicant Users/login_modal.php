@@ -138,7 +138,7 @@
             <input type="text" class="form-control" id="last_name" name="last_name" required>
           </div>
           <div class="form-group">
-            <label for="university_email">University Email</label>
+            <label for="university_email">Email</label>
             <input type="email" class="form-control" id="university_email" name="university_email" required>
           </div>
           <div class="form-group">
