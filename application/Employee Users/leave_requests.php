@@ -238,7 +238,8 @@ $infoStmt->close();
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <?php require_once('../../includes/sidebar.php'); ?>
         <section class="content">
-            <a href="EmployeeDashboard.php" class="btn btn-primary mb-3" style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
+            <a href="EmployeeDashboard.php" class="btn btn-primary mb-3"
+                style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
                 <i class="fas fa-arrow-left curved"></i>
             </a>
 
@@ -464,6 +465,43 @@ $infoStmt->close();
         </section>
     </div>
 
+    <style>
+        .edit-btn {
+            background-color: #003366 !important;
+            border-radius: 50px !important;
+            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+        }
+
+        .edit-btn:hover,
+        .edit-btn:focus {
+            background-color: #002244 !important;
+            cursor: pointer;
+            box-shadow: 0 0 8px #003366;
+        }
+
+        .edit-btn:active {
+            background-color: #001122 !important;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .delete-btn {
+            background-color: #dc3545 !important;
+            border-radius: 50px !important;
+            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+        }
+
+        .delete-btn:hover,
+        .delete-btn:focus {
+            background-color: #b02a37 !important;
+            cursor: pointer;
+            box-shadow: 0 0 8px #dc3545;
+        }
+
+        .delete-btn:active {
+            background-color: #7a1e23 !important;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
     <!-- Edit Leave Modal -->
     <div class="modal fade" id="editLeaveModal" tabindex="-1" role="dialog" aria-labelledby="editLeaveModalLabel"
         aria-hidden="true">
