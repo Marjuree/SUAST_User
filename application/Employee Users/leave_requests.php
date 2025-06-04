@@ -96,6 +96,8 @@ $infoStmt->close();
     <link href="../../css/button.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
     <style>
         .progress-tracker {
             display: flex;
@@ -105,6 +107,8 @@ $infoStmt->close();
             margin: 40px 0;
             padding: 0 20px;
             position: relative;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         .progress-tracker::before {
@@ -124,6 +128,8 @@ $infoStmt->close();
             text-align: center;
             z-index: 1;
             flex: 1;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         .progress-tracker li::before {
@@ -159,6 +165,8 @@ $infoStmt->close();
             margin-top: 5px;
             color: #666;
             font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         table thead {
@@ -173,29 +181,49 @@ $infoStmt->close();
 
             .progress-tracker li small {
                 font-size: 10px;
+                font-family: 'Poppins', sans-serif;
+
 
             }
 
             .progress-tracker {
                 flex-wrap: wrap;
                 padding: 0 10px;
+                font-family: 'Poppins', sans-serif;
+
             }
 
             .progress-tracker li {
                 text-align: center;
+                font-family: 'Poppins', sans-serif;
+
             }
 
             .progress-tracker-wrapper {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 margin-bottom: 20px;
+                font-family: 'Poppins', sans-serif;
+
             }
 
             .progress-tracker {
                 width: max-content;
                 min-width: 800px;
+                font-family: 'Poppins', sans-serif;
+
             }
 
+        }
+
+        .content-header h1,
+        p {
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        .form-group {
+            font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
@@ -206,9 +234,14 @@ $infoStmt->close();
     require_once('../../includes/head_css.php');
     ?>
 
+
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <?php require_once('../../includes/sidebar.php'); ?>
         <section class="content">
+            <a href="EmployeeDashboard.php" class="btn btn-primary mb-3" style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
+                <i class="fas fa-arrow-left curved"></i>
+            </a>
+
             <div class="box-body" style="margin-bottom: 90px;">
                 <section class="content-header text-center my-4">
                     <h1>Leave Request</h1>
@@ -289,10 +322,10 @@ $infoStmt->close();
                     <!-- Header that sits in the BACKGROUND -->
                     <div
                         style="position: absolute; border-top-left-radius: 30px;
-                        border-top-right-radius: 30px;   height: 70px; background-color: #003366; z-index: 0; margin-top: -50px; width: 327px;">
+                        border-top-right-radius: 30px;   height: 70px; background-color: #003366; z-index: 0; margin-top: -50px; width: 327px; ">
                         <h5
-                            style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;">
-                            <i class="fas fa-book" style="margin-right: 8px;"></i>Complete Details
+                            style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;font-family: 'Poppins', sans-serif; ">
+                            <i class="fas fa-book" style="margin-right: 8px;  "></i>Complete Details
                         </h5>
 
 
@@ -303,7 +336,7 @@ $infoStmt->close();
                         <div class="card-body"
                             style="padding: 20px; position: relative; z-index: 1; background-color: rgba(255,255,255,0.95); border-radius: 20px;">
                             <form class="form-horizontal" style="margin-top: 20px;">
-                              
+
                                 <!-- add margin-top to push form below header -->
                                 <div class="form-group row">
                                     <label class="col-sm-3 control-label" style="font-size: 12px;">Full
