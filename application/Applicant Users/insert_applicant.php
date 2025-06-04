@@ -22,7 +22,7 @@ function getPost($key, $default = "") {
 // Fetch all inputs safely
 $lname = getPost('lname');
 $fname = getPost('fname');
-$mname = getPost('mname');
+$mname = getPost('mname') !== "" ? getPost('mname') : null;
 $bdate = getPost('bdate');
 $age = (isset($_POST['age']) && is_numeric($_POST['age'])) ? (int) $_POST['age'] : 0;
 $religion = getPost('religion');
