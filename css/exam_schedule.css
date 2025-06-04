@@ -1,0 +1,26 @@
+/* Ensure consistent button and table design */
+.box-header {
+    padding: 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+.btn-primary {
+    font-weight: bold;
+    padding: 8px 16px;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+}
+
+.table tbody tr td {
+    text-align: center;
+}
+
+input[type="date"]:disabled {
+    background-color: #ffcccc;
+    cursor: not-allowed;
+}
+ 

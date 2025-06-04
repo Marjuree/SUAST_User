@@ -1,0 +1,121 @@
+.form-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 10px;
+    flex-wrap: nowrap;
+    /* prevent wrapping */
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #495057;
+    width: 120px;
+    /* fixed width for label */
+    margin-bottom: 0;
+    flex-shrink: 0;
+    /* don't shrink */
+    line-height: 30px;
+    /* vertically center with input */
+}
+
+.form-group input,
+.form-group span {
+    font-size: 12px;
+    border-radius: 30px !important;
+    height: 30px;
+    flex-grow: 1;
+}
+
+
+
+.badge {
+    padding: 0.4rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+    color: #fff !important;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+    color: #fff !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.large-text {
+    font-size: 14px !important;
+    color: #000 !important;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 20px !important;
+    margin-bottom: 25px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #003366 !important;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px 4px 0 0;
+}
+
+
+.badge-custom {
+    font-size: 13px;
+    padding: 5px 10px;
+}
+
+.btn-icon {
+    position: relative;
+    padding-left: 30px;
+}
+
+.btn-icon .glyphicon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.toggle-section {
+    display: none;
+}
+
+.glyphicon {
+    margin-right: 8px;
+}
