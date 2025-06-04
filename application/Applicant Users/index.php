@@ -1,6 +1,8 @@
 <?php
 session_start();
 session_regenerate_id(true);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require_once "../../configuration/config.php"; // Your config
 
@@ -199,8 +201,7 @@ if (empty($full_name))
                                             "mname" => "Middle Name",
                                             "religion" => "Religion",
                                             "nationality" => "Nationality",
-                                            "civilstatus" => "Civil Status",
-                                            "contact" => "Contact No."
+                                            "civilstatus" => "Civil Status"
                                         ];
 
                                         foreach ($personal as $name => $label) {
@@ -224,7 +225,7 @@ if (empty($full_name))
                                         <!-- Contact Number Field -->
                                         <div class="col-md-6 mb-3">
                                             <label for="applicantNo ">Contact No.</label>
-                                            <input type="tel" class="form-control" name="applicantNo " id="applicantNo "
+                                            <input type="tel" class="form-control" name="applicantNo" id="applicantNo"
                                                 pattern="[0-9]{11}" placeholder="09XXXXXXXXX" required>
                                         </div>
 
@@ -415,9 +416,6 @@ if (empty($full_name))
 
 
                                 </div>
-
-
-
 
 
                                 <!-- Address Section -->
@@ -826,7 +824,34 @@ if (empty($full_name))
 
             document.getElementById('age').value = age >= 0 ? age : '';
         });
+
+        document.getElementById('applicantForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const form = e.target;
+            const formData = new FormData(form); // Automatically collects input and file data
+
+            fetch('insert_applicant.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.type === 'success') {
+                        alert(data.message);
+                    } else {
+                        alert("Error: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('AJAX Error:', error);
+                });
+        });
+
+
     </script>
+
+
 </body>
 
 </html>
