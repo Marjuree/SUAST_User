@@ -94,6 +94,14 @@
   </div>
 </div>
 
+
+<style>
+  #regEmployee .modal-body {
+    min-height: 350px;
+    padding-bottom: 80px;
+    overflow-y: auto;
+  }
+</style>
 <!-- Employee Registration Modal -->
 <div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
