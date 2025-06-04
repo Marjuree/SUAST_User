@@ -1,0 +1,147 @@
+ .calendar-container {
+     margin-top: 20px;
+     text-align: center;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ #examDate {
+     max-width: 300px;
+     margin: 0 auto;
+     display: block;
+ }
+
+ #timeSlots {
+     margin-top: 10px;
+     text-align: left;
+     max-width: 320px;
+ }
+
+ .time-slot {
+     display: flex;
+     align-items: center;
+     margin-bottom: 8px;
+     cursor: pointer;
+     user-select: none;
+ }
+
+ .time-slot input[type="checkbox"] {
+     margin-right: 10px;
+ }
+
+ .available label {
+     cursor: pointer;
+     color: #000;
+ }
+
+ .unavailable label {
+     color: #ccc;
+     cursor: not-allowed;
+ }
+
+ .selected label {
+     color: #007bff;
+     font-weight: bold;
+ }
+
+ #totalAvailableSlots {
+     font-weight: bold;
+     margin-top: 10px;
+     color: green;
+ }
+
+ #dateAvailabilityNote {
+     margin-top: 10px;
+     font-weight: bold;
+ }
+
+ .bg-success-solid {
+     background-color: rgb(55, 243, 99) !important;
+     /* Bootstrap standard green */
+ }
+
+ .bg-danger-solid {
+     background-color: rgb(228, 33, 52) !important;
+     /* Bootstrap standard red */
+ }
+
+ .calendar-container {
+     max-width: 320px;
+     margin: 0 auto;
+ }
+
+ .legend-wrapper {
+     display: inline-flex;
+     gap: 10px;
+     white-space: nowrap;
+     justify-content: center;
+     width: 100%;
+     margin-top: 15px;
+ }
+
+ .legend-cards {
+     display: inline-flex;
+     gap: 10px;
+     white-space: nowrap;
+     justify-content: center;
+     width: 100%;
+     margin-top: 15px;
+ }
+
+ .legend-wrapper {
+     display: inline-flex;
+     gap: 10px;
+     white-space: nowrap;
+     justify-content: flex-start;
+     /* Align to left */
+     width: 100%;
+     margin-top: 15px;
+ }
+
+ .legend-wrapper {
+     overflow-x: auto;
+     white-space: nowrap;
+     width: 100%;
+     margin-top: 15px;
+ }
+
+ .legend-cards {
+     display: inline-flex;
+     gap: 10px;
+     white-space: nowrap;
+     justify-content: flex-start;
+ }
+
+ .legend-card {
+     width: 140px;
+     height: 20px;
+     flex-shrink: 0;
+ }
+
+
+ /* Solid Bootstrap colors override */
+ .bg-success-solid {
+     background-color: rgb(66, 247, 108) !important;
+ }
+
+ .bg-danger-solid {
+     background-color: rgb(249, 37, 59) !important;
+ }
+.time-slot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.slot-checkbox {
+    margin: 0;
+    transform: translateY(1px); /* fine-tune vertical alignment */
+}
+
+.slot-label {
+    margin: 0;
+    line-height: 1.5;
+    
+}
