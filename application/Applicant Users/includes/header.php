@@ -42,12 +42,12 @@ $total_requests = $reservation_approved + $reservation_rejected;
     </a>
 
     <nav class="navbar navbar-static-top">
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
+        <!-- <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </a>
+        </a> -->
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Message Modal Trigger -->
