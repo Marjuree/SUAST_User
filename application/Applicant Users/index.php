@@ -169,7 +169,7 @@ if (empty($full_name))
                 <div id="step-content" tabindex="0" aria-live="polite" aria-atomic="true" style="margin-top: 20px;">
 
                     <!-- Step 1: Profile form embedded here by default -->
-                    <form id="applicantForm" method="POST" enctype="multipart/form-data">
+                    <form action="insert_applicant.php" id="applicantForm" method="POST" enctype="multipart/form-data">
                         <div
                             style="margin-top: 15px; background-color: #f8d7da; border-left: 8px solid #b30000; padding: 15px; border-radius: 4px;">
                             <strong style="color: #b30000;">Reminder:</strong>
@@ -197,19 +197,38 @@ if (empty($full_name))
                                             "lname" => "Last Name",
                                             "fname" => "First Name",
                                             "mname" => "Middle Name",
-                                            "age" => "Age",
                                             "religion" => "Religion",
                                             "nationality" => "Nationality",
                                             "civilstatus" => "Civil Status",
                                             "contact" => "Contact No."
                                         ];
+
                                         foreach ($personal as $name => $label) {
                                             echo "<div class='col-md-4 mb-3'>
                                             <label for='{$name}'>{$label}</label>
-                                            <input type='text' class='form-control' name='{$name}' id='{$name}' " . ($name === 'age' ? "readonly" : "required") . ">
-                                            </div>";
+                                            <input type='text' class='form-control' name='{$name}' id='{$name}' required>
+                                        </div>";
                                         }
                                         ?>
+
+                                        <!-- Age and Birthdate side-by-side -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="bdate">Birthdate</label>
+                                            <input type="date" class="form-control" name="bdate" id="bdate" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="age">Age</label>
+                                            <input type="text" class="form-control" name="age" id="age" readonly>
+                                        </div>
+
+                                        <!-- Contact Number Field -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="applicantNo ">Contact No.</label>
+                                            <input type="tel" class="form-control" name="applicantNo " id="applicantNo "
+                                                pattern="[0-9]{11}" placeholder="09XXXXXXXXX" required>
+                                        </div>
+
+
                                         <!-- Ethnicity Dropdown -->
                                         <div class="col-md-4 mb-3">
                                             <label for="ethnicity">Ethnicity</label>
@@ -320,11 +339,7 @@ if (empty($full_name))
                                             </select>
                                         </div>
 
-                                        <!-- Birthdate Field -->
-                                        <div class="col-md-4 mb-3">
-                                            <label for="bdate">Birthdate</label>
-                                            <input type="date" class="form-control" name="bdate" id="bdate" required>
-                                        </div>
+
 
                                         <!-- Gender Dropdown -->
                                         <div class="col-md-4 mb-3">
@@ -336,10 +351,7 @@ if (empty($full_name))
                                                 <option value="Prefer not to say">Prefer not to say</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email" required>
-                                        </div>
+
 
 
                                     </div>
@@ -689,14 +701,14 @@ if (empty($full_name))
                                         </div>";
                                     }
                                     ?>
-                                     <div class="col-md-4 mb-3">
-                                    <label for="date_applied">Date Applied</label>
-                                    <input type="date" class="form-control" name="date_applied" id="date_applied"
-                                        required>
-                                </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="date_applied">Date Applied</label>
+                                        <input type="date" class="form-control" name="date_applied" id="date_applied"
+                                            required>
+                                    </div>
                                 </div>
 
-                               
+
 
                                 <!-- Checkbox with link to open modal -->
                                 <div class="form-group">
