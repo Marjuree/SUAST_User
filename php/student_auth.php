@@ -14,7 +14,6 @@ if (isset($_POST['btn_student'])) {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
-    echo ".";
 
     if ($stmt->num_rows > 0) {
         $stmt->bind_result($id, $full_name, $hashed_password);
@@ -29,33 +28,13 @@ if (isset($_POST['btn_student'])) {
             header("Location: ../application/Student Users/StudentDashboard.php?success=login");
             exit();
         } else {
-            // Using SweetAlert2 for error message
-            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Invalid password!',
-                        text: 'The password you entered is incorrect.',
-                        confirmButtonText: 'Try Again'
-                    }).then(() => {
-                        window.location.href = 'landing_page.php'; // Redirect back to the landing page
-                    });
-                  </script>";
+            // ❌ Logging removed
+            echo "<script>alert('Invalid password!'); window.location.href='landing_page.php';</script>";
             exit();
         }
     } else {
-        // Using SweetAlert2 for error message
-        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'No account found!',
-                    text: 'There is no account associated with this username.',
-                    confirmButtonText: 'Try Again'
-                }).then(() => {
-                    window.location.href = 'landing_page.php'; // Redirect back to the landing page
-                });
-              </script>";
+        // ❌ Logging removed
+        echo "<script>alert('No account found with this username!'); window.location.href='landing_page.php';</script>";
         exit();
     }
 
