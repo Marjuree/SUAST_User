@@ -119,6 +119,14 @@
         </div>
     </div>
 </div>
+
+<style>
+  #regModal .modal-body {
+    min-height: 350px;
+    padding-bottom: 80px;
+    overflow-y: auto;
+  }
+</style>
 <!-- Registration Modal for Student -->
 <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true"
     data-backdrop="static" data-keyboard="false" style="margin-top: 70px;">
