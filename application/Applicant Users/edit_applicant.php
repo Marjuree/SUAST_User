@@ -806,36 +806,7 @@ if (!$applicant) {
                                 ?>
                             </div>
 
-                            <!-- Other Details Section -->
-                            <h5 class="mt-4">Other Details</h5>
-                            <div class="row">
-                                <?php
-                                $other = [
-                                    "living_status" => "Living Status",
-                                    "siblings" => "No. of Siblings",
-                                    "birth_order" => "Birth Order",
-                                    "monthly_income" => "Monthly Income",
-                                    "indigenous" => "Indigenous?",
-                                    "basic_sector" => "Basic Sector?"
-                                ];
-
-                                foreach ($other as $name => $label) {
-                                    // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
-                                    $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
-
-                                    echo "<div class='col-md-4 mb-3'>
-                                            <label for='{$name}'>{$label}</label>
-                                            <input type='{$input_type}' class='form-control' name='{$name}' id='{$name}' value='{$applicant[$name]}' required>
-                                        </div>";
-                                }
-                                ?>
-
-                                <div class="col-md-4 mb-3">
-                                    <label for="date_applied">Date Applied</label>
-                                    <input type="date" class="form-control" name="date_applied" id="date_applied"
-                                        value="<?= $applicant['date_applied']; ?>" required>
-                                </div>
-                            </div>
+                            
 
                             <!-- Educational Preferences Section -->
                             <h5 class="mt-4">Educational Preferences</h5>
