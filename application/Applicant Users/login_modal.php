@@ -1,6 +1,15 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+  .modal,
+  .modal * {
+    font-family: 'Poppins', sans-serif !important;
+  }
+</style>
 <!-- Applicant Login Modal -->
-<div class="modal fade" id="loginApplicant" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" style="margin-top: 70px;">
+<div class="modal fade" id="loginApplicant" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+  style="margin-top: 70px;">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Add the logo at the top of the modal -->
@@ -96,7 +105,8 @@
 </div>
 
 <!-- Applicant Registration Modal -->
-<div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px; margin-top: 40px;">
+<div class="modal fade" id="registerApplicant" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+  style="margin-top: 70px; margin-top: 40px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <!-- Centered and small modal -->
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border:none;">
