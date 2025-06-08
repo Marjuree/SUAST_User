@@ -42,10 +42,10 @@
             <span id="toggleEmpPassword"
               style="position: absolute; right: 10px; top: 38px; cursor: pointer; user-select: none; margin-top: -8px;">
               <!-- Eye icon SVG -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye"
-                viewBox="0 0 16 16">
-                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
-                <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24"
+                width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+                <circle cx="12" cy="12" r="3.5" />
               </svg>
             </span>
           </div>
@@ -76,14 +76,14 @@
     const type = empPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     empPasswordInput.setAttribute('type', type);
 
-    toggleEmpPassword.innerHTML = type === 'password'
-      ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
-          <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+    togglePassword.innerHTML = type === 'password'
+      ? `   <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24" width="22" height="22">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+            <circle cx="12" cy="12" r="3.5"/>
         </svg>`
-      : `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
-          <path d="M13.359 11.238l1.388 1.388a.5.5 0 0 1-.708.708l-1.388-1.388a8.06 8.06 0 0 1-4.651 1.323C3 13.269 0 8 0 8a13.134 13.134 0 0 1 3.112-3.93L1.72 2.68a.5.5 0 1 1 .708-.708l11 11a.5.5 0 0 1-.708.708l-1.36-1.36zM5.754 6.185a3 3 0 0 0 4.256 4.256L5.754 6.185z"/>
-          <path d="M10.793 12.458a8.06 8.06 0 0 0 4.607-3.94s-3-5.5-8-5.5a7.49 7.49 0 0 0-3.093.612l.987.987a3 3 0 0 1 3.986 3.986l.113.113z"/>
+      : `   <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24" width="22" height="22">
+            <path d="M17.94 17.94C16.12 19.25 14.13 20 12 20c-7 0-11-8-11-8a21.77 21.77 0 0 1 5.06-6.06M22.54 6.42A21.77 21.77 0 0 1 23 12s-4 8-11 8a10.94 10.94 0 0 1-4.24-.88M1 1l22 22"/>
+            <circle cx="12" cy="12" r="3.5"/>
         </svg>`;
   });
 </script>
@@ -112,7 +112,8 @@
             <label>Enter your email address</label>
             <input type="email" class="form-control" name="email" required>
           </div>
-          <button type="submit" name="send_otp" class="btn btn-primary btn-block" style="background-color: #02457A; color: white;">Send OTP</button>
+          <button type="submit" name="send_otp" class="btn btn-primary btn-block"
+            style="background-color: #02457A; color: white;">Send OTP</button>
         </form>
       </div>
     </div>
