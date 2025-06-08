@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +20,8 @@
 
     body {
       height: 100vh;
-      background-color: #003366; /* Deep blue */
+      background-color: #003366;
+      /* Deep blue */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -52,7 +57,8 @@
       border-radius: 50%;
       position: relative;
       border: 6px solid rgba(255 255 255 / 0.3);
-      border-top-color: #66b2ff; /* lighter blue for contrast */
+      border-top-color: #66b2ff;
+      /* lighter blue for contrast */
       animation: spin 1.3s linear infinite;
       box-shadow:
         0 0 10px rgba(102, 178, 255, 0.2),
@@ -84,6 +90,7 @@
     }
 
     @keyframes pulse {
+
       0%,
       100% {
         transform: scale(1);
@@ -112,12 +119,27 @@
     <h1>Welcome to UniReserve!</h1>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
-    const token = Math.random().toString(36).substring(2, 18);
-    const redirectUrl = `./php/landing_page.php?welcome=Please login to access this page&token=${token}`;
-    setTimeout(() => {
-      window.location.href = redirectUrl;
-    }, 1800);
+    <?php if (isset($_SESSION['swal'])):
+      $swal = $_SESSION['swal'];
+      unset($_SESSION['swal']);
+      ?>
+      Swal.fire({
+        icon: '<?= htmlspecialchars($swal['icon']) ?>',
+        title: '<?= htmlspecialchars($swal['title']) ?>',
+        text: '<?= htmlspecialchars($swal['text']) ?>',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        window.location.href = './php/landing_page.php';
+      });
+    <?php else: ?>
+      // No message, just redirect after delay
+      setTimeout(() => {
+        window.location.href = './php/landing_page.php';
+      }, 1800);
+    <?php endif; ?>
   </script>
 </body>
 
