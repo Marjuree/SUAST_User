@@ -67,6 +67,27 @@
   </div>
 </div>
 
+<!-- Forgot Password Modal -->
+<!-- <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Forgot Password</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="send_otp.php" method="POST">
+          <div class="form-group">
+            <label>Enter your email address</label>
+            <input type="email" class="form-control" name="email" required>
+          </div>
+          <button type="submit" name="send_otp" class="btn btn-primary btn-block">Send OTP</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+
 
 <script>
   const togglePassword = document.querySelector('#togglePassword');
@@ -89,7 +110,6 @@
 </script>
 
 
-
 <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
   style="margin-top: 70px;">
   <div class="modal-dialog">
@@ -107,22 +127,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="forgotPasswordForm" method="POST" novalidate>
+        <form action="send_otp.php" method="POST">
           <div class="form-group">
-            <label for="usernameOrEmail" class="font-weight-semibold">Enter Username or Email</label>
-            <input type="text" class="form-control form-control-lg rounded-pill border-primary" id="usernameOrEmail"
-              name="usernameOrEmail" placeholder="Username or Email" required autocomplete="username" autofocus />
+            <label>Enter your email address</label>
+            <input type="email" class="form-control" name="email" required>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-block rounded-pill shadow-sm mt-4"
-            style="background-color: #02457A; color: white;">
-            Send OTP
-          </button>
+          <button type="submit" name="send_otp" class="btn btn-primary btn-block" style="background-color: #02457A; color: white;">Send OTP</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-
 
 
 <script>
@@ -386,41 +401,6 @@
 </script>
 
 
-<!-- Taker Side Modal -->
-<div id="takerModal" class="modal">
-  <div class="modal-content">
-    <h2>Select Exam Schedule</h2>
-    <form id="takerForm" method="POST" action="schedule_handler.php">
-      <div class="form-group">
-        <label for="examDate">Choose Date:</label>
-        <input type="date" id="examDate" name="exam_date" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="examTime">Choose Time Slot:</label>
-        <select id="examTime" name="exam_time" class="form-control" required>
-          <option value="">Select Time</option>
-          <option value="8:00-10:00 AM">8:00-10:00 AM</option>
-          <option value="10:00-12:00 NN">10:00-12:00 NN</option>
-          <option value="1:00-3:00 PM">1:00-3:00 PM</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="testingRoom">Choose Testing Room:</label>
-        <select id="testingRoom" name="testing_room" class="form-control" required>
-          <option value="">Select Room</option>
-          <option value="1">Testing Room 1</option>
-          <option value="2">Testing Room 2</option>
-          <option value="3">Testing Room 3</option>
-          <option value="4">Testing Room 4</option>
-          <option value="5">Testing Room 5</option>
-        </select>
-      </div>
-      <p>Remaining Slots: <span id="remainingSlots">30</span></p>
-      <button type="submit" class="btn btn-primary">Confirm Schedule</button>
-      <button type="button" class="btn btn-secondary" onclick="closeModal('takerModal')">Cancel</button>
-    </form>
-  </div>
-</div>
 
 <!-- Close modal function -->
 <script>
