@@ -13,14 +13,13 @@ require_once "../../configuration/config.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_applicant'])) {
 
-    // Define expected fields
+    // Updated expected fields without the removed ones
     $fields = [
         'lname', 'fname', 'mname', 'age', 'religion', 'nationality', 'civilstatus',
         'contact', 'ethnicity', 'bdate', 'gender', 'email', 'purok', 'barangay', 'municipality',
         'province', 'first_option', 'second_option', 'third_option', 'campus',
         'n_mother', 'n_father', 'c_mother', 'c_father', 'm_occupation', 'f_occupation',
-        'm_address', 'f_address', 'living_status', 'siblings', 'birth_order', 'monthly_income',
-        'indigenous', 'basic_sector', 'date_applied'
+        'm_address', 'f_address'
     ];
 
     $data = [];
@@ -60,8 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_applicant'])) 
         ethnicity=?, bdate=?, gender=?, email=?, purok=?, barangay=?, municipality=?, province=?,
         first_option=?, second_option=?, third_option=?, campus=?,
         n_mother=?, n_father=?, c_mother=?, c_father=?, m_occupation=?, f_occupation=?,
-        m_address=?, f_address=?, living_status=?, siblings=?, birth_order=?, monthly_income=?,
-        indigenous=?, basic_sector=?, date_applied=?";
+        m_address=?, f_address=?";
 
     if ($image_blob) {
         $sql .= ", image_blob=?";

@@ -93,12 +93,12 @@ $total_requests =
     </a>
 
     <nav class="navbar navbar-static-top">
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
+        <!-- <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </a>
+        </a> -->
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Message Modal Trigger -->
@@ -137,6 +137,7 @@ $total_requests =
         </div>
     </nav>
 </header>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 
 <!-- View Profile Modal -->
@@ -149,7 +150,7 @@ $total_requests =
                 </button>
                 <h4 class="modal-title">Profile</h4>
             </div>
-            <div class="modal-body text-center" style="padding: 30px;">
+            <div class="modal-body text-center" style="padding: 30px; font-family: 'Poppins', sans-serif;">
                 <?php
                 if ($employee_id > 0) {
                     $stmt = $con->prepare("SELECT username, email, first_name, middle_name, last_name FROM tbl_employee_registration WHERE employee_id = ?");
@@ -171,18 +172,19 @@ $total_requests =
                                 justify-content: center; 
                                 align-items: center; 
                                 font-size: 40px; 
-                                margin: 0 auto 20px auto;">
+                                margin: 0 auto 20px auto;
+                                ">
                             <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                         </div>
-                        <h3 style="margin-bottom: 10px;"><?php echo htmlspecialchars($fullName); ?></h3>
-                        <p style="margin-bottom: 25px; color: #555;"><?php echo $email; ?></p>
+                        <h3 style="margin-bottom: 10px; font-family: 'Poppins', sans-serif;"><?php echo htmlspecialchars($fullName); ?></h3>
+                        <p style="margin-bottom: 25px; color: #555; "><?php echo $email; ?></p>
                         <div style="max-width: 200px; margin-left: 30px; font-size: 16px; font-weight: 500;">
                             <!-- Edit Profile Link -->
                             <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#editProfileModal"
                                 style="color: #003366; text-decoration: none; cursor: pointer; display: flex; align-items: center; margin-bottom: 15px;">
                                 <i class="glyphicon glyphicon-pencil" aria-hidden="true"
                                     style="color: green; margin-right: 5px;"></i>
-                                <span style="color: black;">Edit Profile</span>
+                                <span style="color: black; font-family: 'Poppins', sans-serif;">Edit Profile</span>
                                 <span style="font-size: 24px; color: black; margin-left: auto;">&gt;</span>
                             </a>
 
@@ -190,7 +192,7 @@ $total_requests =
                             <a href="../../logout.php"
                                 style="color: #003366; text-decoration: none; cursor: pointer; display: flex; align-items: center;">
                                 <i class="fa fa-sign-out-alt" aria-hidden="true" style="margin-right: 5px;"></i>
-                                <span style="color: black;">Logout</span>
+                                <span style="color: black; font-family: 'Poppins', sans-serif;">Logout</span>
                             </a>
                         </div>
 

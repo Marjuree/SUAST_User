@@ -1,13 +1,26 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+<style>
+  .modal,
+  .modal * {
+    font-family: 'Poppins', sans-serif !important;
+  }
+</style>
 <!-- Login Modal -->
-<div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+  style="margin-top: 70px;">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Updated Modal Header -->
       <div class="modal-header flex-column align-items-center"
         style="outline: none !important; box-shadow: none !important; border: none;">
         <!-- Logo -->
-        <img src="../img/uni.png" alt="Logo" style="width: 200px; height: auto; margin-bottom: 10px; margin-top: -40px;">
-        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Employee!</h4>
+        <img src="../img/uni.png" alt="Logo"
+          style="width: 200px; height: auto; margin-bottom: 10px; margin-top: -40px;">
+        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Employee!
+        </h4>
         <h4 class="modal-title" style="font-size: 10px;">please login your account</h4>
 
         <button type="button" class="close position-absolute" style="right: 10px; top: 10px;" data-dismiss="modal"
@@ -23,17 +36,30 @@
             <label for="loginUsername">Username</label>
             <input type="text" class="form-control" id="loginUsername" name="username" required>
           </div>
-          <div class="form-group">
+          <div class="form-group position-relative">
             <label for="loginPassword">Password</label>
             <input type="password" class="form-control" id="loginPassword" name="employee_password" required>
+            <span id="toggleEmpPassword"
+              style="position: absolute; right: 10px; top: 38px; cursor: pointer; user-select: none; margin-top: -8px;">
+              <!-- Eye icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye"
+                viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
+                <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+              </svg>
+            </span>
           </div>
-          <button type="submit" class="btn btn-block"
-            style="background-color: #02457A; color: white;">Login</button>
+          <button type="submit" class="btn btn-block" style="background-color: #02457A; color: white;">Login</button>
 
           <p class="mt-2 text-center">
             <span style="color: black;">New User?</span>
             <a href="#" data-toggle="modal" data-target="#agreementModal2" class="text-warning ">
               Register
+            </a>
+          </p>
+          <p class="mt-2 text-center">
+            <a href="#" data-toggle="modal" data-target="#forgotPasswordModal3" class="text-primary">
+              Forgot Password?
             </a>
           </p>
         </form>
@@ -42,13 +68,102 @@
   </div>
 </div>
 
+<script>
+  const toggleEmpPassword = document.querySelector('#toggleEmpPassword');
+  const empPasswordInput = document.querySelector('#loginPassword');
+
+  toggleEmpPassword.addEventListener('click', () => {
+    const type = empPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    empPasswordInput.setAttribute('type', type);
+
+    toggleEmpPassword.innerHTML = type === 'password'
+      ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
+          <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+        </svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+          <path d="M13.359 11.238l1.388 1.388a.5.5 0 0 1-.708.708l-1.388-1.388a8.06 8.06 0 0 1-4.651 1.323C3 13.269 0 8 0 8a13.134 13.134 0 0 1 3.112-3.93L1.72 2.68a.5.5 0 1 1 .708-.708l11 11a.5.5 0 0 1-.708.708l-1.36-1.36zM5.754 6.185a3 3 0 0 0 4.256 4.256L5.754 6.185z"/>
+          <path d="M10.793 12.458a8.06 8.06 0 0 0 4.607-3.94s-3-5.5-8-5.5a7.49 7.49 0 0 0-3.093.612l.987.987a3 3 0 0 1 3.986 3.986l.113.113z"/>
+        </svg>`;
+  });
+</script>
+
+<!-- Reset password OTP -->
+<div class="modal fade" id="forgotPasswordModal3" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+  style="margin-top: 70px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column align-items-center"
+        style="outline: none !important; box-shadow: none !important; border:none;">
+        <img src="../img/uni.png" alt="Logo" style="width: 200px; height: auto; margin-bottom: 10px; margin-top:-40px;">
+        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">Welcome, Employee!
+        </h4>
+        <h4 class="modal-title" id="loginModalLabel" style="font-size: 10px;">please input exisitng email
+          accoung!</h4>
+
+        <button type="button" class="close position-absolute" style="right: 10px; top: 10px;" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="forgotPasswordForm" method="POST" novalidate>
+          <div class="form-group">
+            <label for="usernameOrEmail" class="font-weight-semibold">Enter Username or Email</label>
+            <input type="text" class="form-control form-control-lg rounded-pill border-primary" id="usernameOrEmail"
+              name="usernameOrEmail" placeholder="Username or Email" required autocomplete="username" autofocus />
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block rounded-pill shadow-sm mt-4"
+            style="background-color: #02457A; color: white;">
+            Send OTP
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const notyf = new Notyf();
+
+  document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('../../php/send_otp_employee.php', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        notyf.success(data.message);
+        if (data.redirect) {
+          setTimeout(() => {
+            window.location.href = data.redirect;
+          }, 2000); // delay before redirecting
+        }
+      } else {
+        notyf.error(data.message);
+      }
+    } catch (error) {
+      notyf.error('An unexpected error occurred.');
+      console.error('Fetch error:', error);
+    }
+  });
+</script>
 
 
 
 
 <!-- Agreement Modal -->
 <div class="modal fade" id="agreementModal2" tabindex="-1" role="dialog" aria-labelledby="agreementModalLabel"
-  aria-hidden="true">
+  aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -94,8 +209,17 @@
   </div>
 </div>
 
+
+<style>
+  #regEmployee .modal-body {
+    min-height: 350px;
+    padding-bottom: 80px;
+    overflow-y: auto;
+  }
+</style>
 <!-- Employee Registration Modal -->
-<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+  style="margin-top: 70px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border: none;">
       <div class="modal-header flex-column align-items-center">
@@ -143,21 +267,25 @@
           </div>
           <div class="form-group">
             <label for="registerPassword">Password</label>
-            <input type="password" class="form-control" id="registerPassword" name="employee_password" required minlength="8">
+            <input type="password" class="form-control" id="registerPassword" name="employee_password" required
+              minlength="8">
             <small id="reg_passwordHelp" class="text-muted"></small>
           </div>
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="employee_confirm_password" required minlength="8">
+            <input type="password" class="form-control" id="confirmPassword" name="employee_confirm_password" required
+              minlength="8">
           </div>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1" required>
-            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy notice</label>
+            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
+              required>
+            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy
+              notice</label>
           </div>
-          <button type="submit" class="btn btn-primary btn-block" name="register_employee" style="background-color: #02457A;">Register</button>
+          <button type="submit" class="btn btn-primary btn-block" name="register_employee"
+            style="background-color: #02457A;">Register</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-

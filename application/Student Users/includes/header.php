@@ -1,39 +1,45 @@
 <?php
-// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include "../../configuration/config.php"; // Modify this path if needed
+include "../../configuration/config.php";
 
-// Set default values for session variables
 $role = $_SESSION['role'] ?? 'Student';
 $id = $_SESSION['student_id'] ?? 0;
 
+$status = null;
 
+// Fetch current student's status
+if ($id > 0) {
+    $stmt = $con->prepare("SELECT status FROM tbl_student_users WHERE id = ?");
+    if ($stmt) {
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->bind_result($status);
+        $stmt->fetch();
+        $stmt->close();
+    } else {
+        die("Prepare failed: " . $con->error);
+    }
+}
 
-
-// Fetch messages only for Accounting (make sure to include `role` in SELECT)
-$sql = "SELECT admin_name, message, role, created_at 
-        FROM tbl_announcement 
-        WHERE role = 'Accounting' 
-        ORDER BY created_at DESC";
-$result = $con->query($sql);
-$num = $result ? $result->num_rows : 0; // Handle potential query failure
-
+// Badge count: show 1 if status exists and is not 'Pending'
+$total_statuses = ($status && strtolower($status) !== 'pending') ? 1 : 0;
 ?>
+
 
 <header class="header bg-dark text-white">
     <a href="#" class="logo">
         <img src="../../img/uni.png" alt="Logo" style="width: 70px; height: auto;">
     </a>
     <nav class="navbar navbar-static-top">
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
+        <!-- <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </a>
+        </a> -->
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Message Modal Trigger -->
@@ -41,24 +47,27 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                     <a href="#" class="text-white" data-toggle="modal" data-target="#messagesModal"
                         style="position: relative; display: inline-block;">
                         <i class="fa fa-bell" style="font-size: 20px;"></i>
-                        <span class="badge" style="
-                            position: absolute;
-                            top: 8px;
-                            right: 8px;
-                            background-color: red;
-                            color: white;
-                            padding: 3px 7px;
-                            border-radius: 50%;
-                            font-size: 8px;
-                            font-weight: bold;
-                            min-width: 10px;
-                            text-align: center;
-                            line-height: 1;
+                        <?php if ($total_statuses > 0): ?>
+                            <span class="badge" style="
+                                position: absolute;
+                                top: 8px;
+                                right: 8px;
+                                background-color: red;
+                                color: white;
+                                padding: 3px 7px;
+                                border-radius: 50%;
+                                font-size: 8px;
+                                font-weight: bold;
+                                min-width: 10px;
+                                text-align: center;
+                                line-height: 1;
                             ">
-                            <?php echo $num; ?>
-                        </span>
+                                <?php echo $total_statuses; ?>
+                            </span>
+                        <?php endif; ?>
                     </a>
                 </li>
+
 
 
                 <!-- User Profile Modal Trigger -->
@@ -72,40 +81,49 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
         </div>
     </nav>
 </header>
-
 <!-- Messages Modal -->
-<div id="messagesModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm modal-md modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">You have <?php echo $num; ?> new Announcement</h5>
-                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+<div class="modal fade" id="messagesModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow">
+
+            <!-- Red header with bullhorn icon -->
+            <div class="modal-header text-white" style="background-color: #c62828;">
+                <i class="fa fa-bullhorn mr-2" style="font-size: 22px; color: #fff;"></i>
+                <button type="button" class="close text-white ml-auto" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body overflow-auto" style="max-height: 60vh;">
-                <?php if ($num > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) { ?>
-                        <div class="message-item d-flex flex-column mb-2">
-                            <small class="text-muted"><?php echo date('M d, Y h:i A', strtotime($row['created_at'])); ?></small>
-                            <div class="alert alert-light rounded-lg shadow-sm p-2 position-relative w-100"
-                                style="word-break: break-word;">
-                                <p class="mb-1"><strong>From:
-                                        <?php echo htmlspecialchars($row['role'] ?? 'Unknown'); ?></strong></p>
-                                <p class="mb-0"><strong><?php echo htmlspecialchars($row['admin_name']); ?>:</strong>
-                                    <?php echo htmlspecialchars($row['message']); ?></p>
-                            </div>
-                        </div>
-                    <?php }
-                } else { ?>
-                    <p class="text-muted text-center">No new Announcement.</p>
-                <?php } ?>
+
+            <!-- Modal Body -->
+            <div class="modal-body p-4" style="background-color: #fff; font-size: 16px;">
+                <div class="mb-4">
+                    <h6 class="font-weight-bold">Student Status Update</h6>
+
+                    <?php if ($status === 'Cleared'): ?>
+                        <p class="text-success mb-2">✅ You have been <strong>Cleared</strong>! Please proceed to the next
+                            steps.</p>
+                    <?php elseif ($status === 'For Payment'): ?>
+                        <p class="text-warning mb-2">💰 Your status is <strong>For Payment</strong>. Kindly settle your
+                            payment to proceed.</p>
+                    <?php elseif ($status !== null && strtolower($status) !== 'pending'): ?>
+                        <p class="text-info mb-2">ℹ️ Your current status is
+                            <strong><?php echo htmlspecialchars($status); ?></strong>.</p>
+                    <?php else: ?>
+                        <p class="text-muted mb-2">No status updates found.</p>
+                    <?php endif; ?>
+                </div>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <a href="#" class="btn btn-primary btn-sm">View all Announcement</a>
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger px-4" data-dismiss="modal">CLOSE</button>
             </div>
+
         </div>
     </div>
 </div>
+
+
 
 <!-- View Profile Modal -->
 <div id="viewProfileModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -142,7 +160,7 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                                 margin: 0 auto 20px auto;">
                             <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                         </div>
-                        <h3 style="margin-bottom: 10px;"><?php echo $fullName; ?></h3>
+                        <h3 style="margin-bottom: 10px; font-family: 'Poppins', sans-serif !important;"><?php echo $fullName; ?></h3>
                         <p style="margin-bottom: 25px; color: #555;"><?php echo $email; ?></p>
                         <div style="max-width: 200px; margin-left: 30px; font-size: 16px; font-weight: 500;">
                             <!-- Edit Profile Link -->
@@ -176,6 +194,12 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
     </div>
 </div>
 
+<style>
+    .form-group {
+        width: 100%;
+        max-width: 500px;
+    }
+</style>
 
 
 
@@ -184,7 +208,8 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
     <form method="post">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white" style="background-color: #003366; color: white; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                <div class="modal-header bg-primary text-white"
+                    style="background-color: #003366; color: white; border-top-left-radius: 10px; border-top-right-radius: 10px;">
                     <h4 class="modal-title">Edit profile</h4>
                 </div>
                 <div class="modal-body">
@@ -198,6 +223,7 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                     if ($row = $result->fetch_assoc()) { ?>
                         <div class="form-group">
                             <label>Full Name:</label>
+
                             <input name="full_name" class="form-control" type="text"
                                 value="<?php echo htmlspecialchars($row['full_name']); ?>" required />
                         </div>
@@ -221,11 +247,11 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                             <input name="password" class="form-control" type="password" placeholder="Enter new password" />
                         </div>
 
-                         <div class="form-group">
-                                <label for="txt_confirm_password">Confirm Password:</label>
-                                <input id="txt_confirm_password" name="txt_confirm_password" class="form-control" type="password"
-                                    placeholder="Re-enter new password" />
-                            </div>
+                        <div class="form-group">
+                            <label for="txt_confirm_password">Confirm Password:</label>
+                            <input id="txt_confirm_password" name="txt_confirm_password" class="form-control"
+                                type="password" placeholder="Re-enter new password" />
+                        </div>
                     <?php } else {
                         echo '<p class="text-danger">User data not found.</p>';
                     }
@@ -233,8 +259,10 @@ $num = $result ? $result->num_rows : 0; // Handle potential query failure
                     ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:red; color: white;">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="save_profile" style="background-color:#003366;">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        style="background-color:red; color: white;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" name="save_profile"
+                        style="background-color:#003366;">Save Changes</button>
                 </div>
             </div>
         </div>

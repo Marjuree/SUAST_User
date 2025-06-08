@@ -96,108 +96,166 @@ $infoStmt->close();
     <link href="../../css/button.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../../img/favicon.png" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
     <style>
+        /* Desktop and general layout */
         .progress-tracker {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            counter-reset: step;
+            flex-direction: column;
+            padding: 0;
             margin: 40px 0;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        .progress-tracker::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 30px;
-            right: 30px;
-            height: 4px;
-            background-color: #ccc;
-            z-index: 0;
-        }
-
-        .progress-tracker li {
             list-style: none;
             position: relative;
-            text-align: center;
-            z-index: 1;
-            flex: 1;
+            font-family: 'Poppins', sans-serif;
         }
 
+        /* Step item */
+        .progress-tracker li {
+            position: relative;
+            padding-left: 60px;
+            /* space for left-aligned circle */
+            margin-bottom: 30px;
+        }
+
+        /* Default circle */
         .progress-tracker li::before {
             content: counter(step);
             counter-increment: step;
-            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 35px;
             height: 35px;
             line-height: 35px;
+            text-align: center;
             background: #fff;
             border: 3px solid #ccc;
             border-radius: 50%;
-            margin-bottom: 10px;
             color: #ccc;
             font-weight: bold;
         }
 
+        /* DONE state: checkmark */
         .progress-tracker li.done::before {
             content: "✔";
             background-color: #4CAF50;
             border-color: #4CAF50;
             color: white;
+            font-size: 18px;
+            margin-top: 10px;
+            width: 20px;
+            height: 20px;
         }
 
+        /* CURRENT state */
         .progress-tracker li.current::before {
             background-color: #4CAF50;
             border-color: #4CAF50;
             color: white;
         }
 
+        /* Text content */
         .progress-tracker li span {
             display: block;
             margin-top: 5px;
             color: #666;
             font-weight: 500;
+            font-family: 'Poppins', sans-serif;
         }
 
-        table thead {
-            background-color: #343a40;
-            color: #fff;
+        .progress-tracker li small {
+            font-size: 12px;
+            color: #666;
+            display: block;
+            margin-top: 2px;
+            line-height: 1.3;
         }
 
+
+        /* Mobile view */
         @media (max-width: 600px) {
-            .progress-tracker li span {
-                font-size: 14px;
+            .progress-tracker-wrapper {
+                max-height: 400px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding-left: 40px;
+                background-color: #fafafa;
+                border-radius: 8px;
+                padding-top: 20px;
+                padding-bottom: 20px;
             }
 
-            .progress-tracker li small {
-                font-size: 10px;
-
-            }
+         
 
             .progress-tracker {
-                flex-wrap: wrap;
-                padding: 0 10px;
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+                width: 100%;
             }
 
             .progress-tracker li {
+                position: relative;
+                padding-left: 50px;
+                margin-bottom: 30px;
+            }
+
+            .progress-tracker li::before {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 20px;
+                height: 20px;
+                background-color: #ccc;
+                border: 3px solid #ccc;
+                border-radius: 50%;
+                line-height: 20px;
+                font-size: 12px;
                 text-align: center;
             }
 
-            .progress-tracker-wrapper {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                margin-bottom: 20px;
+            .progress-tracker li.done::before {
+                content: "✔";
+                background-color: #28a745;
+                border-color: #28a745;
+                color: white;
             }
 
-            .progress-tracker {
-                width: max-content;
-                min-width: 800px;
+            .progress-tracker li.current::before {
+                background-color: #007bff;
+                border-color: #007bff;
+                color: white;
             }
 
+            .progress-tracker li span {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 2px;
+            }
+
+            .progress-tracker li small {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .progress-tracker li:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+
+        .content-header h1,
+        p {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group {
+            font-family: 'Poppins', sans-serif;
         }
     </style>
+
 </head>
 
 <body class="skin-blue">
@@ -206,9 +264,15 @@ $infoStmt->close();
     require_once('../../includes/head_css.php');
     ?>
 
+
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <?php require_once('../../includes/sidebar.php'); ?>
         <section class="content">
+            <a href="EmployeeDashboard.php" class="btn btn-primary mb-3"
+                style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
+                <i class="fas fa-arrow-left curved"></i>
+            </a>
+
             <div class="box-body" style="margin-bottom: 90px;">
                 <section class="content-header text-center my-4">
                     <h1>Leave Request</h1>
@@ -289,10 +353,10 @@ $infoStmt->close();
                     <!-- Header that sits in the BACKGROUND -->
                     <div
                         style="position: absolute; border-top-left-radius: 30px;
-                        border-top-right-radius: 30px;   height: 70px; background-color: #003366; z-index: 0; margin-top: -50px; margin-left: 11px !important; width: 350px;">
+                        border-top-right-radius: 30px;   height: 70px; background-color: #003366; z-index: 0; margin-top: -50px; width: 327px; ">
                         <h5
-                            style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;">
-                            <i class="fas fa-book" style="margin-right: 8px;"></i>Complete Details
+                            style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;font-family: 'Poppins', sans-serif; ">
+                            <i class="fas fa-book" style="margin-right: 8px;  "></i>Complete Details
                         </h5>
 
 
@@ -303,7 +367,7 @@ $infoStmt->close();
                         <div class="card-body"
                             style="padding: 20px; position: relative; z-index: 1; background-color: rgba(255,255,255,0.95); border-radius: 20px;">
                             <form class="form-horizontal" style="margin-top: 20px;">
-                              
+
                                 <!-- add margin-top to push form below header -->
                                 <div class="form-group row">
                                     <label class="col-sm-3 control-label" style="font-size: 12px;">Full
@@ -431,6 +495,43 @@ $infoStmt->close();
         </section>
     </div>
 
+    <style>
+        .edit-btn {
+            background-color: #003366 !important;
+            border-radius: 50px !important;
+            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+        }
+
+        .edit-btn:hover,
+        .edit-btn:focus {
+            background-color: #002244 !important;
+            cursor: pointer;
+            box-shadow: 0 0 8px #003366;
+        }
+
+        .edit-btn:active {
+            background-color: #001122 !important;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .delete-btn {
+            background-color: #dc3545 !important;
+            border-radius: 50px !important;
+            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+        }
+
+        .delete-btn:hover,
+        .delete-btn:focus {
+            background-color: #b02a37 !important;
+            cursor: pointer;
+            box-shadow: 0 0 8px #dc3545;
+        }
+
+        .delete-btn:active {
+            background-color: #7a1e23 !important;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
     <!-- Edit Leave Modal -->
     <div class="modal fade" id="editLeaveModal" tabindex="-1" role="dialog" aria-labelledby="editLeaveModalLabel"
         aria-hidden="true">

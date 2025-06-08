@@ -49,7 +49,15 @@ $student_data = $result->fetch_assoc();
 
     <!-- Bootstrap 3 CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 </head>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif !important;
+
+    }
+</style>
 
 <body class="skin-blue">
     <?php
@@ -75,18 +83,18 @@ $student_data = $result->fetch_assoc();
                      border-bottom-left-radius: 30px;
                     border-bottom-right-radius: 30px;">
             <!-- Dashboard Title -->
-            <h4 class="text-center mb-0">Dashboard</h4>
-            <hr class="my-2" style="border-top: 1px solid  rgb(117, 118, 120);">
+            <h4 class="text-center mb-0" style="font-family: 'Poppins', sans-serif !important;">Dashboard</h4>
+            <hr class="my-2" style="border-top: 1px solid  rgb(117, 118, 120); ">
 
             <!-- Hello and Student Full Name -->
             <div class="text-center my-3">
-                <h2 class="mb-1"><Strong>Hello</Strong> </h2>
-                <h4 class="text-center"><strong><?= $first_name ?>!</strong></h4>
+                <h2 class="mb-1" style="font-family: 'Poppins', sans-serif !important;"><Strong>Hello</Strong> </h2>
+                <h4 class="text-center" style="font-family: 'Poppins', sans-serif !important;"><strong><?= $first_name ?>!</strong></h4>
             </div>
 
             <?php if ($student_data['enabled'] == 1): ?>
-                <button class="btn btn-success" id="requestClearanceBtn" style="margin-bottom: 25px; font-weight: 700;" data-toggle="tooltip"
-                    title="Click to request clearance">
+                <button class="btn btn-success" id="requestClearanceBtn" style="margin-bottom: 25px; font-weight: 700;"
+                    data-toggle="tooltip" title="Click to request clearance">
                     Request Clearance <br> and Balance
                 </button>
 
@@ -103,7 +111,7 @@ $student_data = $result->fetch_assoc();
         <!-- Clearance Requests Section -->
         <div class="card" id="requestClearance">
             <div class="card-header">
-                <span class="glyphicon glyphicon-list-alt"> Clearance Requests</span>
+                <span style="font-family: 'Poppins', sans-serif !important;" > Clearance Requests</span>
             </div>
 
             <?php
@@ -139,7 +147,8 @@ $student_data = $result->fetch_assoc();
         <!-- Student Info Section -->
         <div class="card-header"
             style=" border-top-left-radius: 20px; border-top-right-radius: 20px;  background-color: #003366; color: white; margin-top: 10px; margin-bottom: -20px; height: 65px; display: flex; justify-content: center; align-items: center;">
-            <span class="glyphicon glyphicon-user" style="margin-right: 8px;"></span> <strong> Student Information </strong>
+            <span class="glyphicon glyphicon-user" style="margin-right: 8px;"></span> <strong> Student Information
+            </strong>
         </div>
 
         <div class="card" style="border-radius: 30px; border: 1px solid #003366; margin-bottom: 100px;">
@@ -183,24 +192,27 @@ $student_data = $result->fetch_assoc();
 
                     <?php
                     $status = htmlspecialchars($student_data['status']) ?: 'Not Set';
-                    $badgeClass = 'bg-secondary';
+                    $badgeClass = 'label label-default'; // default grey
                     if ($status === 'Pending') {
-                        $badgeClass = 'bg-warning';
+                        $badgeClass = 'label label-warning';       // yellow - good
                     } elseif ($status === 'For Signature') {
-                        $badgeClass = 'bg-success';
+                        $badgeClass = 'label label-success';       // green - but you want orange here
                     } elseif ($status === 'For Payment') {
-                        $badgeClass = 'bg-danger';
+                        $badgeClass = 'label label-danger';        // red - good
                     } elseif ($status === 'Cleared') {
-                        $badgeClass = 'bg-primary';
+                        $badgeClass = 'label label-success';       // blue - you want green here
                     }
+
+
                     ?>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label" style="font-size: 12px;">Status</label>
                         <div class="col-sm-9">
-                            <span class="badge <?= $badgeClass ?>" style="font-size: 12px; width: 100px; margin-left: -50px;">
+                            <span class="<?= $badgeClass ?>" style="font-size: 12px; width: 100px; margin-left: -50px;">
                                 <?= htmlspecialchars($status) ?>
                             </span>
+
                         </div>
                     </div>
                 </form>

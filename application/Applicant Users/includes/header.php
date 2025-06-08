@@ -42,12 +42,12 @@ $total_requests = $reservation_approved + $reservation_rejected;
     </a>
 
     <nav class="navbar navbar-static-top">
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
+        <!-- <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-        </a>
+        </a> -->
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Message Modal Trigger -->
@@ -107,7 +107,8 @@ $total_requests = $reservation_approved + $reservation_rejected;
                     <h6 class="font-weight-bold">Reservation Requests</h6>
                     <?php if ($reservation_approved > 0): ?>
                         <p class="text-success mb-2">🎉 Congratulations, your reservation request(s) is/are
-                            <strong>Approved</strong>!</p>
+                            <strong>Approved</strong>!
+                        </p>
                     <?php endif; ?>
                     <?php if ($reservation_rejected > 0): ?>
                         <p class="text-danger mb-2">😞 Sorry, your reservation request(s) is/are <strong>Rejected</strong>.
@@ -126,7 +127,18 @@ $total_requests = $reservation_approved + $reservation_rejected;
         </div>
     </div>
 </div>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
+<style>
+    #viewProfile {
+        font-family: 'Poppins', sans-serif !important;
+
+    }
+
+    #editProfileModal {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
 
 
 <!-- View Profile Modal -->
@@ -164,7 +176,7 @@ $total_requests = $reservation_approved + $reservation_rejected;
                                 margin: 0 auto 20px auto;">
                             <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                         </div>
-                        <h3 style="margin-bottom: 10px;"><?php echo htmlspecialchars($fullName); ?></h3>
+                        <h3 style="margin-bottom: 10px; font-family: 'Poppins', sans-serif;"><?php echo htmlspecialchars($fullName); ?></h3>
                         <p style="margin-bottom: 25px; color: #555;"><?php echo $email; ?></p>
                         <div style="max-width: 200px; margin-left: 30px; font-size: 16px; font-weight: 500;">
                             <!-- Edit Profile Link -->

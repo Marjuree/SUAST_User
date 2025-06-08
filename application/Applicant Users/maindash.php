@@ -34,8 +34,13 @@ while ($row = $datesQuery->fetch_assoc()) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../css/calendar.css">
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+
+        }
     </style>
 </head>
 
@@ -106,7 +111,7 @@ while ($row = $datesQuery->fetch_assoc()) {
 
         <!-- Reserve Button -->
         <div class="text-center mt-4">
-            <button id="reserveBtn" class="btn btn-success" disabled>Reserve Slot</button>
+            <button id="reserveBtn" class="btn btn-success" disabled>Next</button>
         </div>
     </div>
 
@@ -160,7 +165,6 @@ while ($row = $datesQuery->fetch_assoc()) {
             // Clear slots and disable button if any filter missing
             if (!date || !venue || !room) {
                 $('#timeSlots').html('');
-                $('#totalAvailableSlots').html('');
                 $('#reserveBtn').prop('disabled', true);
                 selectedSlot = null;
                 return;
@@ -169,71 +173,55 @@ while ($row = $datesQuery->fetch_assoc()) {
             $.ajax({
                 url: 'load_slots.php',
                 method: 'POST',
-                dataType: 'json',  // <-- ensures response is parsed JSON
+                dataType: 'json',
                 data: { date, venue, room },
                 success: function (data) {
-                    $('#timeSlots').html('');
-                    $('#totalAvailableSlots').html('');
+                    $('#timeSlots').empty();
                     selectedSlot = null;
                     $('#reserveBtn').prop('disabled', true);
 
                     if (data.error) {
-                        $('#timeSlots').html('<p>' + data.error + '</p>');
+                        $('#timeSlots').html('<p class="text-danger">' + data.error + '</p>');
                         return;
                     }
 
-                    if (!Array.isArray(data)) {
-                        $('#timeSlots').html('<p>Invalid response format.</p>');
-                        return;
-                    }
-
-                    if (data.length === 0) {
+                    if (!Array.isArray(data) || data.length === 0) {
                         $('#timeSlots').html('<p>No slots available.</p>');
                         return;
                     }
 
-                    let totalSlots = 0;
                     data.forEach(slot => {
-                        totalSlots += parseInt(slot.remaining_slots);
-
-                        const checkbox = $('<input type="checkbox" name="slotCheckbox" class="mr-2 mt-1" />')
+                        const radio = $('<input type="radio" name="slotRadio" class="mr-2 mt-1" />')
                             .attr('id', 'slot_' + slot.id)
-                            .prop('disabled', slot.remaining_slots == 0);
+                            .val(slot.id)
+                            .prop('disabled', slot.remaining_slots <= 0);
 
                         const label = $('<label></label>')
                             .attr('for', 'slot_' + slot.id)
-                            .html(`${slot.exam_time} <span class="text-success font-weight-bold">(${slot.remaining_slots} slots)</span>`);
+                            .html(`${slot.exam_time} <span class="text-success font-weight-bold">(${slot.remaining_slots} slots left)</span><br><small>Venue: ${slot.venue}, Room: ${slot.room}</small>`);
 
                         const slotDiv = $('<div class="time-slot d-flex align-items-center mb-2"></div>')
-                            .append(checkbox)
+                            .append(radio)
                             .append(label);
 
                         $('#timeSlots').append(slotDiv);
 
-
-
-                        checkbox.on('change', function () {
-                            if ($(this).is(':checked')) {
-                                $('input[name="slotCheckbox"]').not(this).prop('checked', false);
-                                selectedSlot = slot.id;
-                                $('#reserveBtn').prop('disabled', false);
-                            } else {
-                                selectedSlot = null;
-                                $('#reserveBtn').prop('disabled', true);
-                            }
+                        radio.on('change', function () {
+                            selectedSlot = $(this).val();
+                            $('#reserveBtn').prop('disabled', false);
                         });
-
-                        $('#timeSlots').append(slotDiv);
                     });
-
                 },
                 error: function (xhr, status, error) {
-                    $('#timeSlots').html('<p>Error loading slots: ' + error + '</p>');
-                    $('#totalAvailableSlots').html('');
+                    $('#timeSlots').html('<p class="text-danger">Error loading slots: ' + error + '</p>');
+                    $('#reserveBtn').prop('disabled', true);
+                    selectedSlot = null;
                     console.error('AJAX error:', xhr.responseText);
                 }
             });
         }
+
+
 
         // Reload slots when venue or room changes
         $('#venue, #room').on('change', function () {
@@ -262,28 +250,33 @@ while ($row = $datesQuery->fetch_assoc()) {
                     $.ajax({
                         url: 'ajax_reserve.php',
                         method: 'POST',
-                        data: { exam_id: selectedSlot },
-                        success: function (response) {
-                            let res;
-                            try {
-                                res = JSON.parse(response);
-                            } catch {
-                                Swal.fire('Error', 'Invalid server response.', 'error');
-                                return;
-                            }
+                        data: { exam_schedule_id: selectedSlot },
+                        dataType: 'json',
+                        success: function (res) {
+                            console.log('Reserve response:', res);
+
                             if (res.status === 'success') {
-                                Swal.fire('Success', 'Reservation successful!', 'success').then(() => location.reload());
+                                Swal.fire('Success', 'Reservation successful!', 'success').then(() => {
+                                    // ✅ Go to Step 3
+                                    if (window.parent && window.parent.$) {
+                                        window.parent.$('.step-btn[data-step="3"]').trigger('click');
+                                    }
+                                });
                             } else {
                                 Swal.fire('Error', res.message || 'Reservation failed.', 'error');
                             }
                         },
-                        error: function () {
+                        error: function (xhr) {
+                            console.error('Reserve error response:', xhr.responseText);
                             Swal.fire('Error', 'Failed to reserve slot.', 'error');
                         }
                     });
                 }
             });
         });
+
+
+
     </script>
 
 </body>

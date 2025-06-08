@@ -1,40 +1,42 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['role'])) {
-        header("Location: ../../php/error.php?welcome=Please login to access this page");
-        exit();
-    }
-    ob_start();
-    
-    require_once "../../configuration/config.php";
-    
-    // Fetch leave requests data
-    $leaveRequests = mysqli_query($con, "SELECT DATE_FORMAT(date_request, '%M') as month, COUNT(*) as count FROM tbl_leave_requests GROUP BY month ORDER BY STR_TO_DATE(month, '%M')");
-    $leaveMonths = [];
-    $leaveCounts = [];
-    while ($row = mysqli_fetch_assoc($leaveRequests)) {
-        $leaveMonths[] = $row['month'];
-        $leaveCounts[] = $row['count'];
-    }
-    
-    // Fetch leave requests per faculty
-    $facultyRequests = mysqli_query($con, "SELECT faculty, COUNT(*) as count FROM tbl_leave_requests GROUP BY faculty");
-    $facultyNames = [];
-    $facultyCounts = [];
-    while ($row = mysqli_fetch_assoc($facultyRequests)) {
-        $facultyNames[] = $row['faculty'];
-        $facultyCounts[] = $row['count'];
-    }
-    
-    // Fetch leave types distribution
-    $leaveTypes = mysqli_query($con, "SELECT request_type, COUNT(*) as count FROM tbl_leave_requests GROUP BY request_type");
-    $leaveTypeNames = [];
-    $leaveTypeCounts = [];
-    while ($row = mysqli_fetch_assoc($leaveTypes)) {
-        $leaveTypeNames[] = $row['request_type'];
-        $leaveTypeCounts[] = $row['count'];
-    }
+ob_start(); // ✅ Start output buffering BEFORE anything else
+session_start(); // ✅ Safe to start session now
+
+if (!isset($_SESSION['role'])) {
+    header("Location: ../../php/error.php?welcome=Please login to access this page");
+    exit();
+}
+
+include "../../configuration/config.php";
+
+// Fetch leave requests data
+$leaveRequests = mysqli_query($con, "SELECT DATE_FORMAT(date_request, '%M') as month, COUNT(*) as count FROM tbl_leave_requests GROUP BY month ORDER BY STR_TO_DATE(month, '%M')");
+$leaveMonths = [];
+$leaveCounts = [];
+while ($row = mysqli_fetch_assoc($leaveRequests)) {
+    $leaveMonths[] = $row['month'];
+    $leaveCounts[] = $row['count'];
+}
+
+// Fetch leave requests per faculty
+$facultyRequests = mysqli_query($con, "SELECT faculty, COUNT(*) as count FROM tbl_leave_requests GROUP BY faculty");
+$facultyNames = [];
+$facultyCounts = [];
+while ($row = mysqli_fetch_assoc($facultyRequests)) {
+    $facultyNames[] = $row['faculty'];
+    $facultyCounts[] = $row['count'];
+}
+
+// Fetch leave types distribution
+$leaveTypes = mysqli_query($con, "SELECT request_type, COUNT(*) as count FROM tbl_leave_requests GROUP BY request_type");
+$leaveTypeNames = [];
+$leaveTypeCounts = [];
+while ($row = mysqli_fetch_assoc($leaveTypes)) {
+    $leaveTypeNames[] = $row['request_type'];
+    $leaveTypeCounts[] = $row['count'];
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

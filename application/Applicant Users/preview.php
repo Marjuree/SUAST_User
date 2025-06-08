@@ -26,7 +26,14 @@ $result_reservations = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
     <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+
+        }
+
         .reservation-preview {
             border: 1px solid #ddd;
             padding: 20px;

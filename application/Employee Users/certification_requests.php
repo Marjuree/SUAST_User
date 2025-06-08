@@ -127,105 +127,160 @@ $infoStmt->close();
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
 
     <style>
-     .progress-tracker {
+        /* Desktop and general layout */
+        .progress-tracker {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            counter-reset: step;
+            flex-direction: column;
+            padding: 0;
             margin: 40px 0;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        .progress-tracker::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 30px;
-            right: 30px;
-            height: 4px;
-            background-color: #ccc;
-            z-index: 0;
-        }
-
-        .progress-tracker li {
             list-style: none;
             position: relative;
-            text-align: center;
-            z-index: 1;
-            flex: 1;
+            font-family: 'Poppins', sans-serif;
         }
 
+        /* Step item */
+        .progress-tracker li {
+            position: relative;
+            padding-left: 60px;
+            /* space for left-aligned circle */
+            margin-bottom: 30px;
+        }
+
+        /* Default circle */
         .progress-tracker li::before {
             content: counter(step);
             counter-increment: step;
-            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 35px;
             height: 35px;
             line-height: 35px;
+            text-align: center;
             background: #fff;
             border: 3px solid #ccc;
             border-radius: 50%;
-            margin-bottom: 10px;
             color: #ccc;
             font-weight: bold;
         }
 
+        /* DONE state: checkmark */
         .progress-tracker li.done::before {
             content: "✔";
             background-color: #4CAF50;
             border-color: #4CAF50;
             color: white;
+            font-size: 18px;
+            margin-top: 10px;
+            width: 20px;
+            height: 20px;
         }
 
+        /* CURRENT state */
         .progress-tracker li.current::before {
             background-color: #4CAF50;
             border-color: #4CAF50;
             color: white;
         }
 
+        /* Text content */
         .progress-tracker li span {
             display: block;
             margin-top: 5px;
             color: #666;
             font-weight: 500;
+            font-family: 'Poppins', sans-serif;
         }
 
-        table thead {
-            background-color: #343a40;
-            color: #fff;
+        .progress-tracker li small {
+            font-size: 12px;
+            color: #666;
+            display: block;
+            margin-top: 2px;
+            line-height: 1.3;
         }
 
+
+        /* Mobile view */
         @media (max-width: 600px) {
-            .progress-tracker li span {
-                font-size: 14px;
+            .progress-tracker-wrapper {
+                max-height: 400px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding-left: 40px;
+                background-color: #fafafa;
+                border-radius: 8px;
+                padding-top: 20px;
+                padding-bottom: 20px;
             }
 
-            .progress-tracker li small {
-                font-size: 10px;
 
-            }
 
             .progress-tracker {
-                flex-wrap: wrap;
-                padding: 0 10px;
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+                width: 100%;
             }
 
             .progress-tracker li {
+                position: relative;
+                padding-left: 50px;
+                margin-bottom: 30px;
+            }
+
+            .progress-tracker li::before {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 20px;
+                height: 20px;
+                background-color: #ccc;
+                border: 3px solid #ccc;
+                border-radius: 50%;
+                line-height: 20px;
+                font-size: 12px;
                 text-align: center;
             }
 
-            .progress-tracker-wrapper {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                margin-bottom: 20px;
+            .progress-tracker li.done::before {
+                content: "✔";
+                background-color: #28a745;
+                border-color: #28a745;
+                color: white;
             }
 
-            .progress-tracker {
-                width: max-content;
-                min-width: 800px;
+            .progress-tracker li.current::before {
+                background-color: #007bff;
+                border-color: #007bff;
+                color: white;
             }
 
+            .progress-tracker li span {
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 2px;
+            }
+
+            .progress-tracker li small {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .progress-tracker li:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+
+        .content-header h1,
+        p {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group {
+            font-family: 'Poppins', sans-serif;
         }
     </style>
 </head>
@@ -240,19 +295,23 @@ $infoStmt->close();
         <?php require_once('../../includes/sidebar.php'); ?>
 
         <aside class="right-side">
-            <section class="content-header">
-                <h1>Certification Request</h1>
-                <p>Welcome, <strong><?= $first_name ?></strong></p>
-            </section>
+
 
             <section class="content">
                 <div class="row">
                     <div class="box">
+                        <a href="EmployeeDashboard.php" class="btn btn-primary mb-3"
+                            style="display: inline-block; font-size: 1.5rem; background: transparent; border: none; color: #003366;">
+                            <i class="fas fa-arrow-left curved"></i>
+                        </a>
                         <div class="box-body">
-                            <h4>Certification Request Progress</h4>
+                            <section class="content-header text-center">
+                                <h1>Certification Request</h1>
+                                <p>Welcome, <strong><?= $first_name ?></strong></p>
+                            </section>
 
                             <p><strong><?= htmlspecialchars($faculty) ?>:</strong></p>
-                            <div class="progress-tracker-wrapper" >
+                            <div class="progress-tracker-wrapper">
 
                                 <ul class="progress-tracker">
                                     <?php
@@ -320,9 +379,9 @@ $infoStmt->close();
                                         overflow: hidden; 
                                         white-space: nowrap; 
                                         text-overflow: ellipsis;' target='_blank' title='Download " . htmlspecialchars($row['file_name']) . "'>"
-                                                                    . htmlspecialchars($row['file_name']) . "</a>";
-                                                            } else {
-                                                                $file_link = '<input type="text" class="form-control" readonly
+                                            . htmlspecialchars($row['file_name']) . "</a>";
+                                    } else {
+                                        $file_link = '<input type="text" class="form-control" readonly
                                         style="font-size: 12px; height: 30px; width: 230px; border-radius: 50px !important; color: #888;" value="No file">';
                                     }
 
@@ -454,29 +513,66 @@ $infoStmt->close();
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12 text-right">
-                                                        <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
-                                                            data-target="#editCertificationModal" data-id="<?= $row['id'] ?>"
-                                                            data-name="<?= htmlspecialchars($row['name']) ?>"
-                                                            data-request_type="<?= htmlspecialchars($row['request_type']) ?>"
-                                                            data-date_request="<?= htmlspecialchars($row['date_request']) ?>"
-                                                            data-faculty="<?= htmlspecialchars($row['faculty']) ?>"
-                                                            data-reason="<?= htmlspecialchars($row['reason']) ?>"
-                                                            style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
-                                                            Edit
-                                                        </button>
-                                                        <button class="btn btn-sm btn-danger delete-btn"
-                                                            data-id="<?= $row['id'] ?>"
-                                                            style="font-size: 12px; height: 30px; border-radius: 50px !important;">
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
+                                                    data-target="#editCertificationModal"
+                                                    data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                    data-name="<?= htmlspecialchars($row['name'] ?? '') ?>"
+                                                    data-request_type="<?= htmlspecialchars($row['request_type'] ?? '') ?>"
+                                                    data-date_request="<?= htmlspecialchars($row['date_request'] ?? '') ?>"
+                                                    data-faculty="<?= htmlspecialchars($row['faculty'] ?? '') ?>"
+                                                    data-reason="<?= htmlspecialchars($row['reason'] ?? '') ?>"
+                                                    style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
+                                                    Edit
+                                                </button>
+                                                <button class="btn btn-sm btn-danger delete-btn"
+                                                    data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                    style="font-size: 12px; height: 30px; border-radius: 50px !important;">
+                                                    Delete
+                                                </button>
+
 
                                             </form>
                                         </div>
                                     </div>
+
+                                    <style>
+                                        .edit-btn {
+                                            background-color: #003366 !important;
+                                            border-radius: 50px !important;
+                                            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+                                        }
+
+                                        .edit-btn:hover,
+                                        .edit-btn:focus {
+                                            background-color: #002244 !important;
+                                            cursor: pointer;
+                                            box-shadow: 0 0 8px #003366;
+                                        }
+
+                                        .edit-btn:active {
+                                            background-color: #001122 !important;
+                                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+                                        }
+
+                                        .delete-btn {
+                                            background-color: #dc3545 !important;
+                                            border-radius: 50px !important;
+                                            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+                                        }
+
+                                        .delete-btn:hover,
+                                        .delete-btn:focus {
+                                            background-color: #b02a37 !important;
+                                            cursor: pointer;
+                                            box-shadow: 0 0 8px #dc3545;
+                                        }
+
+                                        .delete-btn:active {
+                                            background-color: #7a1e23 !important;
+                                            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+                                        }
+                                    </style>
+
 
                                     <!-- Reason Modal -->
                                     <div class="modal fade" id="reasonModal<?= $row['id'] ?>" tabindex="-1" role="dialog"
@@ -508,7 +604,7 @@ $infoStmt->close();
                                 <!-- No data found — show empty form -->
                                 <div
                                     style="position: absolute; border-top-left-radius: 30px;
-                                     border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px; margin-left: 16px !important; max-width: 350px; width: 350px;">
+                                     border-top-right-radius: 30px; height: 70px; background-color: #003366; z-index: 0; margin-top: -50px;  max-width: 350px; width: 338px;">
                                     <h5
                                         style="color: #fff; text-align: left; line-height: 60px; margin: 0 0 0 20px; font-size: 14px; font-weight: bold;">
                                         <i class="fas fa-file-alt" style="margin-right: 8px;"></i>Complete Details
@@ -602,23 +698,23 @@ $infoStmt->close();
                                                 </div>
                                             </div>
 
-                                            <button type="button" class="btn btn-sm btn-info edit-btn" data-toggle="modal"
-                                                data-target="#editCertificationModal" data-id="<?= $row['id'] ?>"
-                                                data-name="<?= !empty($row['name']) ? htmlspecialchars($row['name']) : 'N/A' ?>"
-                                                data-request_type="<?= !empty($row['request_type']) ? htmlspecialchars($row['request_type']) : 'N/A' ?>"
-                                                data-date_request="<?= !empty($row['date_request']) ? htmlspecialchars($row['date_request']) : 'N/A' ?>"
-                                                data-faculty="<?= !empty($row['faculty']) ? htmlspecialchars($row['faculty']) : 'N/A' ?>"
-                                                data-reason="<?= !empty($row['reason']) ? htmlspecialchars($row['reason']) : 'N/A' ?>"
+                                            <button class="btn btn-sm btn-info edit-btn" data-toggle="modal"
+                                                data-target="#editCertificationModal"
+                                                data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
+                                                data-name="<?= htmlspecialchars($row['name'] ?? '') ?>"
+                                                data-request_type="<?= htmlspecialchars($row['request_type'] ?? '') ?>"
+                                                data-date_request="<?= htmlspecialchars($row['date_request'] ?? '') ?>"
+                                                data-faculty="<?= htmlspecialchars($row['faculty'] ?? '') ?>"
+                                                data-reason="<?= htmlspecialchars($row['reason'] ?? '') ?>"
                                                 style="font-size: 12px; height: 30px; background-color: #003366; border-radius: 50px !important;">
                                                 Edit
                                             </button>
-
-
-
-                                            <button class="btn btn-sm btn-danger delete-btn" data-id="<?= $row['id'] ?>"
+                                            <button class="btn btn-sm btn-danger delete-btn"
+                                                data-id="<?= htmlspecialchars($row['id'] ?? '') ?>"
                                                 style="font-size: 12px; height: 30px; border-radius: 50px !important;">
                                                 Delete
                                             </button>
+
 
                                         </form>
                                     </div>

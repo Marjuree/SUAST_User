@@ -47,6 +47,8 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
     <!-- FontAwesome 5 for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 
     <style>
         /* Styles for info cards */
@@ -55,6 +57,8 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
             gap: 20px;
             flex-wrap: wrap;
             margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+
         }
 
         /* Make all cards uniform size */
@@ -73,6 +77,28 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
             align-items: flex-start;
             transition: background 0.3s ease;
             position: relative;
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        .content {
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        #personalDetails {
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        #examScheduleModal {
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        #examScheduleModalLabel {
+            font-family: 'Poppins', sans-serif;
+
         }
 
         .info-card .icon {
@@ -97,16 +123,20 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
             user-select: none;
         }
 
-        .info-card.clickable:hover {
-            background: rgb(199, 201, 201);
-            box-shadow: 0 6px 12px rgba(19, 132, 150, 0.6);
-            text-decoration: none;
-        }
+        .card.clickable {
+        transition: background-color 0.3s, transform 0.2s;
+    }
 
-        /* Remove button inside card when card is clickable */
-        .info-card.clickable button {
-            display: none;
-        }
+    .card.clickable:hover {
+        background-color: #e6f0ff; /* light blue on hover */
+        transform: translateY(-3px);
+    }
+
+    .card.clickable:active {
+        background-color: #cce0ff; /* darker blue on click */
+        transform: scale(0.98);
+    }
+        
     </style>
 </head>
 
@@ -139,7 +169,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                     margin-right: -50vw;
                     margin-top: -50px;
                 ">
-                    <h4 style="margin: 0; font-weight: bold;">Dashboard</h4>
+                    <h4 style="margin: 0; font-weight: bold; font-family: 'Poppins', sans-serif; ">Dashboard</h4>
                     <hr class="my-2" style="border-top: 2px solid gray; width: 190px;">
 
                 </div>
@@ -161,10 +191,10 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                     border-bottom-right-radius: 30px;
 
                 ">
-                    <h1 style="font-size: 26px; font-weight: bold;">Hello<br>
+                    <h1 style="font-size: 26px; font-weight: bold;  font-family: 'Poppins', sans-serif;">Hello<br>
                         <span style="color:#004085;"><?php echo $full_name; ?></span>!
                     </h1>
-                    <p style="font-size: 14px; margin-top: 10px;">
+                    <p style="font-size: 14px; margin-top: 10px;  font-family: 'Poppins', sans-serif;">
                         "Your First Step to DORSU Starts Here."<br>
                         Reserve. Secure. Succeed.
                     </p>
@@ -176,38 +206,49 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                     style="gap: 15px; display: flex; flex-direction: column; align-items: center;">
 
                     <!-- Make a Reservation Card -->
-                    <div class="card" onclick="window.location.href='index.php';"
-                        style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
-                        <div class="card-body">
-                            <div style="font-size: 28px; color: #003366;"><i class="fas fa-file-alt"></i></div>
-                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Make a Reservation</h5>
-                            <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to make a
-                                reservation and secure a
-                                slot for the State University Admission and Scholarship Test (SUAST) of Davao Oriental
-                                State University (DORSU).</p>
+                    <?php if ($user_has_reservation): ?>
+                        <div class="card"
+                            style="width: 100%; max-width: 350px; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; background-color: #f0f0f0; opacity: 0.6; cursor: not-allowed;">
+                            <div class="card-body">
+                                <div style="font-size: 28px; color: #999;"><i class="fas fa-file-alt"></i></div>
+                                <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Reservation Submitted
+                                </h5>
+                                <p class="card-text" style="font-size: 13px;">You have already submitted a reservation.
+                                    Please wait for confirmation or check your status.</p>
+                            </div>
                         </div>
-                    </div>
+                    <?php else: ?>
+                        <div class="card clickable" onclick="window.location.href='index.php';"
+                            style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
+                            <div class="card-body">
+                                <div style="font-size: 28px; color: #003366;"><i class="fas fa-file-alt"></i></div>
+                                <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Make a Reservation</h5>
+                                <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to make a
+                                    reservation and secure a slot for the State University Admission and Scholarship Test
+                                    (SUAST) of DORSU.</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Exam Schedule Card -->
-                    <div class="card" data-toggle="modal" data-target="#examScheduleModal"
+                    <div class="card clickable" data-toggle="modal" data-target="#examScheduleModal"
                         style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                         <div class="card-body">
                             <div style="font-size: 28px; color: #003366;"><i class="fas fa-calendar-check"></i></div>
                             <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Your Exam Schedule</h5>
                             <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to view your exam
-                                schedule and
-                                reservation status.</p>
+                                schedule and reservation status.</p>
                         </div>
                     </div>
 
-                    <div class="card" data-toggle="modal" data-target="#personalDetails"
+                    <!-- Personal Details Card -->
+                    <div class="card clickable" data-toggle="modal" data-target="#personalDetails"
                         style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                         <div class="card-body">
-                            <div style="font-size: 28px; color: #003366;"><i class="fas fa-book"></i>
-                            </div>
-                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Personal Deetails</h5>
-                            <p class="card-text" style="font-size: 13px;">Click here to view your exam schedule and
-                                assigned location.</p>
+                            <div style="font-size: 28px; color: #003366;"><i class="fas fa-book"></i></div>
+                            <h5 class="card-title" style="font-weight: bold; margin-top: 10px;">Personal Details</h5>
+                            <p class="card-text" style="font-size: 13px;"><strong>Click here</strong> to view and edit
+                                your submitted details on the slot reservation.</p>
                         </div>
                     </div>
 
@@ -228,10 +269,11 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
             <div class="modal-content" style="border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,.5);">
                 <div class="modal-header"
                     style="background-color: #003366; color: white; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                    <h5 class="modal-title" id="personalDetailsLabel" style="font-size: 16px;">
+                    <h4 class="modal-title" id="personalDetailsLabel" style="font-size: 16px; font-family: 'Poppins', sans-serif;
+">
                         <i class="fas fa-book-open" style="margin-right: 8px;"></i>
                         Personal Information
-                    </h5>
+                    </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         style="color: white; font-size: 1.5rem;">
                         <span aria-hidden="true">&times;</span>
@@ -365,7 +407,8 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                         style="color: white; opacity: 1; font-size: 2rem;">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="applicationStatusModalLabel">
+                    <h4 class="modal-title" id="applicationStatusModalLabel"
+                        style="font-family: 'Poppins', sans-serif;">
                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"
                             style="margin-right: 8px;"></span>
                         Application Status
@@ -429,7 +472,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title" id="examScheduleModalLabel">
-                        <i class="fas fa-calendar-check" aria-hidden="true" style="margin-right: 8px;"></i>
+                        <i class="fas fa-calendar-check" aria-hidden="true" style="margin-right: 8px; "></i>
                         Exam Schedule
                     </h4>
                 </div>

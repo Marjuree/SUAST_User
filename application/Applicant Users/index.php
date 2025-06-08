@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 session_regenerate_id(true);
 
@@ -30,8 +33,15 @@ if (empty($full_name))
     <link href="../../css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 
     <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+
+        }
+
         .stepwizard {
             display: flex;
             justify-content: space-between;
@@ -162,7 +172,7 @@ if (empty($full_name))
                 <div id="step-content" tabindex="0" aria-live="polite" aria-atomic="true" style="margin-top: 20px;">
 
                     <!-- Step 1: Profile form embedded here by default -->
-                    <form id="applicantForm" method="POST" enctype="multipart/form-data">
+                    <form action="insert_applicant.php" id="applicantForm" method="POST" enctype="multipart/form-data">
                         <div
                             style="margin-top: 15px; background-color: #f8d7da; border-left: 8px solid #b30000; padding: 15px; border-radius: 4px;">
                             <strong style="color: #b30000;">Reminder:</strong>
@@ -185,23 +195,109 @@ if (empty($full_name))
                                     <h5 class="mt-3">Personal Information</h5>
                                     <div class="row">
                                         <?php
-                                        $personal = [
-                                            "lname" => "Last Name",
-                                            "fname" => "First Name",
-                                            "mname" => "Middle Name",
-                                            "age" => "Age",
-                                            "religion" => "Religion",
-                                            "nationality" => "Nationality",
-                                            "civilstatus" => "Civil Status",
-                                            "contact" => "Contact No."
+                                        $default_values = [
+                                            'fname' => $first_name,
+                                            'mname' => $middle_name,
+                                            'lname' => $last_name,
+                                            'suffix' => '', // Add a default if available (e.g., $suffix)
                                         ];
-                                        foreach ($personal as $name => $label) {
-                                            echo "<div class='col-md-4 mb-3'>
-                                            <label for='{$name}'>{$label}</label>
-                                            <input type='text' class='form-control' name='{$name}' id='{$name}' required>
-                                        </div>";
-                                        }
                                         ?>
+
+                                        <!-- First Name -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="fname">First Name</label>
+                                                <input type="text" class="form-control" name="fname" id="fname"
+                                                    value="<?php echo htmlspecialchars($default_values['fname']); ?>"
+                                                    readonly required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Middle Name -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="mname">Middle Name (Optional)</label>
+                                                <input type="text" class="form-control" name="mname" id="mname"
+                                                    value="<?php echo htmlspecialchars($default_values['mname']); ?>"
+                                                    readonly>
+                                            </div>
+                                        </div>
+
+                                        <!-- Last Name -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="lname">Last Name</label>
+                                                <input type="text" class="form-control" name="lname" id="lname"
+                                                    value="<?php echo htmlspecialchars($default_values['lname']); ?>"
+                                                    readonly required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Suffix -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="suffix">Suffix (Optional)</label>
+                                                <select class="form-control" name="suffix" id="suffix">
+                                                    <option value="">-- Select Suffix --</option>
+                                                    <option value="Jr.">Jr.</option>
+                                                    <option value="Sr.">Sr.</option>
+                                                    <option value="II">II</option>
+                                                    <option value="III">III</option>
+                                                    <option value="IV">IV</option>
+                                                    <option value="V">V</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Religion -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="religion">Religion</label>
+                                                <input type="text" class="form-control" name="religion" id="religion"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Nationality -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="nationality">Nationality</label>
+                                                <input type="text" class="form-control" name="nationality"
+                                                    id="nationality" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Civil Status -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="civilstatus">Civil Status</label>
+                                                <input type="text" class="form-control" name="civilstatus"
+                                                    id="civilstatus" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Birthdate -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bdate">Birthdate</label>
+                                                <input type="date" class="form-control" name="bdate" id="bdate"
+                                                    required>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="age">Age</label>
+                                            <input type="text" class="form-control" name="age" id="age" readonly>
+                                        </div>
+
+                                        <!-- Contact Number Field -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="applicantNo ">Contact No.</label>
+                                            <input type="tel" class="form-control" name="applicantNo" id="applicantNo"
+                                                pattern="[0-9]{11}" placeholder="09XXXXXXXXX" required>
+                                        </div>
+
 
                                         <!-- Ethnicity Dropdown -->
                                         <div class="col-md-4 mb-3">
@@ -313,11 +409,7 @@ if (empty($full_name))
                                             </select>
                                         </div>
 
-                                        <!-- Birthdate Field -->
-                                        <div class="col-md-4 mb-3">
-                                            <label for="bdate">Birthdate</label>
-                                            <input type="date" class="form-control" name="bdate" id="bdate" required>
-                                        </div>
+
 
                                         <!-- Gender Dropdown -->
                                         <div class="col-md-4 mb-3">
@@ -329,10 +421,7 @@ if (empty($full_name))
                                                 <option value="Prefer not to say">Prefer not to say</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email" required>
-                                        </div>
+
 
 
                                     </div>
@@ -396,9 +485,6 @@ if (empty($full_name))
 
 
                                 </div>
-
-
-
 
 
                                 <!-- Address Section -->
@@ -596,8 +682,8 @@ if (empty($full_name))
                                 </div>
 
                                 <!-- Additional Details -->
-                                <h5 class="mt-4">Other Details</h5>
-                                <div class="row">
+                                <!-- <h5 class="mt-4">Other Details</h5> -->
+                                <!-- <div class="row">
                                     <?php
                                     $other = [
                                         "living_status" => "Living Status",
@@ -610,7 +696,6 @@ if (empty($full_name))
                                     ];
 
                                     foreach ($other as $name => $label) {
-                                        // Check if the field should be number input for fields like siblings, birth_order, or monthly_income
                                         $input_type = in_array($name, ['siblings', 'birth_order', 'monthly_income']) ? 'number' : 'text';
 
                                         echo "<div class='col-md-4 mb-3'>
@@ -624,7 +709,7 @@ if (empty($full_name))
                                         <input type="date" class="form-control" name="date_applied" id="date_applied"
                                             required>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Educational Preferences -->
                                 <h5 class="mt-4">Educational Preferences</h5>
                                 <div class="row">
@@ -683,7 +768,14 @@ if (empty($full_name))
                                         </div>";
                                     }
                                     ?>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="date_applied">Date Applied</label>
+                                        <input type="date" class="form-control" name="date_applied" id="date_applied"
+                                            required>
+                                    </div>
                                 </div>
+
+
 
                                 <!-- Checkbox with link to open modal -->
                                 <div class="form-group">
@@ -704,7 +796,7 @@ if (empty($full_name))
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" name="add_applicant" class="btn btn-success">Submit</button>
+                            <button type="submit" name="add_applicant" class="btn btn-success">Next</button>
                         </div>
 
 
@@ -779,56 +871,68 @@ if (empty($full_name))
 
     <!-- Bootstrap 3 JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!-- 
+
     <script>
-      $(document).ready(function () {
-    let currentStep = 1;
-    highlightStepButton(currentStep);
+        document.getElementById('bdate').addEventListener('change', function () {
+            const birthDate = new Date(this.value);
+            const today = new Date();
 
-    $('.step-btn').click(function () {
-        const step = $(this).data('step');
-        currentStep = step;
-        highlightStepButton(step);
-        loadStepContent(step);
-    });
+            if (birthDate > today) {
+                // Invalid birthdate in the future
+                alert('Birthdate cannot be in the future.');
+                this.value = '';
+                document.getElementById('age').value = '';
+                return;
+            }
 
-    $('#nextButton').click(function () {
-        if (currentStep < 3) {
-            currentStep++;
-            $('.step-btn[data-step="' + currentStep + '"]').click();
-        }
-    });
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
 
-    function loadStepContent(step) {
-        if (step === 1) {
-            $('#step-content').load('profile_form.php');
-            $('#nextButton').show();
-        } else if (step === 2) {
-            $('#step-content').html('<iframe id="dashboardFrame" src="maindash.php" style="width:100%; height:600px; border:none;"></iframe>');
-            $('#nextButton').show();
+            document.getElementById('age').value = age >= 0 ? age : '';
+        });
 
-            $('#dashboardFrame').on('load', function () {
-                const iframe = this;
-                try {
-                    const iframeBody = iframe.contentWindow.document.body;
-                    const newHeight = iframeBody.scrollHeight;
-                    $(iframe).height(newHeight + 20);
-                } catch (e) {
-                    $(iframe).height(800);
-                }
-            });
-        } else if (step === 3) {
-            $('#step-content').html('<p>Loading Preview...</p>');
-            $('#step-content').load('preview.php');
-            $('#nextButton').hide(); // Hide the Next button in step 3
-        }
-    }
+        document.getElementById('applicantForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
 
-    // Load the initial step content
-    loadStepContent(currentStep);
-}); -->
+            const form = e.target;
+            const formData = new FormData(form); // Automatically collects input and file data
+
+            fetch('insert_applicant.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())  // get raw text first
+                .then(text => {
+                    console.log("Raw response:", text);
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.type === 'success') {
+                            alert(data.message);
+
+                            // ✅ Tell the parent page to switch to Step 2
+                            if (window.parent && window.parent.$) {
+                                window.parent.$('.step-btn[data-step="2"]').trigger('click');
+                            }
+                        }
+                        else {
+                            alert("Error: " + data.message);
+                        }
+                    } catch (e) {
+                        alert("Response is not valid JSON. Check console.");
+                        console.error("JSON parse error:", e, "Response text:", text);
+                    }
+                })
+                .catch(error => {
+                    console.error('AJAX Error:', error);
+                });
+        });
+
 
     </script>
+
 </body>
 
 </html>
