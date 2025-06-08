@@ -115,74 +115,70 @@
 <!-- Reset password OTP Modal -->
 <div class="modal fade" id="forgotPasswordModal2" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
     style="margin-top: 70px;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header flex-column align-items-center"
-           style="outline: none !important; box-shadow: none !important; border:none;">
-        <img src="../img/uni.png" alt="Logo"
-             style="width: 200px; height: auto; margin-bottom: 10px; margin-top:-40px;">
-        <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">
-          Welcome, Student!
-        </h4>
-        <h5 class="modal-title" style="font-size: 10px;">
-          Please input your existing email account!
-        </h5>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header flex-column align-items-center"
+                style="outline: none !important; box-shadow: none !important; border:none;">
+                <img src="../img/uni.png" alt="Logo"
+                    style="width: 200px; height: auto; margin-bottom: 10px; margin-top:-40px;">
+                <h4 class="modal-title" id="loginModalLabel" style="font-weight: 700; margin-top: -50px;">
+                    Welcome, Student!
+                </h4>
+                <h5 class="modal-title" style="font-size: 10px;">
+                    Please input your existing email account!
+                </h5>
 
-        <button type="button" class="close position-absolute" style="right: 10px; top: 10px;"
-                data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="forgotPasswordForm" method="POST" novalidate>
-          <div class="form-group">
-            <label for="usernameOrEmail" class="font-weight-semibold">Enter Username or Email</label>
-            <input type="text" class="form-control form-control-lg rounded-pill border-primary"
-                   id="usernameOrEmail" name="usernameOrEmail" placeholder="Username or Email" required
-                   autocomplete="username" autofocus />
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-block rounded-pill shadow-sm mt-4"
-                  style="background-color: #02457A; color: white;">
-            Send OTP
-          </button>
-        </form>
-      </div>
+                <button type="button" class="close position-absolute" style="right: 10px; top: 10px;"
+                    data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="send_otp_student.php" method="POST">
+                    <div class="form-group">
+                        <label>Enter your email address</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <button type="submit" name="send_otp" class="btn btn-primary btn-block"
+                        style="background-color: #02457A; color: white;">Send OTP</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-  const notyf = new Notyf();
+    const notyf = new Notyf();
 
-  document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+    document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
+        const form = e.target;
+        const formData = new FormData(form);
 
-    try {
-      const response = await fetch('../../php/send_otp_student.php', {
-        method: 'POST',
-        body: formData
-      });
+        try {
+            const response = await fetch('../../php/send_otp_student.php', {
+                method: 'POST',
+                body: formData
+            });
 
-      const data = await response.json();
+            const data = await response.json();
 
-      if (data.status === 'success') {
-        notyf.success(data.message);
-        if (data.redirect) {
-          setTimeout(() => {
-            window.location.href = data.redirect;
-          }, 2000); // delay before redirecting
+            if (data.status === 'success') {
+                notyf.success(data.message);
+                if (data.redirect) {
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 2000); // delay before redirecting
+                }
+            } else {
+                notyf.error(data.message);
+            }
+        } catch (error) {
+            notyf.error('An unexpected error occurred.');
+            console.error('Fetch error:', error);
         }
-      } else {
-        notyf.error(data.message);
-      }
-    } catch (error) {
-      notyf.error('An unexpected error occurred.');
-      console.error('Fetch error:', error);
-    }
-  });
+    });
 </script>
 
 
