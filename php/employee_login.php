@@ -15,15 +15,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Initialize attempts/session variables if not set
     if (!isset($_SESSION['login_attempts'])) {
         $_SESSION['login_attempts'] = 0;
+    }
+    if (!isset($_SESSION['last_attempt_time'])) {
         $_SESSION['last_attempt_time'] = 0;
     }
 
-    // Calculate time since last attempt
-    $timeSinceLastAttempt = time() - $_SESSION['last_attempt_time'];
+    // Make sure last_attempt_time is an integer
+    $lastAttemptTime = (int)$_SESSION['last_attempt_time'];
+    $timeSinceLastAttempt = time() - $lastAttemptTime;
 
     // Check if user is banned
     if ($_SESSION['login_attempts'] >= $maxAttempts && $timeSinceLastAttempt < $banDuration) {
         $timeLeft = $banDuration - $timeSinceLastAttempt;
+
         echo "<!DOCTYPE html><html><head>
                 <meta charset='UTF-8'>
                 <title>Login Banned</title>
