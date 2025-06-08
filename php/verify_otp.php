@@ -72,12 +72,11 @@
       cursor: pointer;
       user-select: none;
       color: black;
-      /* Make sure icon color is black */
       opacity: 1;
-      /* Fully visible */
       transition: opacity 0.2s ease-in-out;
       width: 20px;
       height: 20px;
+      margin-top: 12px;
     }
 
     .toggle-password:hover {
@@ -126,34 +125,31 @@
         <input type="text" name="otp" id="otp" class="form-control" required maxlength="6" />
       </div>
 
-      <div class="form-group text-left">
+      <div class="form-group position-relative text-left">
         <label for="new_password">New Password</label>
-        <div class="input-group">
-          <input type="password" name="new_password" id="new_password" class="form-control" required minlength="6" />
-          <span class="toggle-password" toggle="#new_password" title="Show/Hide Password">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
-              <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-            </svg>
-          </span>
-
-        </div>
+        <input type="password" name="new_password" id="new_password" class="form-control" required minlength="6" />
+        <span class="toggle-password" toggle="#new_password" title="Show/Hide Password">
+          <!-- Eye SVG icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
+            <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+          </svg>
+        </span>
       </div>
 
-      <div class="form-group text-left">
+      <div class="form-group position-relative text-left">
         <label for="confirm_password">Confirm New Password</label>
-        <div class="input-group">
-          <input type="password" name="confirm_password" id="confirm_password" class="form-control" required
-            minlength="6" />
-          <span class="toggle-password" toggle="#new_password" title="Show/Hide Password">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
-              <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-            </svg>
-          </span>
-
-        </div>
+        <input type="password" name="confirm_password" id="confirm_password" class="form-control" required
+          minlength="6" />
+        <span class="toggle-password" toggle="#confirm_password" title="Show/Hide Password">
+          <!-- Eye SVG icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
+            <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+          </svg>
+        </span>
       </div>
+
 
       <button type="submit" class="btn btn-primary">Reset Password</button>
     </form>
@@ -167,28 +163,29 @@
   <script>
     $(document).ready(function () {
       $(".toggle-password").click(function () {
-        const input = $($(this).attr("toggle"));
+        const input = $($(this).attr("toggle")); // get input by selector in toggle attr
         if (input.attr("type") === "password") {
           input.attr("type", "text");
-          // Change icon to eye-slash
+          // Change icon to eye-slash (hide icon)
           $(this).html(`
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="20" height="20">
-              <path d="M13.359 11.238l1.388 1.388a.5.5 0 0 1-.708.708l-1.388-1.388a8.06 8.06 0 0 1-4.651 1.323C3 13.269 0 8 0 8a13.134 13.134 0 0 1 3.112-3.93L1.72 2.68a.5.5 0 1 1 .708-.708l11 11a.5.5 0 0 1-.708.708l-1.36-1.36zM5.754 6.185a3 3 0 0 0 4.256 4.256L5.754 6.185z"/>
-              <path d="M10.793 12.458a8.06 8.06 0 0 0 4.607-3.94s-3-5.5-8-5.5a7.49 7.49 0 0 0-3.093.612l.987.987a3 3 0 0 1 3.986 3.986l.113.113z"/>
-            </svg>
-          `);
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="20" height="20">
+          <path d="M13.359 11.238l1.388 1.388a.5.5 0 0 1-.708.708l-1.388-1.388a8.06 8.06 0 0 1-4.651 1.323C3 13.269 0 8 0 8a13.134 13.134 0 0 1 3.112-3.93L1.72 2.68a.5.5 0 1 1 .708-.708l11 11a.5.5 0 0 1-.708.708l-1.36-1.36zM5.754 6.185a3 3 0 0 0 4.256 4.256L5.754 6.185z"/>
+          <path d="M10.793 12.458a8.06 8.06 0 0 0 4.607-3.94s-3-5.5-8-5.5a7.49 7.49 0 0 0-3.093.612l.987.987a3 3 0 0 1 3.986 3.986l.113.113z"/>
+        </svg>
+      `);
         } else {
           input.attr("type", "password");
-          // Change icon back to eye
+          // Change icon back to eye (show icon)
           $(this).html(`
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="20" height="20">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
-              <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
-            </svg>
-          `);
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="20" height="20">
+          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/>
+          <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+        </svg>
+      `);
         }
       });
     });
+
 
     $('form').submit(function (e) {
       e.preventDefault(); // Prevent normal form submission
