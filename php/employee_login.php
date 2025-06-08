@@ -12,21 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['employee_password'];
 
-    // Initialize attempts/session variables if not set
-    if (!isset($_SESSION['login_attempts'])) {
-        $_SESSION['login_attempts'] = 0;
-    }
-    if (!isset($_SESSION['last_attempt_time'])) {
-        $_SESSION['last_attempt_time'] = 0;
-    }
+    // Initialize session variables if not set
+    if (!isset($_SESSION['login_attempts'])) $_SESSION['login_attempts'] = 0;
+    if (!isset($_SESSION['ban_time'])) $_SESSION['ban_time'] = 0;
 
-    // Make sure last_attempt_time is an integer
-    $lastAttemptTime = (int)$_SESSION['last_attempt_time'];
-    $timeSinceLastAttempt = time() - $lastAttemptTime;
+    $banTime = (int)$_SESSION['ban_time'];
+    $timeSinceBan = time() - $banTime;
 
-    // Check if user is banned
-    if ($_SESSION['login_attempts'] >= $maxAttempts && $timeSinceLastAttempt < $banDuration) {
-        $timeLeft = $banDuration - $timeSinceLastAttempt;
+    // If banned and ban not expired
+    if ($_SESSION['login_attempts'] >= $maxAttempts && $timeSinceBan < $banDuration) {
+        $timeLeft = $banDuration - $timeSinceBan;
+        $minutesLeft = ceil($timeLeft / 60);
 
         echo "<!DOCTYPE html><html><head>
                 <meta charset='UTF-8'>
@@ -37,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Too Many Failed Attempts',
-                    html: 'You are temporarily locked out. Please try again after <b>$timeLeft seconds</b>.',
+                    html: 'You are temporarily locked out. Please try again in <b>$minutesLeft minute(s)</b>.',
                     confirmButtonText: 'OK',
                     background: '#fff0f0',
                     color: '#8B0000',
@@ -50,10 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Reset attempts if ban time has passed
-    if ($timeSinceLastAttempt >= $banDuration) {
+    // Reset attempts if ban expired
+    if ($_SESSION['login_attempts'] >= $maxAttempts && $timeSinceBan >= $banDuration) {
         $_SESSION['login_attempts'] = 0;
-        $_SESSION['last_attempt_time'] = 0;
+        $_SESSION['ban_time'] = 0;
     }
 
     $query = "SELECT * FROM tbl_employee_registration WHERE username = ?";
@@ -85,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user['employee_password'])) {
             // Successful login — reset attempts
             $_SESSION['login_attempts'] = 0;
-            $_SESSION['last_attempt_time'] = 0;
+            $_SESSION['ban_time'] = 0;
 
             session_regenerate_id(true);
 
@@ -125,11 +121,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Failed login — increment attempts
             $_SESSION['login_attempts']++;
-            $_SESSION['last_attempt_time'] = time();
-
             $attemptsLeft = $maxAttempts - $_SESSION['login_attempts'];
 
+            // If reached max attempts, set ban time
             if ($_SESSION['login_attempts'] >= $maxAttempts) {
+                $_SESSION['ban_time'] = time();
                 echo "<script>
                     Swal.fire({
                         icon: 'error',
