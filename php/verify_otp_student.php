@@ -200,23 +200,16 @@
         type: 'POST',
         url: 'reset_password_student.php',
         data: formData,
-        success: function (response) {
-          try {
-            const res = JSON.parse(response);
-
-            Swal.fire({
-              icon: res.status,
-              title: res.title,
-              text: res.message,
-            }).then(() => {
-              if (res.status === 'success') {
-                window.location.href = 'landing_page.php'; // or login page
-              }
-            });
-          } catch (e) {
-            console.error("Invalid JSON response", response);
-            Swal.fire("Error", "Unexpected error occurred. Try again.", "error");
-          }
+        success: function (res) {
+          Swal.fire({
+            icon: res.status,
+            title: res.title,
+            text: res.message,
+          }).then(() => {
+            if (res.status === 'success') {
+              window.location.href = 'landing_page.php';
+            }
+          });
         },
         error: function () {
           Swal.fire("Error", "Server error. Try again.", "error");
