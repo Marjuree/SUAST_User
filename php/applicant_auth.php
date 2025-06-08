@@ -6,14 +6,14 @@ session_regenerate_id(true);
 
 require_once "../configuration/config.php";
 
+$maxAttempts = 3;
+$lockoutDuration = 300; // 5 minutes in seconds
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['applicant_password'];
 
-    // Lockout duration in seconds (5 minutes)
-    $lockout_time = 5 * 60;
-
-    // Initialize login attempts if not set
+    // Initialize attempts/session variables if not set
     if (!isset($_SESSION['login_attempts'])) {
         $_SESSION['login_attempts'] = 0;
     }
@@ -21,56 +21,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['lockout_time'] = 0;
     }
 
+    $lockoutTime = (int)$_SESSION['lockout_time'];
+    $timeSinceLockout = time() - $lockoutTime;
+
     // Check if user is currently locked out
-    if ($_SESSION['login_attempts'] >= 3) {
-        $elapsed = time() - $_SESSION['lockout_time'];
+    if ($_SESSION['login_attempts'] >= $maxAttempts && $timeSinceLockout < $lockoutDuration) {
+        $timeLeft = $lockoutDuration - $timeSinceLockout;
+        $minutesLeft = ceil($timeLeft / 60);
 
-        if ($elapsed < $lockout_time) {
-            $remaining = ceil(($lockout_time - $elapsed) / 60); // minutes remaining
+        echo "<!DOCTYPE html><html><head>
+                <meta charset='UTF-8'>
+                <title>Login Locked</title>
+                <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' rel='stylesheet'>
+                <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'/>
+                <style>
+                    body {
+                        background-color: #002B5B;
+                        font-family: 'Poppins', sans-serif;
+                        margin: 0;
+                        padding: 0;
+                    }
+                </style>
+              </head>
+              <body>
+              <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Too Many Attempts',
+                    html: '<b>You have exceeded the maximum login attempts.</b><br>Please try again in $minutesLeft minute(s).',
+                    background: '#fff0f0',
+                    color: '#8B0000',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showClass: {
+                        popup: 'animate__animated animate__shakeX'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOut'
+                    }
+                }).then(() => {
+                    window.location.href='landing_page.php';
+                });
+              </script>
+              </body></html>";
+        exit;
+    }
 
-            echo "<!DOCTYPE html><html><head>
-                    <meta charset='UTF-8'>
-                    <title>Login Locked</title>
-                    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' rel='stylesheet'>
-                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-                    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'/>
-                    <style>
-                        body {
-                            background-color: #002B5B;
-                            font-family: 'Poppins', sans-serif;
-                            margin: 0;
-                            padding: 0;
-                        }
-                    </style>
-                  </head>
-                  <body>
-                  <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Too Many Attempts',
-                        html: '<b>You have exceeded the maximum login attempts.</b><br>Please try again in $remaining minute(s).',
-                        background: '#fff0f0',
-                        color: '#8B0000',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        timerProgressBar: true,
-                        showClass: {
-                            popup: 'animate__animated animate__shakeX'
-                        },
-                        hideClass: {
-                            popup: 'animate__animated animate__fadeOut'
-                        }
-                    }).then(() => {
-                        window.location.href='landing_page.php';
-                    });
-                  </script>
-                  </body></html>";
-            exit;
-        } else {
-            // Lockout expired - reset attempts
-            $_SESSION['login_attempts'] = 0;
-            $_SESSION['lockout_time'] = 0;
-        }
+    // Reset attempts if lockout time expired
+    if ($timeSinceLockout >= $lockoutDuration) {
+        $_SESSION['login_attempts'] = 0;
+        $_SESSION['lockout_time'] = 0;
     }
 
     $query = "SELECT * FROM tbl_applicant_registration WHERE username = ?";
@@ -141,15 +143,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Wrong password - increase attempts
             $_SESSION['login_attempts']++;
 
-            if ($_SESSION['login_attempts'] >= 3) {
+            if ($_SESSION['login_attempts'] >= $maxAttempts) {
                 $_SESSION['lockout_time'] = time(); // start lockout timer
             }
+
+            $attemptsLeft = $maxAttempts - $_SESSION['login_attempts'];
 
             echo "<script>
                 Swal.fire({
                     icon: 'error',
                     title: 'Invalid Password',
-                    html: '<b>Please check your password</b><br>and try again.',
+                    html: '<b>Please check your password</b><br>and try again.<br>Attempts left: $attemptsLeft',
                     background: '#fff0f0',
                     color: '#8B0000',
                     showConfirmButton: false,
