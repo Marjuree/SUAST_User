@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Reset attempts if lockout time expired
-    if ($timeSinceLockout >= $lockoutDuration) {
+    if ($_SESSION['login_attempts'] >= $maxAttempts && $timeSinceLockout >= $lockoutDuration) {
         $_SESSION['login_attempts'] = 0;
         $_SESSION['lockout_time'] = 0;
     }
@@ -142,12 +142,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Wrong password - increase attempts
             $_SESSION['login_attempts']++;
+            $attemptsLeft = $maxAttempts - $_SESSION['login_attempts'];
 
             if ($_SESSION['login_attempts'] >= $maxAttempts) {
                 $_SESSION['lockout_time'] = time(); // start lockout timer
             }
-
-            $attemptsLeft = $maxAttempts - $_SESSION['login_attempts'];
 
             echo "<script>
                 Swal.fire({
