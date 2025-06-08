@@ -78,6 +78,7 @@
       transition: opacity 0.2s ease-in-out;
       width: 20px;
       height: 20px;
+      margin-top: 11px;
     }
 
     .toggle-password:hover {
@@ -126,34 +127,35 @@
         <input type="text" name="otp" id="otp" class="form-control" required maxlength="6" />
       </div>
 
-      <div class="form-group text-left">
+      <!-- New Password -->
+      <div class="form-group position-relative text-left">
         <label for="new_password">New Password</label>
-        <div class="input-group">
-          <input type="password" name="new_password" id="new_password" class="form-control" required minlength="6" />
-          <span class="toggle-password" toggle="#new_password" title="Show/Hide Password">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
-              <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-            </svg>
-          </span>
-
-        </div>
+        <input type="password" name="new_password" id="new_password" class="form-control" required minlength="6" />
+        <span class="toggle-password" toggle="#new_password" title="Show/Hide Password"
+          style="position: absolute; top: 38px; right: 15px; cursor: pointer;">
+          <!-- Eye SVG icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
+            <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+          </svg>
+        </span>
       </div>
 
-      <div class="form-group text-left">
+      <!-- Confirm Password -->
+      <div class="form-group position-relative text-left">
         <label for="confirm_password">Confirm New Password</label>
-        <div class="input-group">
-          <input type="password" name="confirm_password" id="confirm_password" class="form-control" required
-            minlength="6" />
-          <span class="toggle-password" toggle="#new_password" title="Show/Hide Password">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
-              <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-            </svg>
-          </span>
-
-        </div>
+        <input type="password" name="confirm_password" id="confirm_password" class="form-control" required
+          minlength="6" />
+        <span class="toggle-password" toggle="#confirm_password" title="Show/Hide Password"
+          style="position: absolute; top: 38px; right: 15px; cursor: pointer;">
+          <!-- Eye SVG icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 16 16" width="20" height="20">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z" />
+            <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+          </svg>
+        </span>
       </div>
+
 
       <button type="submit" class="btn btn-primary">Reset Password</button>
     </form>
