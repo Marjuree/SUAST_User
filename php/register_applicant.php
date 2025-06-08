@@ -6,33 +6,16 @@ include "../application/SystemLog.php";
 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data safely with null coalescing and trim whitespace
-    $first_name = trim($_POST['first_name'] ?? '');
-    $middle_name = trim($_POST['middle_name'] ?? '');
-    $last_name = trim($_POST['last_name'] ?? '');
-    $university_email = trim($_POST['university_email'] ?? '');
-    $username = trim($_POST['username'] ?? '');
-    $applicant_password = $_POST['applicant_password'] ?? '';
+    // Retrieve form data
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'] ?? NULL; // Optional
+    $last_name = $_POST['last_name'];
+    $university_email = $_POST['university_email'];
+    $username = $_POST['username'];
+    $password = password_hash($_POST['applicant_password'], PASSWORD_DEFAULT);
     $privacy_notice_accepted = isset($_POST['privacy_notice_accepted']) ? 1 : 0;
 
-    // Validate required fields
-    if ($first_name === '' || $last_name === '' || $university_email === '' || $username === '' || $applicant_password === '') {
-        echo "
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Missing Fields',
-                text: 'Please fill in all required fields.',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                window.location.href = '../index.php';
-            });
-        </script>";
-        exit;
-    }
-
-    $password = password_hash($applicant_password, PASSWORD_DEFAULT);
-
+    echo ".";
     // Check if email already exists
     $check_query = "SELECT * FROM tbl_applicant_registration WHERE university_email = ?";
     $stmt = $con->prepare($check_query);
@@ -88,9 +71,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close();
-} else {
-    // Optionally, handle non-POST access here or redirect
-    header("Location: ../index.php");
-    exit;
 }
 ?>
