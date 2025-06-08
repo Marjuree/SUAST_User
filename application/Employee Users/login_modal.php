@@ -107,16 +107,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="forgotPasswordForm" method="POST" novalidate>
+        <form action="send_otp_emloyee.php" method="POST">
           <div class="form-group">
-            <label for="usernameOrEmail" class="font-weight-semibold">Enter Username or Email</label>
-            <input type="text" class="form-control form-control-lg rounded-pill border-primary" id="usernameOrEmail"
-              name="usernameOrEmail" placeholder="Username or Email" required autocomplete="username" autofocus />
+            <label>Enter your email address</label>
+            <input type="email" class="form-control" name="email" required>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-block rounded-pill shadow-sm mt-4"
-            style="background-color: #02457A; color: white;">
-            Send OTP
-          </button>
+          <button type="submit" name="send_otp" class="btn btn-primary btn-block" style="background-color: #02457A; color: white;">Send OTP</button>
         </form>
       </div>
     </div>
