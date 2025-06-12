@@ -205,11 +205,11 @@
           <li>Your data will be used exclusively for this application.</li>
           <li>You have the right to access, update, and delete your personal data at any time.</li>
         </ol>
-        <p>Please confirm your agreement before proceeding with the registration.</p>
+        <p style="color: black !important;">Please confirm your agreement before proceeding with the registration.</p>
       </div>
 
       <div class="modal-footer d-flex flex-column"
-        style="outline: none !important; box-shadow: none !important; border:none; margin-top: -40px;">
+        style="outline: none !important; box-shadow: none !important; border:none; margin-top: -10px;">
         <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerApplicant" data-dismiss="modal"
           style="background-color: #20457A; color: white;">
           I Agree
@@ -278,16 +278,34 @@
             <label for="usernameRegister">Username</label>
             <input type="text" class="form-control" id="usernameRegister" name="username" required>
           </div>
-          <div class="form-group">
+          <!-- Password Field -->
+          <div class="form-group position-relative">
             <label for="applicant_password_register">Password</label>
             <input type="password" class="form-control" id="applicant_password_register" name="applicant_password"
               required minlength="8">
+            <span id="toggleApplicantPassword" style="position:absolute; right:15px; top:30px; cursor:pointer; user-select:none;">
+              <!-- Eye icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3.5"/>
+              </svg>
+            </span>
             <small id="passwordHelp" class="text-muted"></small>
           </div>
-          <div class="form-group">
+          <!-- Confirm Password Field -->
+          <div class="form-group position-relative">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required
               minlength="8">
+            <span id="toggleApplicantConfirmPassword" style="position:absolute; right:15px; top:30px; cursor:pointer; user-select:none;">
+              <!-- Eye icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3.5"/>
+              </svg>
+            </span>
           </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
@@ -418,4 +436,45 @@
   function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
   }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Password eye toggle
+  const passwordInput = document.getElementById('applicant_password_register');
+  const confirmInput = document.getElementById('confirm_password');
+  const togglePassword = document.getElementById('toggleApplicantPassword');
+  const toggleConfirm = document.getElementById('toggleApplicantConfirmPassword');
+
+  togglePassword.addEventListener('click', function () {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.innerHTML = type === 'password'
+      ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+            viewBox="0 0 24 24" width="22" height="22">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+            <circle cx="12" cy="12" r="3.5"/>
+        </svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+            viewBox="0 0 24 24" width="22" height="22">
+            <path d="M17.94 17.94C16.12 19.25 14.13 20 12 20c-7 0-11-8-11-8a21.77 21.77 0 0 1 5.06-6.06M22.54 6.42A21.77 21.77 0 0 1 23 12s-4 8-11 8a10.94 10.94 0 0 1-4.24-.88M1 1l22 22"/>
+            <circle cx="12" cy="12" r="3.5"/>
+        </svg>`;
+  });
+
+  toggleConfirm.addEventListener('click', function () {
+    const type = confirmInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmInput.setAttribute('type', type);
+    this.innerHTML = type === 'password'
+      ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+            viewBox="0 0 24 24" width="22" height="22">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+            <circle cx="12" cy="12" r="3.5"/>
+        </svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+            viewBox="0 0 24 24" width="22" height="22">
+            <path d="M17.94 17.94C16.12 19.25 14.13 20 12 20c-7 0-11-8-11-8a21.77 21.77 0 0 1 5.06-6.06M22.54 6.42A21.77 21.77 0 0 1 23 12s-4 8-11 8a10.94 10.94 0 0 1-4.24-.88M1 1l22 22"/>
+            <circle cx="12" cy="12" r="3.5"/>
+        </svg>`;
+  });
+});
 </script>
