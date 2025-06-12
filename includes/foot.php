@@ -18,5 +18,5 @@
 </style>
 
 <footer class="footer">
-    <p>&copy; <?php echo date("Y"); ?> © 2025. UniReserve. All Rights Reserved.</p>
+    <p>&copy; <?php echo date("Y"); ?> ©. UniReserve. All Rights Reserved.</p>
 </footer>
