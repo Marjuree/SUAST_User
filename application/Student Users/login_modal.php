@@ -212,11 +212,11 @@
                     <li>Your data will be used exclusively for this application.</li>
                     <li>You have the right to access, update, and delete your personal data at any time.</li>
                 </ol>
-                <p>Please confirm your agreement before proceeding with the registration.</p>
+                <p style="color: black !important;">Please confirm your agreement before proceeding with the registration.</p>
             </div>
 
             <div class="modal-footer d-flex flex-column"
-                style="outline: none !important; box-shadow: none !important; border:none; margin-top: -40px;">
+                style="outline: none !important; box-shadow: none !important; border:none; margin-top: -10px;">
                 <a href="#" class="btn btn-block" data-toggle="modal" data-target="#regModal" data-dismiss="modal"
                     style="background-color: #20457A; color: white;">
                     I Agree
@@ -299,16 +299,34 @@
                             <option value="4th Year">4th Year</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <!-- Password Field -->
+                    <div class="form-group position-relative">
                         <label for="reg_student_password">Password</label>
                         <input type="password" class="form-control" id="reg_student_password" name="student_password"
                             placeholder="Password" required minlength="8">
-                        <small id="reg_passwordHelp" class="text-muted"></small>
+                        <span id="toggleRegPassword" style="position:absolute; right:15px; top:30px; cursor:pointer; user-select:none;">
+                            <!-- Eye icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                                viewBox="0 0 24 24" width="22" height="22">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                                <circle cx="12" cy="12" r="3.5"/>
+                            </svg>
+                        </span>
+                        <small id="reg_passwordHelp" class="text-muted" style="color: red !important;"></small>
                     </div>
-                    <div class="form-group">
+                    <!-- Confirm Password Field -->
+                    <div class="form-group position-relative">
                         <label for="reg_student_confirm_password">Confirm Password</label>
                         <input type="password" class="form-control" id="reg_student_confirm_password"
                             name="student_confirm_password" placeholder="Confirm Password" required minlength="8">
+                        <span id="toggleRegConfirmPassword" style="position:absolute; right:15px; top:30px; cursor:pointer; user-select:none;">
+                            <!-- Eye icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                                viewBox="0 0 24 24" width="22" height="22">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                                <circle cx="12" cy="12" r="3.5"/>
+                            </svg>
+                        </span>
                         <small id="reg_confirmPasswordHelp" class="text-muted"></small>
                     </div>
 
@@ -321,7 +339,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-success btn-block" name="register_student"
-                        style="background-color: #02457A;">Register</button>
+                        style="background-color: #002B5B !important;">Register</button>
                 </form>
                 <div id="error" class="text-danger text-right mt-2">
                     <?php if (isset($_GET['register_error']))
@@ -340,39 +358,98 @@
         const confirmInput = document.getElementById('reg_student_confirm_password');
         const passwordHelp = document.getElementById('reg_passwordHelp');
         const confirmPasswordHelp = document.getElementById('reg_confirmPasswordHelp');
+        const registerBtn = document.querySelector('button[name="register_student"]');
 
+        // At least 8 chars, one uppercase, one lowercase, one digit, one special char
         const strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
 
-        passwordInput.addEventListener('input', function () {
+        function validatePassword() {
             const password = passwordInput.value;
-
             if (password.length === 0) {
                 passwordHelp.textContent = '';
+                return false;
             } else if (!strongPattern.test(password)) {
-                passwordHelp.textContent = '';
+                passwordHelp.textContent = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special symbol.';
                 passwordHelp.style.color = 'red';
+                return false;
             } else {
                 passwordHelp.textContent = 'Strong password!';
                 passwordHelp.style.color = 'green';
+                return true;
             }
+        }
+
+        function checkPasswordMatch() {
+            const passwordValid = validatePassword();
+            if (confirmInput.value.length === 0) {
+                confirmPasswordHelp.textContent = '';
+                setRegisterBtnState(false);
+                return false;
+            }
+            if (passwordInput.value === confirmInput.value && passwordValid) {
+                confirmPasswordHelp.textContent = 'Passwords match.';
+                confirmPasswordHelp.style.color = 'green';
+                setRegisterBtnState(true);
+                return true;
+            } else {
+                confirmPasswordHelp.textContent = 'Passwords do not match.';
+                confirmPasswordHelp.style.color = 'red';
+                setRegisterBtnState(false);
+                return false;
+            }
+        }
+
+        function setRegisterBtnState(enabled) {
+            registerBtn.disabled = !enabled;
+        }
+
+        passwordInput.addEventListener('input', function () {
+            validatePassword();
             checkPasswordMatch();
         });
 
         confirmInput.addEventListener('input', checkPasswordMatch);
 
-        function checkPasswordMatch() {
-            if (confirmInput.value.length === 0) {
-                confirmPasswordHelp.textContent = '';
-                return;
-            }
-            if (passwordInput.value === confirmInput.value) {
-                confirmPasswordHelp.textContent = 'Passwords match.';
-                confirmPasswordHelp.style.color = 'green';
-            } else {
-                confirmPasswordHelp.textContent = 'Passwords do not match.';
-                confirmPasswordHelp.style.color = 'red';
-            }
-        }
+        // Initial state
+        setRegisterBtnState(false);
+
+        // Eye icon toggle for password
+        const regPasswordInput = document.getElementById('reg_student_password');
+        const regConfirmInput = document.getElementById('reg_student_confirm_password');
+        const toggleRegPassword = document.getElementById('toggleRegPassword');
+        const toggleRegConfirmPassword = document.getElementById('toggleRegConfirmPassword');
+
+        toggleRegPassword.addEventListener('click', function () {
+            const type = regPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            regPasswordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password'
+                ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3.5"/>
+            </svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M17.94 17.94C16.12 19.25 14.13 20 12 20c-7 0-11-8-11-8a21.77 21.77 0 0 1 5.06-6.06M22.54 6.42A21.77 21.77 0 0 1 23 12s-4 8-11 8a10.94 10.94 0 0 1-4.24-.88M1 1l22 22"/>
+                <circle cx="12" cy="12" r="3.5"/>
+            </svg>`;
+        });
+
+        toggleRegConfirmPassword.addEventListener('click', function () {
+            const type = regConfirmInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            regConfirmInput.setAttribute('type', type);
+            this.innerHTML = type === 'password'
+                ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3.5"/>
+            </svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M17.94 17.94C16.12 19.25 14.13 20 12 20c-7 0-11-8-11-8a21.77 21.77 0 0 1 5.06-6.06M22.54 6.42A21.77 21.77 0 0 1 23 12s-4 8-11 8a10.94 10.94 0 0 1-4.24-.88M1 1l22 22"/>
+                <circle cx="12" cy="12" r="3.5"/>
+            </svg>`;
+        });
     });
 
 </script>
