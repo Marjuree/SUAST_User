@@ -3,7 +3,7 @@ require_once "../configuration/config.php";
 require_once "../application/SystemLog.php";
 
 // Load SweetAlert2 JS
-echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+// echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
 
 if (isset($_POST['register_student'])) {
     $full_name = $_POST['student_name'];
