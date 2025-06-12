@@ -186,11 +186,11 @@
           <li>Your data will be used exclusively for this application.</li>
           <li>You have the right to access, update, and delete your personal data at any time.</li>
         </ol>
-        <p>Please confirm your agreement before proceeding with the registration.</p>
+        <p style="color: black !important;">Please confirm your agreement before proceeding with the registration.</p>
       </div>
 
       <div class="modal-footer d-flex flex-column"
-        style="outline: none !important; box-shadow: none !important; border:none; margin-top: -40px;">
+        style="outline: none !important; box-shadow: none !important; border:none; margin-top: -10px;">
         <a href="#" class="btn btn-block" data-toggle="modal" data-target="#regEmployee" data-dismiss="modal"
           style="background-color: #20457A; color: white;">
           I Agree
@@ -214,9 +214,11 @@
     overflow-y: auto;
   }
 </style>
+
+
 <!-- Employee Registration Modal -->
-<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
-  style="margin-top: 70px;">
+<!-- Employee Registration Modal -->
+<div class="modal fade" id="regEmployee" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" style="margin-top: 70px;">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content" style="outline: none !important; box-shadow: none !important; border: none;">
       <div class="modal-header flex-column align-items-center">
@@ -226,8 +228,7 @@
         <h4 class="modal-title text-center font-weight-bold mb-1" style="margin-top: -40px;">Employee Registration</h4>
         <h6 class="modal-title text-center text-muted mb-3" style="font-size: 0.9rem;">Please create your account</h6>
 
-        <button type="button" class="close position-absolute" style="right: 15px; top: 15px;" data-dismiss="modal"
-          aria-label="Close">
+        <button type="button" class="close position-absolute" style="right: 15px; top: 15px;" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -262,27 +263,106 @@
               <option value="Staff">Staff</option>
             </select>
           </div>
-          <div class="form-group">
+
+          <!-- Password with Eye Icon -->
+          <div class="form-group position-relative">
             <label for="registerPassword">Password</label>
-            <input type="password" class="form-control" id="registerPassword" name="employee_password" required
-              minlength="8">
-            <small id="reg_passwordHelp" class="text-muted"></small>
+            <input type="password" class="form-control" id="registerPassword" name="employee_password" required minlength="8">
+            <span id="toggleRegisterPassword" style="position:absolute; right:15px; top:30px; cursor:pointer; user-select:none;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3.5"/>
+              </svg>
+            </span>
+            <small id="passwordRequirements" class="text-muted" style="display:none; color: red !important;">
+              Password must include uppercase, lowercase, number, special character, and be at least 8 characters.
+            </small>
           </div>
-          <div class="form-group">
+
+          <!-- Confirm Password with Eye Icon -->
+          <div class="form-group position-relative">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="employee_confirm_password" required
-              minlength="8">
+            <input type="password" class="form-control" id="confirmPassword" name="employee_confirm_password" required minlength="8">
+            <span id="toggleConfirmPassword" style="position:absolute; right:15px; top:30px; cursor:pointer; user-select:none;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5"
+                viewBox="0 0 24 24" width="22" height="22">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3.5"/>
+              </svg>
+            </span>
+            <small id="confirmPasswordMsg" class="text-muted" style="display:none;"></small>
           </div>
+
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
-              required>
-            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy
-              notice</label>
+            <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1" required>
+            <label class="form-check-label" for="privacy_notice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I accept the privacy notice</label>
           </div>
-          <button type="submit" class="btn btn-primary btn-block" name="register_employee"
-            style="background-color: #02457A;">Register</button>
+
+          <button type="submit" class="btn btn-primary btn-block" name="register_employee" style="background-color: #02457A;">Register</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<!-- JavaScript to Toggle Eye Icons -->
+<script>
+  function setupPasswordToggle(toggleId, inputId) {
+    const toggle = document.getElementById(toggleId);
+    const input = document.getElementById(inputId);
+
+    toggle.addEventListener('click', () => {
+      const type = input.type === 'password' ? 'text' : 'password';
+      input.type = type;
+
+      toggle.innerHTML = type === 'password'
+        ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24" width="22" height="22">
+             <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+             <circle cx="12" cy="12" r="3.5"/>
+           </svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24" width="22" height="22">
+             <path d="M17.94 17.94C16.12 19.25 14.13 20 12 20c-7 0-11-8-11-8a21.77 21.77 0 0 1 5.06-6.06M22.54 6.42A21.77 21.77 0 0 1 23 12s-4 8-11 8a10.94 10.94 0 0 1-4.24-.88M1 1l22 22"/>
+             <circle cx="12" cy="12" r="3.5"/>
+           </svg>`;
+    });
+  }
+
+  // Initialize both toggles
+  setupPasswordToggle("toggleRegisterPassword", "registerPassword");
+  setupPasswordToggle("toggleConfirmPassword", "confirmPassword");
+
+  // Show/hide password requirements on focus/blur
+  const regPasswordInput = document.getElementById('registerPassword');
+  const passwordRequirements = document.getElementById('passwordRequirements');
+  regPasswordInput.addEventListener('focus', () => {
+    passwordRequirements.style.display = 'block';
+  });
+  regPasswordInput.addEventListener('blur', () => {
+    passwordRequirements.style.display = 'none';
+  });
+
+  // Password match check for confirm password
+  const confirmPasswordInput = document.getElementById('confirmPassword');
+  const confirmPasswordMsg = document.getElementById('confirmPasswordMsg');
+
+  function checkPasswordMatch() {
+    if (confirmPasswordInput.value.length === 0) {
+      confirmPasswordMsg.style.display = 'none';
+      confirmPasswordMsg.textContent = '';
+      return;
+    }
+    if (confirmPasswordInput.value === regPasswordInput.value) {
+      confirmPasswordMsg.style.display = 'block';
+      confirmPasswordMsg.style.color = 'green';
+      confirmPasswordMsg.textContent = 'Passwords match';
+    } else {
+      confirmPasswordMsg.style.display = 'block';
+      confirmPasswordMsg.style.color = 'red';
+      confirmPasswordMsg.textContent = 'Passwords do not match';
+    }
+  }
+
+  regPasswordInput.addEventListener('input', checkPasswordMatch);
+  confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+</script>
