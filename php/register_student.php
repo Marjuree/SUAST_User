@@ -38,30 +38,21 @@ if (isset($_POST['register_student'])) {
     $stmt = $con->prepare($sql);
     $stmt->bind_param("sssssss", $full_name, $email, $school_id, $username, $hashed_password, $faculty, $year_level);
 
-    if ($stmt->execute()) {
-        echo "
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Registered Successfully!',
-                text: 'You can now log in with your credentials.',
-                confirmButtonText: 'Login'
-            }).then(() => {
-                window.location.href = '../index.php';
-            });
-        </script>";
-    } else {
-        echo "
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Registration Failed',
-                text: 'Username or email might already be taken.',
-                confirmButtonText: 'Try Again'
-            }).then(() => {
-                window.location.href = '../index.php';
-            });
-        </script>";
+    try {
+        if ($stmt->execute()) {
+            header("Location: landing_page.php?register_success=" . urlencode("You can now log in with your credentials."));
+            exit();
+        }
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1062) {
+            // Duplicate entry found
+            header("Location: landing_page.php?register_error=" . urlencode("Username, email, or school ID already exists. Please use different credentials."));
+            exit();
+        } else {
+            // Other errors
+            header("Location: landing_page.php?register_error=" . urlencode("An unexpected error occurred. Please try again."));
+            exit();
+        }
     }
 
     $stmt->close();
