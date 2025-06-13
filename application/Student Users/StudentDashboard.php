@@ -190,6 +190,24 @@ $student_data = $result->fetch_assoc();
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" style="font-size: 12px;">Faculty</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control"
+                                style="font-size: 12px; height: 30px; max-width: 100%; width: 230px; margin-left: -50px;"
+                                value="<?= htmlspecialchars($student_data['faculty']) ?>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" style="font-size: 12px;">Year Level</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control"
+                                style="font-size: 12px; height: 30px; max-width: 100%; width: 230px; margin-left: -50px;"
+                                value="<?= htmlspecialchars($student_data['year_level']) ?>" readonly>
+                        </div>
+                    </div>
+
                     <?php
                     $status = htmlspecialchars($student_data['status']) ?: 'Not Set';
                     $badgeClass = 'label label-default'; // default grey
@@ -244,7 +262,10 @@ $student_data = $result->fetch_assoc();
                 $.ajax({
                     url: 'request_clearance.php',
                     type: 'POST',
-                    data: {},
+                    data: {
+                        faculty: "<?= htmlspecialchars($student_data['faculty']) ?>",
+                        year_level: "<?= htmlspecialchars($student_data['year_level']) ?>"
+                    },
                     success: function (response) {
                         console.log('AJAX response:', response); // debug
 
