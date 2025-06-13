@@ -303,7 +303,7 @@ $infoStmt->close();
                         </a>
                         <div class="box-body">
                             <section class="content-header text-center">
-                                <h1>Dashboard</h1>
+                                <h1>Services Record Request</h1>
                                 <p>Welcome, <strong><?php echo $first_name; ?></strong></p>
                             </section>
                             <p><strong><?= htmlspecialchars($faculty) ?>:</strong></p>
