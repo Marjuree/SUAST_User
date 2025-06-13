@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
+session_regenerate_id(true);
 require_once "../configuration/config.php";
 
 $maxAttempts = 3;
@@ -83,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['login_attempts'] = 0;
             $_SESSION['ban_time'] = 0;
 
-            session_regenerate_id(true);
 
             $_SESSION['employee_id'] = $user['employee_id'];
             $_SESSION['first_name'] = $user['first_name'];
