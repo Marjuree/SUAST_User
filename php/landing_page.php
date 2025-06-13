@@ -196,7 +196,7 @@ require_once "../configuration/config.php";
 
     <!-----------------------------------Service Modal----------------------------------------->
     <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true"
-        style="height: 400px; margin-top: 60px;">
+        style="height: 600px; margin-top: 60px;">
         <div class="modal-dialog modal-sm"> <!-- Removed modal-dialog-centered as it's BS4+ -->
             <div class="modal-content text-center p-2"
                 style="border-radius: 15px; border: none; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); position: relative;">
