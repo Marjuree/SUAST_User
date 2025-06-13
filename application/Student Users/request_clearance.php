@@ -20,6 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date_requested = date("Y-m-d H:i:s");
     $status = 'Pending';
 
+    // Get faculty and year_level from POST
+    $faculty = isset($_POST['faculty']) ? trim($_POST['faculty']) : '';
+    $year_level = isset($_POST['year_level']) ? trim($_POST['year_level']) : '';
+
     // Fetch the school_id using the internal student_id
     $stmt = $con->prepare("SELECT school_id FROM tbl_student_users WHERE id = ?");
     $stmt->bind_param("i", $student_id);
@@ -53,10 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Insert new request using the school_id
-    $insertSql = "INSERT INTO tbl_clearance_requests (student_id, status, date_requested) VALUES (?, ?, ?)";
+    // Insert new request using the school_id, faculty, and year_level
+    $insertSql = "INSERT INTO tbl_clearance_requests (student_id, status, date_requested, faculty, year_level) VALUES (?, ?, ?, ?, ?)";
     $insertStmt = $con->prepare($insertSql);
-    $insertStmt->bind_param("sss", $school_id, $status, $date_requested);
+    $insertStmt->bind_param("sssss", $school_id, $status, $date_requested, $faculty, $year_level);
 
     if ($insertStmt->execute()) {
         echo json_encode([
