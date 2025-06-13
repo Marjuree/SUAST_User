@@ -124,19 +124,20 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
         }
 
         .card.clickable {
-        transition: background-color 0.3s, transform 0.2s;
-    }
+            transition: background-color 0.3s, transform 0.2s;
+        }
 
-    .card.clickable:hover {
-        background-color: #e6f0ff; /* light blue on hover */
-        transform: translateY(-3px);
-    }
+        .card.clickable:hover {
+            background-color: #e6f0ff;
+            /* light blue on hover */
+            transform: translateY(-3px);
+        }
 
-    .card.clickable:active {
-        background-color: #cce0ff; /* darker blue on click */
-        transform: scale(0.98);
-    }
-        
+        .card.clickable:active {
+            background-color: #cce0ff;
+            /* darker blue on click */
+            transform: scale(0.98);
+        }
     </style>
 </head>
 
@@ -218,7 +219,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                             </div>
                         </div>
                     <?php else: ?>
-                        <div class="card clickable" onclick="window.location.href='index.php';"
+                        <div class="card clickable" onclick="openTermsModal()"
                             style="width: 100%; max-width: 350px; cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                             <div class="card-body">
                                 <div style="font-size: 28px; color: #003366;"><i class="fas fa-file-alt"></i></div>
@@ -550,7 +551,6 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
 
 
     <!-- Terms & Privacy Modal -->
-    <!-- Modal -->
     <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="border-radius: 10px;">
@@ -593,7 +593,7 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
-                    <button type="button" class="btn btn-primary" id="proceedBtn" disabled>PROCEED</button>
+                    <button type="button" class="btn btn-primary" id="proceedBtn" style="background-color: 002B5B ;" disabled>PROCEED</button>
                 </div>
             </div>
         </div>
@@ -614,6 +614,30 @@ $user_has_reservation = mysqli_num_rows($result_reservations) > 0;
 
     <!-- Bootstrap 3 JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+    function openTermsModal() {
+        $('#termsModal').modal('show');
+    }
+
+    // Enable the PROCEED button only when checkbox is checked
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkbox = document.getElementById('termsCheckbox');
+        const proceedBtn = document.getElementById('proceedBtn');
+
+        if (checkbox && proceedBtn) {
+            checkbox.addEventListener('change', function () {
+                proceedBtn.disabled = !checkbox.checked;
+            });
+
+            proceedBtn.addEventListener('click', function () {
+                if (checkbox.checked) {
+                    window.location.href = "index.php";
+                }
+            });
+        }
+    });
+</script>
 
     <script>
         $(document).ready(function () {
