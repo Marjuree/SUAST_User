@@ -41,7 +41,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 ],
                 "Employee" => [
                     ["link" => "../Employee Users/EmployeeDashboard.php", "icon" => "fa-tachometer-alt", "label" => "Dashboard"],
-                    ["link" => "../Employee Users/contact.php", "icon" => "fa-envelope", "label" => "Manage Contact"],
+                    ["link" => "../Employee Users/contact.php", "icon" => "fa-envelope", "label" => "Contact Us"],
                 ],
                 "Applicant" => [
                     ["link" => "../Applicant Users/dashboard.php", "icon" => "fas fa-tachometer-alt", "label" => "Dashboard"],
