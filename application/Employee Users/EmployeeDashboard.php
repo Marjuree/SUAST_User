@@ -78,13 +78,13 @@ if ($res && $row = $res->fetch_assoc()) {
     }
 
     #submitMdoal .btn:hover {
-        background-color: #00509e;
+        background-color: #018ABE !important;
         color: #fff;
     }
 
     /* Click/active effect */
     #submitMdoal .btn:active {
-        background-color: #00509e;
+        background-color: #018ABE !important;
         /* even darker blue */
         transform: scale(0.98);
         /* slight shrink */
@@ -112,8 +112,7 @@ if ($res && $row = $res->fetch_assoc()) {
     }
 
     .request-btn:hover {
-        background-color: #00509e;
-        /* slightly lighter blue */
+        background-color: #018ABE !important;
         color: #fff;
         transform: scale(1.03);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
