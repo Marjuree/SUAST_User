@@ -347,21 +347,29 @@
   const confirmPasswordMsg = document.getElementById('confirmPasswordMsg');
 
   function checkPasswordMatch() {
-    if (confirmPasswordInput.value.length === 0) {
-      confirmPasswordMsg.style.display = 'none';
-      confirmPasswordMsg.textContent = '';
-      return;
-    }
-    if (confirmPasswordInput.value === regPasswordInput.value) {
-      confirmPasswordMsg.style.display = 'block';
-      confirmPasswordMsg.style.color = 'green';
-      confirmPasswordMsg.textContent = 'Passwords match';
-    } else {
-      confirmPasswordMsg.style.display = 'block';
-      confirmPasswordMsg.style.color = 'red';
-      confirmPasswordMsg.textContent = 'Passwords do not match';
-    }
+  const password = regPasswordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+
+  // Clear previous styles
+  confirmPasswordMsg.classList.remove('text-muted', 'text-success', 'text-danger');
+
+  if (confirmPassword.length === 0) {
+    confirmPasswordMsg.style.display = 'none';
+    confirmPasswordMsg.textContent = '';
+    return;
   }
+
+  confirmPasswordMsg.style.display = 'block';
+
+  if (confirmPassword === password) {
+    confirmPasswordMsg.textContent = 'Passwords match';
+    confirmPasswordMsg.classList.add('text-success');
+  } else {
+    confirmPasswordMsg.textContent = 'Passwords do not match';
+    confirmPasswordMsg.classList.add('text-danger');
+  }
+}
+
 
   regPasswordInput.addEventListener('input', checkPasswordMatch);
   confirmPasswordInput.addEventListener('input', checkPasswordMatch);
