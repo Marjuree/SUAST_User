@@ -306,6 +306,8 @@
                 <circle cx="12" cy="12" r="3.5"/>
               </svg>
             </span>
+              <small id="confirmHelper" style="display:block; margin-top:5px;"></small>
+
           </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="privacy_notice" name="privacy_notice_accepted" value="1"
@@ -403,18 +405,21 @@
       if (!confirmHelper) {
         confirmHelper = document.createElement('small');
         confirmHelper.id = 'confirmPasswordHelp';
-        confirmHelper.classList.add('text-muted');
+        confirmHelper.classList.add('form-text', 'mt-1');
         confirmPasswordInput.parentNode.appendChild(confirmHelper);
       }
 
+      confirmHelper.classList.remove('text-success', 'text-danger', 'text-muted');
+
       if (confirmPassword.length === 0) {
         confirmHelper.textContent = '';
+        confirmHelper.classList.add('text-muted');
       } else if (password !== confirmPassword) {
         confirmHelper.textContent = 'Passwords do not match!';
-        confirmHelper.style.color = 'red';
+        confirmHelper.classList.add('text-danger');
       } else {
         confirmHelper.textContent = 'Passwords match!';
-        confirmHelper.style.color = 'green';
+        confirmHelper.classList.add('text-success');
       }
     }
 
