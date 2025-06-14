@@ -379,25 +379,32 @@
             }
         }
 
-        function checkPasswordMatch() {
-            const passwordValid = validatePassword();
-            if (confirmInput.value.length === 0) {
-                confirmPasswordHelp.textContent = '';
-                setRegisterBtnState(false);
-                return false;
-            }
-            if (passwordInput.value === confirmInput.value && passwordValid) {
-                confirmPasswordHelp.textContent = 'Passwords match.';
-                confirmPasswordHelp.style.color = 'green';
-                setRegisterBtnState(true);
-                return true;
-            } else {
-                confirmPasswordHelp.textContent = 'Passwords do not match.';
-                confirmPasswordHelp.style.color = 'red';
-                setRegisterBtnState(false);
-                return false;
-            }
-        }
+       function checkPasswordMatch() {
+    const passwordValid = validatePassword();
+
+    // Clear previous color classes
+    confirmPasswordHelp.classList.remove('text-muted', 'text-success', 'text-danger');
+
+    if (confirmInput.value.length === 0) {
+        confirmPasswordHelp.textContent = '';
+        confirmPasswordHelp.classList.add('text-muted');
+        setRegisterBtnState(false);
+        return false;
+    }
+
+    if (passwordInput.value === confirmInput.value && passwordValid) {
+        confirmPasswordHelp.textContent = 'Passwords match.';
+        confirmPasswordHelp.classList.add('text-success');
+        setRegisterBtnState(true);
+        return true;
+    } else {
+        confirmPasswordHelp.textContent = 'Passwords do not match.';
+        confirmPasswordHelp.classList.add('text-danger');
+        setRegisterBtnState(false);
+        return false;
+    }
+}
+
 
         function setRegisterBtnState(enabled) {
             registerBtn.disabled = !enabled;
