@@ -318,7 +318,7 @@ if ($res && $row = $res->fetch_assoc()) {
         #requestModal .btn:focus,
         #submitMdoal .btn:hover,
         #submitMdoal .btn:focus {
-            background-color: #002244 !important;
+            background-color: #018ABE !important;
             /* darker blue on hover */
             box-shadow: 0 4px 10px rgba(0, 51, 102, 0.6);
             cursor: pointer;
